@@ -1,11 +1,11 @@
-.App {
+.login-form {
   display: flex;
-  height: 100vh;
-  width: 100vw;
+  height: auto;
+  width: 100%;
   justify-content: flex-start;
   align-items: center;
   align-content: center;
   flex-direction: column;
   flex-wrap: wrap;
-  border: 1px solid blue;
+  border: 1px solid red;
 }
