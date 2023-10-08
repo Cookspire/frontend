@@ -1,23 +1,19 @@
 :root {
-  --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
-  --muted: 210 40% 96.1%;
-  --muted-foreground: 215.4 16.3% 46.9%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 222.2 84% 4.9%;
-  --card: 0 0% 100%;
-  --card-foreground: 222.2 84% 4.9%;
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --primary: 221.2 83.2% 53.3%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 210 40% 96.1%;
-  --secondary-foreground: 222.2 47.4% 11.2%;
-  --accent: 210 40% 96.1%;
-  --accent-foreground: 222.2 47.4% 11.2%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
-  --ring: 221.2 83.2% 53.3%;
+  --background: hsl(0, 0%, 100%);
+  --primaryColor: hsl(0, 0%, 0%);
+  --secondaryColor: hsl(0, 0%, 50%);
+
+  --headingFontSize: 48px;
+  --subHeadingFontSize: 36px;
+  --bodyFontSize: 20px;
+
+  --border: hsl(0, 0%, 0%, 0.17);
+  --borderRadius: 6px;
+  --borderFocus: hsl(0, 0%, 1%);
+
+  --buttonHover: hsl(0, 0%, 10%);
+  --buttonBg: hsl(0, 0%, 0%);
+  --buttonColor: hsl(0, 0%, 100%);
 }
 /* :root[data-theme="dark"] {
   --background: 222.2 84% 4.9%;
@@ -51,6 +47,9 @@ html,
 body {
   width: 100vw;
   height: 100vh;
+  font-size: var(--bodyFontSize);
+  overflow: auto;
+  font-family:  Arial, Helvetica, sans-serif;
 }
 
 .center-modal {
@@ -62,24 +61,21 @@ body {
   align-content: center;
   flex-direction: column;
   flex-wrap: wrap;
-  border: 1px solid red;
 }
 
 .center-content {
   display: flex;
-  height: 50%;
-  width: 50%;
   justify-content: flex-start;
   align-items: center;
   align-content: center;
   flex-direction: column;
   flex-wrap: wrap;
-  border: 1px solid green;
-  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--borderRadius);
+  padding: 10px;
 }
 
-
-.center-content-header{
+.center-content-header {
   display: flex;
   height: auto;
   width: 100%;
@@ -88,10 +84,9 @@ body {
   align-content: center;
   flex-direction: column;
   flex-wrap: wrap;
-  border: 1px solid red;
 }
 
-.center-content-body{
+.center-content-body {
   display: flex;
   height: auto;
   width: 100%;
@@ -100,5 +95,15 @@ body {
   align-content: center;
   flex-direction: column;
   flex-wrap: wrap;
-  border: 1px solid red;
+}
+
+.center-content-footer {
+  display: flex;
+  height: auto;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
 }

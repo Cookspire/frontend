@@ -1,4 +1,17 @@
-.login-form {
+.auth-header {
+  display: flex;
+  height: auto;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-direction: column;
+  flex-wrap: wrap;
+  font-size: var(--subHeadingFontSize);
+  margin: 10px;
+}
+
+.auth-form {
   display: flex;
   height: auto;
   width: 100%;
@@ -7,5 +20,108 @@
   align-content: center;
   flex-direction: column;
   flex-wrap: wrap;
-  border: 1px solid red;
+}
+
+.form-field {
+  display: flex;
+  height: auto;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: 5px;
+}
+
+.field-label {
+  display: flex;
+  height: auto;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: 5px;
+}
+
+.field-content {
+  display: flex;
+  height: auto;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.form-button {
+  display: flex;
+  height: auto;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: 20px;
+}
+
+.field-button {
+  display: flex;
+  height: auto;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.auth-footer {
+  display: flex;
+  height: auto;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 10px;
+}
+
+.auth-form input {
+  outline: none;
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--borderRadius);
+  padding: 10px;
+  font-size: var(--bodyFontSize);
+  width: 100%;
+  font-family: inherit;
+  font-weight: 100;
+}
+
+.auth-form input:focus{
+  outline: none;
+  border: 1px solid var(--borderFocus);
+}
+
+
+.auth-form button {
+  padding: 10px;
+  font-size: var(--bodyFontSize);
+  width: 100%;
+  border: 0;
+  background-color: var(--buttonBg);
+  color: var(--buttonColor);
+  border-radius: var(--borderRadius);
+  font-family: inherit;
+}
+
+.auth-form button:hover {
+  background-color: var(--buttonHover);
+  cursor: pointer;
 }
