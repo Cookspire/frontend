@@ -3,13 +3,15 @@ export default function Login() {
   return (
     <div className="center-modal">
       <div className="center-content">
-        <div className="center-content-header">Sign in to CookSpire</div>
+        <div className="center-content-header">
+          <div className="auth-header">Sign in to CookSpire</div>
+        </div>
 
         <div className="center-content-body">
-          <form className="login-form">
+          <form className="auth-form">
             <div className="form-field">
               <div className="field-label">
-                <label>Email</label>
+                <label htmlFor="email">Email</label>
               </div>
 
               <div className="field-content">
@@ -24,24 +26,31 @@ export default function Login() {
 
             <div className="form-field">
               <div className="field-label">
-                <label>Password</label>
+                <label htmlFor="password">Password</label>
               </div>
 
               <div className="field-content">
-                <input type="password" id="password" required />
+                <input
+                  type="password"
+                  id="password"
+                  placeholder="shh..."
+                  required
+                />
               </div>
             </div>
 
             <div className="form-button">
               <div className="field-button">
-                <button type="submit">Sign In</button>
+                <button type="submit">Create an account</button>
               </div>
             </div>
           </form>
         </div>
 
         <div className="center-content-footer">
-          New to CookSpire? <a href="/register">Create an account</a>
+          <div className="auth-footer">
+            New to CookSpire? &nbsp;<a href="/register">Create an account</a>
+          </div>
         </div>
       </div>
     </div>
