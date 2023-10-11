@@ -39,6 +39,51 @@ export default function Login() {
               </div>
             </div>
 
+            <div className="form-field">
+              <div className="field-label">
+                <label htmlFor="password">Password</label>
+              </div>
+
+              <div className="field-content">
+                <input
+                  type="password"
+                  id="password"
+                  placeholder="shh..."
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="form-field">
+              <div className="field-label">
+                <label htmlFor="password">Password</label>
+              </div>
+
+              <div className="field-content">
+                <input
+                  type="password"
+                  id="password"
+                  placeholder="shh..."
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="form-field">
+              <div className="field-label">
+                <label htmlFor="password">Password</label>
+              </div>
+
+              <div className="field-content">
+                <input
+                  type="password"
+                  id="password"
+                  placeholder="shh..."
+                  required
+                />
+              </div>
+            </div>
+
             <div className="form-button">
               <div className="field-button">
                 <button type="submit">Create an account</button>
