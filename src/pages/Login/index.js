@@ -18,7 +18,7 @@ export default function Login() {
                 <input
                   type="text"
                   id="email"
-                  placeholder="hello@example.com"
+                  placeholder="foodie@example.com"
                   required
                 />
               </div>
@@ -33,52 +33,7 @@ export default function Login() {
                 <input
                   type="password"
                   id="password"
-                  placeholder="shh..."
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="form-field">
-              <div className="field-label">
-                <label htmlFor="password">Password</label>
-              </div>
-
-              <div className="field-content">
-                <input
-                  type="password"
-                  id="password"
-                  placeholder="shh..."
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="form-field">
-              <div className="field-label">
-                <label htmlFor="password">Password</label>
-              </div>
-
-              <div className="field-content">
-                <input
-                  type="password"
-                  id="password"
-                  placeholder="shh..."
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="form-field">
-              <div className="field-label">
-                <label htmlFor="password">Password</label>
-              </div>
-
-              <div className="field-content">
-                <input
-                  type="password"
-                  id="password"
-                  placeholder="shh..."
+                  placeholder="secret recipe..."
                   required
                 />
               </div>
@@ -86,7 +41,7 @@ export default function Login() {
 
             <div className="form-button">
               <div className="field-button">
-                <button type="submit">Create an account</button>
+                <button type="submit">Sign In</button>
               </div>
             </div>
           </form>

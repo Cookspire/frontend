@@ -58,13 +58,12 @@ body {
   align-content: center;
   flex-direction: column;
   flex-wrap: wrap;
-  transform-origin: top center;
 }
 
 .center-modal {
   display: flex;
-  height: inherit;
-  width: inherit;
+  height: 50em;
+  width: auto;
   justify-content: center;
   align-items: center;
   align-content: center;
