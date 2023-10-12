@@ -9,7 +9,7 @@
 
   --border: hsl(0, 0%, 0%, 0.17);
   --borderRadius: 6px;
-  --borderFocus: hsl(0, 0%, 1%);
+  --borderFocus: hsl(0, 0%, 50%);
 
   --buttonHover: hsl(0, 0%, 10%);
   --buttonBg: hsl(0, 0%, 0%);
@@ -45,17 +45,25 @@
 
 html,
 body {
-  width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   font-size: var(--bodyFontSize);
-  overflow: auto;
-  font-family:  Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .center-modal {
   display: flex;
-  height: inherit;
-  width: inherit;
+  height: 50em;
+  width: auto;
   justify-content: center;
   align-items: center;
   align-content: center;
@@ -72,7 +80,7 @@ body {
   flex-wrap: wrap;
   border: 1px solid var(--border);
   border-radius: var(--borderRadius);
-  padding: 10px;
+  padding: 20px;
 }
 
 .center-content-header {
@@ -107,3 +115,11 @@ body {
   flex-direction: column;
   flex-wrap: wrap;
 }
+
+/* @media (max-width: 870px) {
+  body {
+    --headingFontSize: 42px;
+    --subHeadingFontSize: 28px;
+    --bodyFontSize: 12px;
+  }
+} */
