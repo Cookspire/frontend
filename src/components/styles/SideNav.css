@@ -35,12 +35,31 @@
   border: 1px solid var(--border);
 }
 
-.side-nav-container a {
-  text-decoration: none;
-  color: black;
-  font-size: 1.2em;
+.side-menu-appName {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  align-content: flex-end;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: 10px;
+  text-align: left;
+  width: max-content;
+  padding: 5px;
+  color: var(--primaryColor);
+  font-size: var(--text-3xl);
+  font-weight: bold;
 }
 
-.side-menu-content .active {
-  color: green;
+
+.side-nav-container a {
+  text-decoration: none;
+  color: var(--primaryColor);
+  font-size: var(--text-1xl);
 }
+
+
+nav .active{
+  color:red;
+}
+

@@ -117,7 +117,7 @@
 }
 
 .auth-form input::placeholder {
-  font-size: var(--placeHolderFontSize);
+  font-size: var(--text-small);
 }
 
 .auth-form button {

@@ -7,6 +7,10 @@ export default function SideNav() {
       <div className="side-menu-content">
         <nav>
           <NavLink to="/home">
+            <div className="side-menu-appName">CookSpire</div>
+          </NavLink>
+
+          <NavLink to="/home">
             <div className="side-menu-item">Home</div>
           </NavLink>
 
