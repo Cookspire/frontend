@@ -1,3 +1,8 @@
+:root {
+  --fieldBorder: 2px solid hsl(0, 0%, 0%, 0.17); /* dark Theme */
+  --fieldFocusBorder: 2px solid hsl(0, 0%, 0%); /* dark Theme */
+}
+
 .auth-header {
   display: flex;
   height: auto;
@@ -44,6 +49,7 @@
   flex-direction: column;
   flex-wrap: wrap;
   margin: 5px;
+  font-weight: 600;
 }
 
 .field-content {
@@ -76,7 +82,7 @@
   justify-content: flex-start;
   align-items: center;
   align-content: flex-start;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: wrap;
 }
 
@@ -95,7 +101,7 @@
 .auth-form input {
   outline: none;
   margin: 0;
-  border: 1px solid var(--border);
+  border: var(--fieldBorder);
   border-radius: var(--borderRadius);
   padding: 10px;
   font-size: var(--bodyFontSize);
@@ -106,11 +112,11 @@
 
 .auth-form input:focus {
   outline: none;
-  border: 1px solid var(--borderFocus);
+  border: var(--fieldFocusBorder);
 }
 
 .auth-form input::placeholder {
-  font-size: 18px;
+  font-size: var(--placeHolderFontSize);
 }
 
 .auth-form button {
@@ -127,4 +133,66 @@
 .auth-form button:hover {
   background-color: var(--buttonHover);
   cursor: pointer;
+}
+
+.auth-form button:disabled {
+  cursor: not-allowed;
+  background-color: hsl(0, 0%, 50%);
+}
+
+.disabled button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-color: var(--buttonDisabled);
+}
+
+.disabled button:hover {
+  background-color: var(--buttonDisabled);
+  cursor: not-allowed;
+}
+
+.side-loader {
+  width: 10%;
+  justify-content: right;
+  display: flex;
+  cursor: not-allowed;
+}
+
+.loader {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  border: 5px solid var(--background);
+  border-radius: 50%;
+  border-right: 3px solid var(--background);
+  border-bottom: 3px solid var(--background);
+  border-left: 3px solid var(--background);
+  border-top: 3px solid var(--buttonDisabled);
+  animation: spin 0.75s ease infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.err-msg {
+  color: var(--dangerBorder);
+  text-align: left;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 100%;
+  font-size: var(--bodyFontSize);
+  margin-top: 4px;
 }
