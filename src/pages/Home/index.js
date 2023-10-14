@@ -1,6 +1,5 @@
-export default function Home(){
+import "./index.css";
 
-    return (
-        <h1>This is homepage!!</h1>
-    )
+export default function Home() {
+  return <h1>This is homepage</h1>;
 }

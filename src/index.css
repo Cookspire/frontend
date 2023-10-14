@@ -3,13 +3,22 @@
   --primaryColor: hsl(0, 0%, 0%);
   --secondaryColor: hsl(0, 0%, 50%);
 
-  --cardBackgroundColor: hsl(0,0%,100%);
+  --cardBackgroundColor: hsl(0, 0%, 100%);
 
-  --headingFontSize: 48px;
-  --subHeadingFontSize: 32px;
-  --bodyFontSize: 16px;
+  --text-small: 0.945rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+  --text-7xl: 4.5rem;
+  --text-8xl: 6rem;
+  --text-9xl: 8rem;
 
-  --dangerBorder: hsl(0,100%,50%);
+  --dangerBorder: hsl(0, 100%, 50%);
   --border: hsl(0, 0%, 0%, 0.17);
   --borderRadius: 6px;
   --borderFocus: hsl(0, 0%, 50%);
@@ -52,7 +61,7 @@
 html,
 body {
   min-height: 100vh;
-  font-size: var(--bodyFontSize);
+  font-size: var(--text-base);
   font-family: Arial, Helvetica, sans-serif;
   background-color: var(--background);
 }
@@ -126,11 +135,16 @@ body {
   flex-wrap: wrap;
 }
 
-@media (max-width: 800px) {
+
+@media (width<=1000px) {
   body {
-    --headingFontSize: 42px;
-    --subHeadingFontSize: 28px;
-    --bodyFontSize: 14px;
-    --placeHolderFontSize: 14px;
+    --text-small: 0.8rem;
+    --text-base: 0.9rem;
+    --text-lg: 1rem;
+    --text-xl: 1.125rem;
+    --text-2xl: 1.25rem;
+    --text-3xl: 1.55rem;
+    --text-4xl: 1.875rem;
   }
+  
 }

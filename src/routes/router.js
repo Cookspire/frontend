@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Home from "../pages/Home";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
+import Account from "../pages/Account";
 
 export default function AppRouter() {
   return (
@@ -16,6 +17,9 @@ export default function AppRouter() {
         <Route path="/register" element={<Register />}></Route>
 
         <Route path="/home" element={<Home />}></Route>
+
+        <Route path="/account" element={<Account />}></Route>
+
       </Routes>
     </>
   );
