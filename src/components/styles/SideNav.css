@@ -1,31 +1,31 @@
 .side-nav-container {
+  overflow:auto;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
-  align-content: center;
+  align-content: flex-start;
   flex-direction: column;
   flex-wrap: wrap;
-  overflow: auto;
-  position: sticky;
   width: 100%;
   font-size: var(--text-xl);
 }
 
 .side-menu-content {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
-  align-content: flex-end;
+  align-content: flex-start;
   flex-direction: column;
   flex-wrap: wrap;
   width: 100%;
+  overflow: auto;
 }
 
 .side-menu-item {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
-  align-content: flex-end;
+  align-content: flex-start;
   flex-direction: column;
   flex-wrap: wrap;
   margin: 10px;
@@ -37,9 +37,9 @@
 
 .side-menu-appName {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
-  align-content: flex-end;
+  align-content: flex-start;
   flex-direction: column;
   flex-wrap: wrap;
   margin: 10px;
@@ -58,6 +58,9 @@
   font-size: var(--text-1xl);
 }
 
+nav{
+  overflow: scroll;
+}
 
 nav .active{
   color:red;

@@ -136,7 +136,7 @@ body {
 }
 
 
-@media (width<=1000px) {
+@media (width<=800px) {
   body {
     --text-small: 0.8rem;
     --text-base: 0.9rem;
@@ -146,5 +146,7 @@ body {
     --text-3xl: 1.55rem;
     --text-4xl: 1.875rem;
   }
+
+  
   
 }

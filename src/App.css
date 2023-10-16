@@ -6,6 +6,7 @@
   flex-direction: column;
   flex-wrap: wrap;
   height:100%;
+  width:100vw;
   transform-origin: top center;
 }
 
@@ -29,18 +30,19 @@ section {
   background-color: var(--background);
   border: 1px solid red;
   height: 100%;
-  width: 60vw;
+  width: 100%;
 }
 
 .app-content{
   display: flex;
   justify-content: center;
   align-items: center;
-  align-content: center;
+  align-content: flex-start;
   flex-direction: row;
   flex-wrap: wrap;
   height:100%;
   width:100%;
+  overflow: auto;
 }
 
 .left-container {
@@ -53,10 +55,10 @@ section {
   background-color: var(--background);
   border: 1px solid blue;
   height: 100%;
-  flex: 1;
 }
 
 .center-container {
+  overflow: auto;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -65,7 +67,7 @@ section {
   flex-wrap: wrap;
   border: 1px solid green;
   height: 100%;
-  flex: 4;
+  width: 60%;
 }
 
 
