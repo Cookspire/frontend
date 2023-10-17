@@ -1,22 +1,25 @@
 import "./App.css";
-import AppRouter from "./routes/router";
 import SideNav from "./components/ui/SideNav";
+import AppRouter from "./routes/router";
+
+import Navbar from "./components/ui/Navbar";
 
 function App() {
-
+  const hideNav = true;
 
   return (
     <div className="App">
-      <div className="app-container">
-        <div className="app-content">
+      <Navbar />
+
+      <div className="app-content">
+        {hideNav && (
           <div className="left-container">
             <SideNav />
           </div>
+        )}
 
-          <div className="center-container">
-            <AppRouter />
-          </div>
-          
+        <div className="center-container">
+          <AppRouter />
         </div>
       </div>
     </div>

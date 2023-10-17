@@ -59,7 +59,7 @@
 }
 
 nav{
-  overflow: scroll;
+  overflow: auto;
 }
 
 nav .active{
