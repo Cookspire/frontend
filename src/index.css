@@ -3,8 +3,8 @@
   --primaryColor: hsl(0, 0%, 0%);
   --secondaryColor: hsl(0, 0%, 50%);
 
-  --primaryBackground: hsl(24.6 95% 53.1%);
-  --primaryBackgroundHover: hsl(24.6 95% 58.1%);
+  --primaryBackground: hsl(210, 19%, 94%);
+  --primaryBackgroundHover: hsl(210, 19%, 85%);
 
   --cardBackgroundColor: hsl(0, 0%, 100%);
 
@@ -29,7 +29,7 @@
 
   --dangerBorder: hsl(0, 100%, 50%);
   --border: hsl(0, 0%, 0%, 0.17);
-  --borderRadius: 6px;
+  --borderRadius: 4px;
   --borderFocus: hsl(0, 0%, 50%);
 
   --buttonHover: hsl(0, 0%, 10%);
@@ -41,6 +41,7 @@
 
   --placeHolderFontSize: 16px;
 }
+
 /* :root[data-theme="dark"] {
   --background: 222.2 84% 4.9%;
   --foreground: 210 40% 98%;
@@ -62,6 +63,7 @@
   --destructive-foreground: 210 40% 98%;
   --ring: 224.3 76.3% 48%;
 } */
+
 
 * {
   margin: 0;

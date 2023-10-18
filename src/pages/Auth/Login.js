@@ -17,14 +17,14 @@ import { UpdateUserDataContext } from "../../context/UserContext";
 import "./index.css";
 
 export default function Login() {
-  const hideNavBar = useContext(ToggleShowNavContext);
+  const showNavBar = useContext(ToggleShowNavContext);
   const showNav = useContext(ShowNavContext);
 
   const updateUserData = useContext(UpdateUserDataContext);
 
   useEffect(() => {
     if (showNav) {
-      hideNavBar(false);
+      showNavBar(false);
     }
   }, []);
 
@@ -57,7 +57,7 @@ export default function Login() {
         } else if (data && data.email !== "") {
           localStorage.setItem("persist", JSON.stringify(data));
           updateUserData(data);
-          hideNavBar(true);
+          showNavBar(true);
           navigate("/home");
         }
       })

@@ -9,23 +9,25 @@ function App() {
   const showNav = useContext(ShowNavContext);
 
   return (
-    <div className="App">
-      {showNav && <Navbar />}
+    <>
+      <div className="App">
+        {showNav && <Navbar />}
 
-      <div className="app-content">
-        <div className="app-container">
-          {showNav && (
-            <div className="left-container">
-              <SideNav />
+        <div className="app-content">
+          <div className="app-container">
+            {showNav && (
+              <div className="left-container">
+                <SideNav />
+              </div>
+            )}
+
+            <div className="center-container">
+              <AppRouter />
             </div>
-          )}
-
-          <div className="center-container">
-            <AppRouter />
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

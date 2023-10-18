@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import NotFound from "../components/ui/NotFound";
 import { UserDataContext } from "../context/UserContext";
 import Account from "../pages/Account";
 import Login from "../pages/Auth/Login";
@@ -10,11 +11,10 @@ import ProtectedRoute from "./ProtectedRoute";
 
 export default function AppRouter() {
   const userData = useContext(UserDataContext);
-
   return (
     <>
       <Routes>
-        <Route path="*" element={<h1>Page not found 404!</h1>}></Route>
+        <Route path="*" element={<NotFound />}></Route>
 
         <Route
           path="/"

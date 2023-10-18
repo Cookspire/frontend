@@ -13,14 +13,14 @@ import {
 
 export default function Register() {
 
-  const hideNavBar = useContext(ToggleShowNavContext);
+  const showNavBar = useContext(ToggleShowNavContext);
   const showNav = useContext(ShowNavContext);
 
   useEffect(() => {
     if (showNav) {
-      hideNavBar(false);
+      showNavBar(false);
     }
-  }, []);
+  }, [showNav, showNavBar]);
 
   const [userForm, setUserForm] = useState({
     username: { value: "", err: "" },

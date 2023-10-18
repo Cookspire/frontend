@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import NavDialogContext from "./context/NavDialogContext";
+import { NotificationContext } from "./context/NotificationContext";
 import { UserContext } from "./context/UserContext";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
@@ -12,9 +13,11 @@ root.render(
   <BrowserRouter>
     <React.StrictMode>
       <NavDialogContext>
-        <UserContext>
-          <App />
-        </UserContext>
+        <NotificationContext>
+          <UserContext>
+            <App />
+          </UserContext>
+        </NotificationContext>
       </NavDialogContext>
     </React.StrictMode>
   </BrowserRouter>

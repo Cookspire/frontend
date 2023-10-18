@@ -7,13 +7,13 @@ export const ToggleShowNavContext = createContext();
 export default function NavDialogContext({ children }) {
   const [showDialog, setShowDialog] = useState(true);
 
-  const closeNav = (status) => {
+  const showNav = (status) => {
     setShowDialog(status);
   };
 
   return (
     <ShowNavContext.Provider value={showDialog}>
-      <ToggleShowNavContext.Provider value={closeNav}>
+      <ToggleShowNavContext.Provider value={showNav}>
         {children}
       </ToggleShowNavContext.Provider>
     </ShowNavContext.Provider>

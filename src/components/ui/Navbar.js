@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { UserDataContext } from "../../context/UserContext";
+import { LogoutUserContext, UserDataContext } from "../../context/UserContext";
+import CloseModal from "../../hooks/CloseModal";
 import "../styles/Navbar.css";
 
 export default function Navbar() {
@@ -9,6 +10,12 @@ export default function Navbar() {
   const [showProfile, setShowProfile] = useState(false);
 
   const [showQuickSettings, setShowQuickSettings] = useState(false);
+
+  const logout = useContext(LogoutUserContext);
+
+  const onClickOutside = CloseModal(() => {
+    setShowQuickSettings(false);
+  }, showProfile);
 
   useEffect(() => {
     if (
@@ -28,16 +35,39 @@ export default function Navbar() {
         </a>
 
         {showProfile ? (
-          <div className="profile">
-            Kanishkar T{" "}
-            <div
-              className="dropdown-logo"
-              onClick={() => {
-                setShowQuickSettings((prev) => !prev);
-              }}
-            >
-              <div className="dropdown"></div>
+          <div
+            className="profile"
+            onClick={() => {
+              setShowQuickSettings((prev) => !prev);
+            }}
+            ref={onClickOutside}
+          >
+            <div className="round">KA</div>
+            <div className="dropdown-logo">
+              {!showQuickSettings ? (
+                <div className="dropdown"></div>
+              ) : (
+                <div className="dropdown-change"></div>
+              )}
             </div>
+
+            {showQuickSettings && (
+              <div className="nav-user-dropdown">
+                <div className="menu-items">
+                  <div className="menu-item">
+                    <div className="item">User Settings</div>
+                  </div>
+                  <div className="menu-item">
+                    <div className="item">
+                      Dark Theme <input type="checkbox" />
+                    </div>
+                  </div>
+                  <div className="menu-item" onClick={logout}>
+                    <div className="item">Logout</div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         ) : (
           <ul>
