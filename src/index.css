@@ -1,7 +1,10 @@
 :root {
-  --background: hsl(0, 100%, 100%);
+  --background: hsl(210, 19%, 88%);
   --primaryColor: hsl(0, 0%, 0%);
   --secondaryColor: hsl(0, 0%, 50%);
+
+  --primaryBackground: hsl(24.6 95% 53.1%);
+  --primaryBackgroundHover: hsl(24.6 95% 58.1%);
 
   --cardBackgroundColor: hsl(0, 0%, 100%);
 
@@ -18,6 +21,12 @@
   --text-8xl: 6rem;
   --text-9xl: 8rem;
 
+  --navbarColor: hsl(0, 0%, 0%);
+  --navbarBackground: hsl(0, 0%, 100%);
+
+  --linkColor: hsl(0, 0%, 50%);
+  --linkActiveColor: hsl(0, 0%, 20%);
+
   --dangerBorder: hsl(0, 100%, 50%);
   --border: hsl(0, 0%, 0%, 0.17);
   --borderRadius: 6px;
@@ -26,6 +35,7 @@
   --buttonHover: hsl(0, 0%, 10%);
   --buttonBg: hsl(0, 0%, 0%);
   --buttonColor: hsl(0, 0%, 100%);
+  --buttonBorder: 6px;
 
   --buttonDisabled: hsl(0, 0%, 27%);
 
@@ -75,7 +85,6 @@ body {
   align-content: flex-start;
   flex-direction: row;
   flex-wrap: wrap;
-  height:100vh;
 }
 
 .center-modal {

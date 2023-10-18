@@ -1,9 +1,33 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { JSON_HEADERS, PATH, URL } from "../../environment/APIService";
+import {
+  APIResponse,
+  JSON_HEADERS,
+  PATH,
+  URL,
+} from "../../environment/APIService";
+
+import {
+  ShowNavContext,
+  ToggleShowNavContext,
+} from "../../context/NavDialogContext";
+
+import { UpdateUserDataContext } from "../../context/UserContext";
+
 import "./index.css";
 
 export default function Login() {
+  const hideNavBar = useContext(ToggleShowNavContext);
+  const showNav = useContext(ShowNavContext);
+
+  const updateUserData = useContext(UpdateUserDataContext);
+
+  useEffect(() => {
+    if (showNav) {
+      hideNavBar(false);
+    }
+  }, []);
+
   const navigate = useNavigate();
 
   const [userDetails, setUserDetails] = useState({
@@ -23,12 +47,17 @@ export default function Login() {
         setSubmit((prev) => !prev);
         if (resp.status === 200) {
           return resp.json();
-        } else {
-          return console.log("throw popup error!");
+        } else if (resp.status === 401) {
+          return APIResponse.UNAUTHORIZED;
         }
       })
       .then((data) => {
-        if (data) {
+        if (data === APIResponse.UNAUTHORIZED) {
+          console.log("Unauthorized Access, show error pop up");
+        } else if (data && data.email !== "") {
+          localStorage.setItem("persist", JSON.stringify(data));
+          updateUserData(data);
+          hideNavBar(true);
           navigate("/home");
         }
       })

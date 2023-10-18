@@ -7,37 +7,70 @@
   flex-wrap: wrap;
   border-bottom: 1px solid var(--border);
   width: 100%;
-  max-height: 30%;
-  overflow: auto;
   position: sticky;
   top: 0;
   z-index: 1;
   background-color: var(--background);
 }
 
-.header-content {
+.nav {
+  background-color: var(--navbarBackground);
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
-  align-content: flex-start;
-  flex-direction: row;
+  align-content: center;
   flex-wrap: wrap;
+  gap: 2rem;
+  padding: 0 1rem;
+  width: 100%;
+  overflow: auto;
 }
 
-.header-left {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  align-content: flex-start;
-  flex-direction: row;
-  flex-wrap: wrap;
+.nav a {
+  text-decoration: none;
+  color: var(--navbarColor);
 }
 
-.header-center {
+.app-name {
+  font-size: var(--text-3xl);
+}
+
+.nav ul {
+  margin: 10px;
+  padding: 0;
+  list-style-type: none;
+  gap: 2em;
   display: flex;
-  justify-content: flex-start;
+}
+
+.nav li {
+  padding: 8px 12px 8px 12px;
+  background-color: var(--primaryBackground);
+  border-radius: var(--buttonBorder);
+}
+
+.nav li:hover {
+  cursor: pointer;
+  background-color: var(--primaryBackgroundHover);
+}
+
+.profile {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  align-content: flex-start;
-  flex-direction: row;
+  align-content: center;
   flex-wrap: wrap;
+  color: var(--navbarColor);
+  border: 1px solid rgba(133, 133, 133, 0.585);
+}
+
+
+
+.dropdown {
+  border: solid var(--navbarColor);
+  display: inline-block;
+  border-width: 0px 1px 1px 0px;
+  padding: 3px;
+  margin: 5px;
+  transform: rotate(45deg);
 }

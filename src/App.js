@@ -1,25 +1,28 @@
+import { useContext } from "react";
 import "./App.css";
+import Navbar from "./components/ui/Navbar";
 import SideNav from "./components/ui/SideNav";
+import { ShowNavContext } from "./context/NavDialogContext";
 import AppRouter from "./routes/router";
 
-import Navbar from "./components/ui/Navbar";
-
 function App() {
-  const hideNav = true;
+  const showNav = useContext(ShowNavContext);
 
   return (
     <div className="App">
-      <Navbar />
+      {showNav && <Navbar />}
 
       <div className="app-content">
-        {hideNav && (
-          <div className="left-container">
-            <SideNav />
-          </div>
-        )}
+        <div className="app-container">
+          {showNav && (
+            <div className="left-container">
+              <SideNav />
+            </div>
+          )}
 
-        <div className="center-container">
-          <AppRouter />
+          <div className="center-container">
+            <AppRouter />
+          </div>
         </div>
       </div>
     </div>

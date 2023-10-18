@@ -1,29 +1,56 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { UserDataContext } from "../../context/UserContext";
 import "../styles/Navbar.css";
 
 export default function Navbar() {
-  const loginNavigate = useNavigate();
+  const userData = useContext(UserDataContext);
 
+  const [showProfile, setShowProfile] = useState(false);
+
+  const [showQuickSettings, setShowQuickSettings] = useState(false);
+
+  useEffect(() => {
+    if (
+      userData &&
+      userData.email !== "" &&
+      localStorage.getItem("persist") !== ""
+    ) {
+      setShowProfile(true);
+    }
+  }, [userData]);
 
   return (
     <div className="cookspire-header">
-      <div className="header-content">
-        <div className="header-left"><NavLink to="/">CookSpire</NavLink></div>
-        <div className="header-center">
-          <form>
-            <input
-              type="text"
-              placeholder="Search Recipe..."
-              id="reciepeFinder"
-            />
-          </form>
-        </div>
-        <div className="header-right">
-          <button onClick={()=>loginNavigate("/login")}>Login</button>
+      <nav className="nav">
+        <a href="/" className="app-name">
+          CookSpire
+        </a>
 
-          <button onClick={()=>loginNavigate("/register")}>Sign up</button>
-        </div>
-      </div>
+        {showProfile ? (
+          <div className="profile">
+            Kanishkar T{" "}
+            <div
+              className="dropdown-logo"
+              onClick={() => {
+                setShowQuickSettings((prev) => !prev);
+              }}
+            >
+              <div className="dropdown"></div>
+            </div>
+          </div>
+        ) : (
+          <ul>
+            <NavLink to="/register">
+              <li>Sign up</li>
+            </NavLink>
+
+            <NavLink to="/login">
+              <li>Log In</li>
+            </NavLink>
+          </ul>
+        )}
+      </nav>
     </div>
   );
 }
