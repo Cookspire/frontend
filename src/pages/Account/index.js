@@ -1,16 +1,24 @@
-import { useNavigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import {
+  NotificationDataContext,
+  UpdateNotificationContext,
+} from "../../context/NotificationContext";
+import { NotificationType } from "../../environment/APIService";
+import Notification from "../../components/ui/Notification";
 
 export default function Account() {
-  const navigate = useNavigate();
+  const notificationData = useContext(NotificationDataContext);
 
-  function logout() {
-    navigate("/login");
-  }
+  const setNotificationData = useContext(UpdateNotificationContext);
 
+  useEffect(() => {
+    setNotificationData(true, "Welcome to Accounts", NotificationType.INFO);
+  }, []);
+  
   return (
     <>
+    <div id="notify-portal">{<Notification />}</div>
       <h1>This is accont section</h1>
-      <button onClick={logout}>Log out</button>
     </>
   );
 }

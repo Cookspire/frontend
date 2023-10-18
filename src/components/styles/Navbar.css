@@ -1,0 +1,148 @@
+.cookspire-header {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  box-shadow: 0px 0px 10px var(--border);
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: var(--background);
+}
+
+.nav {
+  background-color: var(--navbarBackground);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  width: 100%;
+  overflow: auto;
+  padding: 6px;
+}
+
+.nav a {
+  text-decoration: none;
+  color: var(--navbarColor);
+}
+
+.app-name {
+  font-size: var(--text-3xl);
+}
+
+.nav ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  gap: 2em;
+  display: flex;
+}
+
+.nav li {
+  padding: 8px 12px 8px 12px;
+  background-color: var(--primaryBackground);
+  border-radius: var(--buttonBorder);
+}
+
+.nav li:hover {
+  cursor: pointer;
+  background-color: var(--primaryBackgroundHover);
+}
+
+.profile {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  align-content: center;
+  flex-wrap: wrap;
+  color: var(--navbarColor);
+  border-radius: var(--borderRadius);
+}
+
+.profile:hover {
+  cursor: pointer;
+}
+
+.dropdown-logo {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  align-content: center;
+  flex-wrap: wrap;
+  margin: 10px;
+}
+
+.dropdown {
+  border: solid var(--navbarColor);
+  display: inline-block;
+  border-width: 0px 1px 1px 0px;
+  padding: 3px;
+  transform: rotate(45deg);
+}
+
+.dropdown-change {
+  border: solid var(--navbarColor);
+  display: inline-block;
+  border-width: 0px 1px 1px 0px;
+  padding: 3px;
+  transform: rotate(0.62turn);
+}
+
+.round {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  align-content: center;
+  flex-wrap: wrap;
+  padding: 10px;
+  border-radius: 50%;
+  background-color: var(--primaryColor);
+  color: var(--navbarBackground);
+}
+
+.nav-user-dropdown {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  position: fixed;
+  box-shadow: 0px 0px 10px var(--border);
+  background-color: var(--navbarBackground);
+  top: 50px;
+  right: 10px;
+  z-index: 1;
+  overflow: auto;
+  max-height: 500px;
+  border-radius: var(--borderRadius);
+  cursor: pointer;
+}
+
+.menu-items {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.menu-item {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding: 15px 45px 15px 15px;
+  width: 100%;
+}
+
+.menu-item:hover {
+  background-color: var(--primaryBackground);
+}

@@ -1,5 +1,9 @@
-import { useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  ShowNavContext,
+  ToggleShowNavContext,
+} from "../../context/NavDialogContext";
 import {
   APIResponse,
   JSON_HEADERS,
@@ -8,6 +12,16 @@ import {
 } from "../../environment/APIService";
 
 export default function Register() {
+
+  const showNavBar = useContext(ToggleShowNavContext);
+  const showNav = useContext(ShowNavContext);
+
+  useEffect(() => {
+    if (showNav) {
+      showNavBar(false);
+    }
+  }, [showNav, showNavBar]);
+
   const [userForm, setUserForm] = useState({
     username: { value: "", err: "" },
     email: { value: "", err: "" },

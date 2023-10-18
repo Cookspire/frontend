@@ -1,24 +1,23 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "../styles/SideNav.css";
 
 export default function SideNav() {
+
+  const navigate = useNavigate();
+
   return (
     <div className="side-nav-container">
-      <div className="side-menu-content">
-        <nav>
-          <NavLink to="/home">
-            <div className="side-menu-appName">CookSpire</div>
-          </NavLink>
+      <nav className="side-nav">
+        <ul>
+          <li onClick={() => navigate("/home")}>
+            <NavLink to="/home">Home</NavLink>
+          </li>
 
-          <NavLink to="/home">
-            <div className="side-menu-item">Home</div>
-          </NavLink>
-
-          <NavLink to="/account">
-            <div className="side-menu-item">Account</div>
-          </NavLink>
-        </nav>
-      </div>
+          <li onClick={() => navigate("/account")}>
+            <NavLink to="/account">Account</NavLink>
+          </li>
+        </ul>
+      </nav>
     </div>
   );
 }
