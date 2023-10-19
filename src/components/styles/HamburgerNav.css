@@ -1,0 +1,72 @@
+.hamburger-content {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  background-color: var(--primaryBackground);
+  height: 100%;
+  position: absolute;
+  left: 0;
+  width: 15em;
+  padding: 6px;
+  overflow: auto;
+  animation: open-left 150ms ease-in;
+
+}
+
+@keyframes open-left {
+  0% {
+    left: -15em;
+  }
+
+  100% {
+    left: 0;
+  }
+}
+
+.hamburger-content a {
+  text-decoration: none;
+  color: var(--navbarColor);
+}
+
+.ham-nav-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.ham-nav {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 100%;
+  padding: 6px;
+  overflow: auto;
+  font-size: var(--text-2xl);
+}
+
+.ham-nav ul {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 100%;
+  list-style-type: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.ham-nav li {
+  width: 100%;
+  padding: 10px 6px 10px 6px;
+  margin: 2px;
+  border-radius: var(--borderRadius);
+}
+
+.ham-nav li:hover {
+  background-color: var(--primaryBackgroundHover);
+ 
+}
+

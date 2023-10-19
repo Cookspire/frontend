@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import NotFound from "../components/ui/NotFound";
 import { UserDataContext } from "../context/UserContext";
 import Account from "../pages/Account";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import Home from "../pages/Home";
+import NotFound from "../pages/NotFound/NotFound";
 import Welcome from "../pages/Welcome";
 import ProtectedRoute from "./ProtectedRoute";
 

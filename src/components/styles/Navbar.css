@@ -146,3 +146,32 @@
 .menu-item:hover {
   background-color: var(--primaryBackground);
 }
+
+.name-content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.toggle-button {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 40px;
+  height: 36px;
+  padding: 10px;
+  background-color: var(--primaryBackground);
+  border-radius: 4px;
+}
+
+.toggle-button:hover {
+  background-color: var(--primaryBackgroundHover);
+}
+
+.toggle-button .bar {
+  height: 2px;
+  width: 100%;
+  background-color: var(--primaryColor);
+}

@@ -24,8 +24,8 @@
   --navbarColor: hsl(0, 0%, 0%);
   --navbarBackground: hsl(0, 0%, 100%);
 
-  --linkColor: hsl(0, 0%, 50%);
-  --linkActiveColor: hsl(0, 0%, 20%);
+  --linkColor: hsl(15, 95%, 60%);
+  --linkActiveColor: hsl(15, 95%, 65%);
 
   --dangerBorder: hsl(0, 100%, 50%);
   --border: hsl(0, 0%, 0%, 0.17);
@@ -40,6 +40,8 @@
   --buttonDisabled: hsl(0, 0%, 27%);
 
   --placeHolderFontSize: 16px;
+
+  --info: hsl(203, 85%, 54%);
 }
 
 /* :root[data-theme="dark"] {
@@ -78,6 +80,12 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   background-color: var(--background);
   color: var(--primaryColor);
+}
+
+#notify-portal{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #root {
@@ -158,4 +166,20 @@ body {
     --text-3xl: 1.55rem;
     --text-4xl: 1.875rem;
   }
+}
+
+
+
+@media (max-width: 1000px) {
+
+  .side-nav-container{
+    display: none;
+  }
+
+  .toggle-button{
+    display: flex;
+  }
+
+ 
+
 }

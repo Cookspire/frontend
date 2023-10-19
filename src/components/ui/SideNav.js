@@ -2,11 +2,10 @@ import { NavLink, useNavigate } from "react-router-dom";
 import "../styles/SideNav.css";
 
 export default function SideNav() {
-
   const navigate = useNavigate();
 
   return (
-    <div className="side-nav-container">
+    <div className="side-nav-container" >
       <nav className="side-nav">
         <ul>
           <li onClick={() => navigate("/home")}>

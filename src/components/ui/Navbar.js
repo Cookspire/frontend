@@ -3,8 +3,23 @@ import { NavLink } from "react-router-dom";
 import { LogoutUserContext, UserDataContext } from "../../context/UserContext";
 import CloseModal from "../../hooks/CloseModal";
 import "../styles/Navbar.css";
+import HamburgerNav from "./HamburgerNav";
 
 export default function Navbar() {
+  const [windowDimensions, setHW] = useState({
+    winWidth: window.innerWidth,
+    winHeight: window.innerHeight,
+  });
+
+  const detectSize = () => {
+    setHW({
+      winWidth: window.innerWidth,
+      winHeight: window.innerHeight,
+    });
+  };
+
+  
+
   const userData = useContext(UserDataContext);
 
   const [showProfile, setShowProfile] = useState(false);
@@ -27,12 +42,40 @@ export default function Navbar() {
     }
   }, [userData]);
 
+
+  const [sideNav, setSideNav] = useState(false);
+
+  const toggleNav = () => {
+    setSideNav((prev) => !prev);
+  };
+
+  
+  useEffect(() => {
+    window.addEventListener("resize", detectSize);
+
+    if(windowDimensions.winWidth>=1000){
+      setSideNav(false);
+    }
+
+    return () => {
+      window.removeEventListener("resize", detectSize);
+    };
+  }, [windowDimensions]);
+
   return (
     <div className="cookspire-header">
       <nav className="nav">
-        <a href="/" className="app-name">
-          CookSpire
-        </a>
+        <div className="name-content">
+          <a href="#" className="toggle-button" onClick={toggleNav}>
+            <span className="bar"></span>
+            <span className="bar"></span>
+            <span className="bar"></span>
+          </a>
+
+          <a href="/" className="app-name">
+            CookSpire
+          </a>
+        </div>
 
         {showProfile ? (
           <div
@@ -81,6 +124,8 @@ export default function Navbar() {
           </ul>
         )}
       </nav>
+
+      {sideNav && <HamburgerNav closeNav={setSideNav} />}
     </div>
   );
 }

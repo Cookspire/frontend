@@ -44,8 +44,21 @@
 }
 
 .side-nav li:hover {
-  background-color: #dfdfdf8c;
+  background-color: var(--linkColor);
 }
+
+.side-nav li:hover a{
+  color: white
+}
+
+.side-nav .active{
+  background-color:  var(--linkColor);
+  color: white;
+}
+
+
+
+
 
 
 
