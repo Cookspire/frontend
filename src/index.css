@@ -24,8 +24,7 @@
   --navbarColor: hsl(0, 0%, 0%);
   --navbarBackground: hsl(0, 0%, 100%);
 
-  --linkColor: hsl(15, 95%, 60%);
-  --linkActiveColor: hsl(15, 95%, 65%);
+  --linkColor: hsl(0, 0%, 19%);
 
   --dangerBorder: hsl(0, 100%, 50%);
   --border: hsl(0, 0%, 0%, 0.17);
