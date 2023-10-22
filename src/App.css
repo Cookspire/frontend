@@ -34,7 +34,7 @@
 
 .left-container {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   align-content: center;
   flex-direction: column;
@@ -52,6 +52,7 @@
   flex-direction: column;
   flex-wrap: wrap;
   height: 100%;
-  width: 50%;
+  width:70%;
 } 
+
 

@@ -1,0 +1,97 @@
+.recipe-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 5px;
+  height:100%;
+}
+
+.recipe-navigation{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-direction: row;
+  width:100%;
+  padding:10px;
+}
+
+.recipe-list {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 5px;
+  height:auto;
+  width:100%;
+}
+
+.recipe-type{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding:10px;
+  border-radius: var(--borderRadius);
+  background-color: var(--navbarBackground);
+  border: 3px solid hsla(0, 0%, 100%, 0);
+  margin:5px;
+  transition:  border 300ms ease-in-out ;
+}
+
+img{
+  border-radius: var(--borderRadius);
+  height: 150px;
+  width: 150px;
+}
+
+.cusine-img{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-direction: column;
+  width: 100%;
+}
+
+.recipe-name{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width:100%;
+  font-size: var(--text-xl);
+  font-weight: bold;
+  padding:5px 0px 5px 0px;
+}
+
+.recipe-duration{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width:100%;
+  font-size: var(--text-small);
+  color: var(--secondaryColor);
+  padding:5px 0px 5px 0px;
+}
+
+
+
+.cusine-type:hover{
+  cursor: pointer;
+  border: 3px solid orange;
+}
+

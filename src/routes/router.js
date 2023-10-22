@@ -4,8 +4,11 @@ import { UserDataContext } from "../context/UserContext";
 import Account from "../pages/Account";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
+import Cusine from "../pages/Cusines";
 import Home from "../pages/Home";
 import NotFound from "../pages/NotFound/NotFound";
+import Recipe from "../pages/Recipes";
+import Trending from "../pages/Trending";
 import Welcome from "../pages/Welcome";
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -48,6 +51,13 @@ export default function AppRouter() {
             )
           }
         ></Route>
+
+        <Route exact path="/explore">
+          <Route path="/explore" element={<Cusine />} />
+          <Route path="/explore/categories/recipes" element={<Recipe />} />
+        </Route>
+
+        <Route path="/trending" element={<Trending />} />
 
         <Route element={<ProtectedRoute />}>
           <Route path="/home" element={<Home />}></Route>
