@@ -75,14 +75,13 @@
 
 .cusine-name{
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  align-content: flex-start;
+  align-content: center;
   flex-direction: column;
   flex-wrap: wrap;
   width:100%;
-  font-size: var(--text-xl);
-  font-weight: bold;
+  font-size: var(--text-base);
   padding:5px 0px 5px 0px;
 }
 
@@ -91,4 +90,5 @@
   cursor: pointer;
   border: 3px solid orange;
 }
+
 
