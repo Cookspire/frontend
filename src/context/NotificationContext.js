@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 
 export const UpdateNotificationContext = createContext();
 
@@ -23,10 +23,6 @@ export function NotificationContext({ children }) {
       },
     }));
   };
-
-  useEffect(()=>{
-    console.log("show pop up")
-  },[notificationData])
 
   return (
     <NotificationDataContext.Provider value={notificationData}>

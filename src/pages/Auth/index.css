@@ -124,6 +124,7 @@
   padding: 10px;
   font-size: var(--bodyFontSize);
   width: 100%;
+  height: 40px;
   border: 0;
   background-color: var(--buttonBg);
   color: var(--buttonColor);
@@ -169,12 +170,11 @@
   display: flex;
   justify-content: right;
   align-items: center;
-  border: 5px solid var(--background);
   border-radius: 50%;
-  border-right: 3px solid var(--background);
-  border-bottom: 3px solid var(--background);
-  border-left: 3px solid var(--background);
-  border-top: 3px solid var(--buttonDisabled);
+  border-right: 2px solid var(--background);
+  border-bottom: 2px solid var(--background);
+  border-left: 2px solid var(--background);
+  border-top: 2px solid var(--buttonDisabled);
   animation: spin 0.75s ease infinite;
 }
 

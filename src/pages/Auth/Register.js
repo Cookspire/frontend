@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   ShowNavContext,
@@ -7,14 +7,24 @@ import {
 import {
   APIResponse,
   JSON_HEADERS,
+  NotificationType,
   PATH,
   URL,
 } from "../../environment/APIService";
 
-export default function Register() {
+import Notification from "../../components/ui/Notification";
+import {
+  NotificationDataContext,
+  UpdateNotificationContext,
+} from "../../context/NotificationContext";
 
+export default function Register() {
   const showNavBar = useContext(ToggleShowNavContext);
   const showNav = useContext(ShowNavContext);
+
+  const notificationData = useContext(NotificationDataContext);
+
+  const setNotificationData = useContext(UpdateNotificationContext);
 
   useEffect(() => {
     if (showNav) {
@@ -50,10 +60,13 @@ export default function Register() {
     })
       .then((response) => {
         if (response.status === 200) return response.json();
-        else return APIResponse.BAD_REQUEST;
+        else {
+          console.log(response.text())
+          return APIResponse.BAD_REQUEST};
       })
       .then((data) => {
         setSubmit(false);
+      
         if (data !== APIResponse.BAD_REQUEST) {
           setUserForm({
             username: "",
@@ -62,13 +75,24 @@ export default function Register() {
             rpassword: "",
           });
           setValid(true);
-
+          setNotificationData(true, "Account Created.", NotificationType.INFO);
           navigate("/login");
         } else {
+          setNotificationData(
+            true,
+            "Account not created",
+            NotificationType.INFO
+          );
           console.log("Error during API call.");
         }
       })
       .catch((err) => {
+        setSubmit(false);
+        setNotificationData(
+          true,
+          "Oops you got us! Kindly raise a bug.",
+          NotificationType.INFO
+        );
         return console.log("Error Occured, Reason : " + err);
       });
   }
@@ -165,6 +189,7 @@ export default function Register() {
 
   return (
     <div className="center-modal">
+      <Notification />
       <div className="center-content">
         <div className="center-content-header">
           <div className="auth-header">Join CookSpire today!</div>

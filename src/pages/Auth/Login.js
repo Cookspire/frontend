@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import {
   APIResponse,
   JSON_HEADERS,
+  NotificationType,
   PATH,
   URL,
 } from "../../environment/APIService";
@@ -12,8 +13,12 @@ import {
   ToggleShowNavContext,
 } from "../../context/NavDialogContext";
 
+import Notification from "../../components/ui/Notification";
+import {
+  NotificationDataContext,
+  UpdateNotificationContext,
+} from "../../context/NotificationContext";
 import { UpdateUserDataContext } from "../../context/UserContext";
-
 import "./index.css";
 
 export default function Login() {
@@ -21,6 +26,10 @@ export default function Login() {
   const showNav = useContext(ShowNavContext);
 
   const updateUserData = useContext(UpdateUserDataContext);
+
+  const notificationData = useContext(NotificationDataContext);
+
+  const setNotificationData = useContext(UpdateNotificationContext);
 
   useEffect(() => {
     if (showNav) {
@@ -53,6 +62,11 @@ export default function Login() {
       })
       .then((data) => {
         if (data === APIResponse.UNAUTHORIZED) {
+          setNotificationData(
+            true,
+            "Invalid Credentials",
+            NotificationType.INFO
+          );
           console.log("Unauthorized Access, show error pop up");
         } else if (data && data.email !== "") {
           localStorage.setItem("persist", JSON.stringify(data));
@@ -62,6 +76,9 @@ export default function Login() {
         }
       })
       .catch((err) => {
+        setSubmit((prev) => !prev);
+        setNotificationData(true, "Oops you got us! Kindly raise a bug.", NotificationType.INFO);
+        console.log("handle API Error in Popup..");
         return err;
       });
   }
@@ -73,85 +90,88 @@ export default function Login() {
   }
 
   return (
-    <div className="center-modal">
-      <div className="center-content">
-        <div className="center-content-header">
-          <div className="auth-header">Sign in to CookSpire</div>
-        </div>
+    <>
+      <Notification />
+      <div className="center-modal">
+        <div className="center-content">
+          <div className="center-content-header">
+            <div className="auth-header">Sign in to CookSpire</div>
+          </div>
 
-        <div className="center-content-body">
-          <form className="auth-form" onSubmit={verifyUser}>
-            <div className="form-field">
-              <div className="field-label">
-                <label htmlFor="email">Email</label>
-              </div>
-
-              <div className="field-content">
-                <input
-                  required
-                  type="text"
-                  id="email"
-                  placeholder="foodie@example.com"
-                  value={userDetails.email}
-                  onChange={(e) => {
-                    setUserDetails((prev) => ({
-                      ...prev,
-                      email: e.target.value,
-                    }));
-                  }}
-                />
-              </div>
-            </div>
-
-            <div className="form-field">
-              <div className="field-label">
-                <label htmlFor="password">Password</label>
-              </div>
-
-              <div className="field-content">
-                <input
-                  required
-                  type="password"
-                  id="password"
-                  placeholder="secret recipe..."
-                  value={userDetails.password}
-                  onChange={(e) => {
-                    setUserDetails((prev) => ({
-                      ...prev,
-                      password: e.target.value,
-                    }));
-                  }}
-                />
-              </div>
-            </div>
-
-            <div className="form-button">
-              {!submit && (
-                <div className="field-button">
-                  <button type="submit">Sign In</button>
+          <div className="center-content-body">
+            <form className="auth-form" onSubmit={verifyUser}>
+              <div className="form-field">
+                <div className="field-label">
+                  <label htmlFor="email">Email</label>
                 </div>
-              )}
 
-              {submit && (
-                <div className=" field-button disabled">
-                  <button type="submit" className="disabled">
-                    Signing In...
-                    <div className="side-loader">
-                      <div className="loader"></div>
-                    </div>
-                  </button>
+                <div className="field-content">
+                  <input
+                    required
+                    type="text"
+                    id="email"
+                    placeholder="foodie@example.com"
+                    value={userDetails.email}
+                    onChange={(e) => {
+                      setUserDetails((prev) => ({
+                        ...prev,
+                        email: e.target.value,
+                      }));
+                    }}
+                  />
                 </div>
-              )}
-            </div>
-          </form>
-        </div>
+              </div>
 
-        <div className="center-content-footer">
-          <div className="auth-footer">
-            New to CookSpire? &nbsp;<a href="/register">Create an account</a>
+              <div className="form-field">
+                <div className="field-label">
+                  <label htmlFor="password">Password</label>
+                </div>
+
+                <div className="field-content">
+                  <input
+                    required
+                    type="password"
+                    id="password"
+                    placeholder="secret recipe..."
+                    value={userDetails.password}
+                    onChange={(e) => {
+                      setUserDetails((prev) => ({
+                        ...prev,
+                        password: e.target.value,
+                      }));
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className="form-button">
+                {!submit && (
+                  <div className="field-button">
+                    <button type="submit">Sign In</button>
+                  </div>
+                )}
+
+                {submit && (
+                  <div className=" field-button disabled">
+                    <button type="submit" className="disabled">
+                      Signing In...
+                      <div className="side-loader">
+                        <div className="loader"></div>
+                      </div>
+                    </button>
+                  </div>
+                )}
+              </div>
+            </form>
+          </div>
+
+          <div className="center-content-footer">
+            <div className="auth-footer">
+              New to CookSpire? &nbsp;<a href="/register">Create an account</a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
