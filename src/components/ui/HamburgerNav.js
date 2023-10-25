@@ -1,7 +1,9 @@
+import { useContext, useEffect, useState } from "react";
 import ReactDom from "react-dom";
 import { NavLink, useNavigate } from "react-router-dom";
-import "../styles/HamburgerNav.css";
+import { UserDataContext } from "../../context/UserContext";
 import CloseModal from "../../hooks/CloseModal";
+import "../styles/HamburgerNav.css";
 
 const OVERLAY = {
   backgroundColor: "rgb(0 0 0 / 70%)",
@@ -18,6 +20,20 @@ const OVERLAY = {
 };
 
 export default function HamburgerNav({ closeNav }) {
+  const userData = useContext(UserDataContext);
+
+  const [isLogged, setIsLogged] = useState(false);
+
+  useEffect(() => {
+    if (
+      userData &&
+      userData.email !== "" &&
+      localStorage.getItem("persist") !== ""
+    ) {
+      setIsLogged(true);
+    }
+  }, [userData]);
+
   const navigate = useNavigate();
 
   const closeHam = () => {
@@ -33,7 +49,6 @@ export default function HamburgerNav({ closeNav }) {
       <div className="hamburger-content" ref={hamRef}>
         <div className="ham-nav-container">
           <div className="name-content">
-
             <a href="#" className="toggle-button" onClick={closeHam}>
               <span className="bar"></span>
               <span className="bar"></span>
@@ -47,23 +62,46 @@ export default function HamburgerNav({ closeNav }) {
 
           <nav className="ham-nav">
             <ul>
+              {isLogged && (
+                <li
+                  onClick={() => {
+                    closeHam();
+                    navigate("/home");
+                  }}
+                >
+                  <NavLink to="/home">Home</NavLink>
+                </li>
+              )}
+
               <li
                 onClick={() => {
                   closeHam();
-                  navigate("/home");
+                  navigate("/explore");
                 }}
               >
-                <NavLink to="/home">Home</NavLink>
+                <NavLink to="/explore">Explore</NavLink>
               </li>
 
               <li
                 onClick={() => {
                   closeHam();
-                  navigate("/account");
+                  navigate("/trending");
                 }}
               >
-                <NavLink to="/account">Account</NavLink>
+                <NavLink to="/trending">Trending</NavLink>
               </li>
+
+              {isLogged && (
+                <li
+                  onClick={() => {
+                    closeHam();
+                    navigate("/account");
+                  }}
+                >
+                  <NavLink to="/account">Account</NavLink>
+                </li>
+              )}
+              
             </ul>
           </nav>
         </div>
