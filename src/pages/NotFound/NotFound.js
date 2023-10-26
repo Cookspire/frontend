@@ -1,9 +1,6 @@
 import { useContext, useEffect } from "react";
-import { NavLink } from "react-router-dom";
-import {
-    ShowNavContext,
-    ToggleShowNavContext,
-} from "../../context/NavDialogContext";
+import { NavLink, useLocation } from "react-router-dom";
+import { ToggleShowNavContext } from "../../context/NavDialogContext";
 
 const customStyle = {
   display: "flex",
@@ -14,13 +11,11 @@ const customStyle = {
 
 export default function NotFound() {
   const showNavBar = useContext(ToggleShowNavContext);
-  const showNav = useContext(ShowNavContext);
+  const locationPath = useLocation();
 
   useEffect(() => {
-    if (showNav) {
-      showNavBar(false);
-    }
-  }, []);
+    showNavBar(false);
+  }, [locationPath]);
 
   return (
     <div className="error-page" style={customStyle}>

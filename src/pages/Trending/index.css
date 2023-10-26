@@ -1,0 +1,82 @@
+.post-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 5px;
+  height: 100%;
+}
+
+.post-creation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 0px 10px 0px 10px;
+  width: 80%;
+}
+
+.new-content {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: inherit;
+  padding: 5px;
+}
+
+.creation-form {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  overflow: auto;
+  padding: 10px;
+  margin: 5px;
+  width: 100%;
+  background-color: var(--cardBackgroundColor);
+  cursor: pointer;
+  border-radius: var(--borderRadius);
+  border: 1px solid var(--border);
+}
+
+.profile-image {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.new-post {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  border: 1px solid var(--border);
+  padding: 10px 8px 10px 8px;
+  margin-left:5px;
+  border-radius: var(--borderRadius);
+  background-color: hsla(0, 0%, 91%, 0.434);
+  color: hsl(0, 0%, 45%);
+  flex:1;
+}
+
+
+.new-post:hover{
+  cursor: text;
+  background-color: var(--cardBackgroundColor);
+  border-color: var(--themeColor);
+}

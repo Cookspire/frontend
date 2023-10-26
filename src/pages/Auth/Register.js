@@ -1,9 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  ShowNavContext,
-  ToggleShowNavContext,
-} from "../../context/NavDialogContext";
+
 import {
   APIResponse,
   JSON_HEADERS,
@@ -19,18 +16,9 @@ import {
 } from "../../context/NotificationContext";
 
 export default function Register() {
-  const showNavBar = useContext(ToggleShowNavContext);
-  const showNav = useContext(ShowNavContext);
-
   const notificationData = useContext(NotificationDataContext);
 
   const setNotificationData = useContext(UpdateNotificationContext);
-
-  useEffect(() => {
-    if (showNav) {
-      showNavBar(false);
-    }
-  }, [showNav, showNavBar]);
 
   const [userForm, setUserForm] = useState({
     username: { value: "", err: "" },
@@ -61,12 +49,13 @@ export default function Register() {
       .then((response) => {
         if (response.status === 200) return response.json();
         else {
-          console.log(response.text())
-          return APIResponse.BAD_REQUEST};
+          console.log(response.text());
+          return APIResponse.BAD_REQUEST;
+        }
       })
       .then((data) => {
         setSubmit(false);
-      
+
         if (data !== APIResponse.BAD_REQUEST) {
           setUserForm({
             username: "",

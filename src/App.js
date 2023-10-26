@@ -1,12 +1,30 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/ui/Navbar";
 import SideNav from "./components/ui/SideNav";
-import { ShowNavContext } from "./context/NavDialogContext";
+import {
+  ShowNavContext,
+  ToggleShowNavContext,
+} from "./context/NavDialogContext";
 import AppRouter from "./routes/router";
 
 function App() {
   const showNav = useContext(ShowNavContext);
+  const showNavBar = useContext(ToggleShowNavContext);
+
+  const locationPath = useLocation();
+
+  useEffect(() => {
+    if (
+      locationPath.pathname === "/login" ||
+      locationPath.pathname === "/register"
+    ) {
+      showNavBar(false);
+    } else {
+      showNavBar(true);
+    }
+  }, [locationPath]);
 
   return (
     <>

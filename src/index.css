@@ -1,5 +1,6 @@
 :root {
   --background: hsl(210, 19%, 88%);
+  --themeColor: hsl(39, 100%, 50%);
   --primaryColor: hsl(0, 0%, 0%);
   --secondaryColor: hsl(0, 0%, 50%);
 
@@ -8,6 +9,8 @@
 
   --cardBackgroundColor: hsl(0, 0%, 100%);
 
+  --text-1xs: 0.6rem;
+  --text-xs: 0.8rem;
   --text-small: 0.945rem;
   --text-base: 1rem;
   --text-lg: 1.125rem;
@@ -31,6 +34,7 @@
   --border: hsl(0, 0%, 0%, 0.17);
   --borderRadius: 4px;
   --borderFocus: hsl(0, 0%, 50%);
+  --invisibleBorder: hsla(0, 0%, 0%, 0);
 
   --buttonHover: hsl(0, 0%, 10%);
   --buttonBg: hsl(0, 0%, 0%);
@@ -42,8 +46,6 @@
   --placeHolderFontSize: 16px;
 
   --info: hsl(203, 85%, 54%);
-
-
 }
 
 /* :root[data-theme="dark"] {
@@ -68,7 +70,6 @@
   --ring: 224.3 76.3% 48%;
 } */
 
-
 * {
   margin: 0;
   padding: 0;
@@ -84,7 +85,7 @@ body {
   color: var(--primaryColor);
 }
 
-#notify-portal{
+#notify-portal {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -170,18 +171,25 @@ body {
   }
 }
 
-
-
 @media (max-width: 1000px) {
-
-  .side-nav-container{
+  .side-nav-container {
     display: none;
   }
 
-  .toggle-button{
+  .toggle-button {
     display: flex;
   }
 
- 
+  .post-content {
+    width: 100%;
+  }
 
+  .post-creation {
+    width: 100%;
+  }
+
+  .post-creation-content {
+    min-width: 80%;
+  }
+  
 }

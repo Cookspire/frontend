@@ -1,0 +1,89 @@
+.post-creation-content {
+  background-color: var(--cardBackgroundColor);
+  border-radius: var(--borderRadius);
+  min-width: 40%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  position: relative;
+}
+.posts-form {
+  display: flex;
+  align-items: center;
+  align-content: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 100%;
+  padding: 10px;
+}
+
+.form-header {
+  display: flex;
+  align-items: center;
+  align-content: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+  font-size: var(--text-2xl);
+  font-weight: 600;
+}
+
+.form-content {
+  display: flex;
+  align-items: center;
+  align-content: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.form-action {
+  display: flex;
+  align-items: center;
+  align-content: flex-end;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.form-action button {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 8px 20px;
+  background-color: var(--buttonBg);
+  border-radius: var(--borderRadius);
+  outline: none;
+  border-style: none;
+  font-size: var(--text-base);
+  cursor: pointer;
+  color: var(--buttonColor)
+}
+
+.form-action button:hover {
+  background-color: var(--buttonHover);
+}
+
+.form-content textarea {
+  resize: none;
+  margin: 0;
+  padding: 15px 10px;
+  font-size: 1rem;
+  width: 100%;
+  border: 1px solid var(--border);
+  max-height: 500px;
+}
+
+.form-content textarea::placeholder {
+  font-size: 1rem !important;
+}
