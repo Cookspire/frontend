@@ -10,7 +10,6 @@ import {
 
 import Notification from "../../components/ui/Notification";
 import {
-  NotificationDataContext,
   UpdateNotificationContext,
 } from "../../context/NotificationContext";
 import { UpdateUserDataContext } from "../../context/UserContext";
@@ -18,8 +17,6 @@ import "./index.css";
 
 export default function Login() {
   const updateUserData = useContext(UpdateUserDataContext);
-
-  const notificationData = useContext(NotificationDataContext);
 
   const setNotificationData = useContext(UpdateNotificationContext);
 
@@ -31,6 +28,37 @@ export default function Login() {
   });
 
   const [submit, setSubmit] = useState(false);
+
+  async function fetchUserDetails(email) {
+    fetch(URL.API_URL + PATH.FETCH_USER + email, {
+      method: "POST",
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else {
+          console.log(response.text());
+          return APIResponse.BAD_REQUEST;
+        }
+      })
+      .then((data) => {
+        if (data === APIResponse.UNAUTHORIZED) {
+          setNotificationData(
+            true,
+            "Error occured while fetching user data.",
+            NotificationType.INFO
+          );
+        } else if (data && data.email !== "") {
+          updateUserData(data);
+        }
+      })
+      .catch((err) => {
+        setNotificationData(
+          true,
+          "Error occured while fetching user data.",
+          NotificationType.INFO
+        );
+      });
+  }
 
   async function verifyUserService() {
     fetch(URL.API_URL + PATH.VERIFY_USER, {
@@ -56,7 +84,7 @@ export default function Login() {
           console.log("Unauthorized Access, show error pop up");
         } else if (data && data.email !== "") {
           localStorage.setItem("persist", JSON.stringify(data));
-          updateUserData(data);
+          fetchUserDetails(data.email);
           navigate("/home");
         }
       })

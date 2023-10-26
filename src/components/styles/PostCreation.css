@@ -59,7 +59,7 @@
   justify-content: center;
   align-content: center;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
   padding: 8px 20px;
   background-color: var(--buttonBg);
   border-radius: var(--borderRadius);
@@ -67,7 +67,7 @@
   border-style: none;
   font-size: var(--text-base);
   cursor: pointer;
-  color: var(--buttonColor)
+  color: var(--buttonColor);
 }
 
 .form-action button:hover {
@@ -86,4 +86,34 @@
 
 .form-content textarea::placeholder {
   font-size: 1rem !important;
+}
+
+.form-action .invalid-button{
+  cursor: not-allowed;
+  background-color: var(--buttonDisabled);
+}
+
+.form-action .invalid-button:hover{
+  background-color: var(--buttonDisabled);
+}
+
+
+.form-action .loader {
+  width: 15px;
+  height: 15px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  border-radius: 50%;
+  border-right: 2px solid var(--background);
+  border-bottom: 2px solid var(--background);
+  border-left: 2px solid var(--background);
+  border-top: 2px solid var(--buttonDisabled);
+  animation: spin 0.75s ease infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
 }

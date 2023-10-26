@@ -1,3 +1,4 @@
+
 import { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { LogoutUserContext, UserDataContext } from "../../context/UserContext";
@@ -18,8 +19,6 @@ export default function Navbar() {
     });
   };
 
-  
-
   const userData = useContext(UserDataContext);
 
   const [showProfile, setShowProfile] = useState(false);
@@ -33,6 +32,7 @@ export default function Navbar() {
   }, showProfile);
 
   useEffect(() => {
+    console.log(userData);
     if (
       userData &&
       userData.email !== "" &&
@@ -42,18 +42,16 @@ export default function Navbar() {
     }
   }, [userData]);
 
-
   const [sideNav, setSideNav] = useState(false);
 
   const toggleNav = () => {
     setSideNav((prev) => !prev);
   };
 
-  
   useEffect(() => {
     window.addEventListener("resize", detectSize);
 
-    if(windowDimensions.winWidth>=1000){
+    if (windowDimensions.winWidth >= 1000) {
       setSideNav(false);
     }
 
@@ -73,9 +71,10 @@ export default function Navbar() {
           </a>
 
           <a href="/" className="app-name">
-            CookSpire
+            Cookspire
           </a>
         </div>
+
 
         {showProfile ? (
           <div
@@ -85,7 +84,10 @@ export default function Navbar() {
             }}
             ref={onClickOutside}
           >
-            <div className="round">KA</div>
+            <div className="round">
+              {userData?.username.charAt(0).toUpperCase() +
+                userData?.username.charAt(1).toUpperCase()}
+            </div>
             <div className="dropdown-logo">
               {!showQuickSettings ? (
                 <div className="dropdown"></div>

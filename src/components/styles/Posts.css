@@ -1,12 +1,12 @@
 .post-content {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  align-content: center;
+  align-content: flex-start;
   flex-direction: column;
   flex-wrap: wrap;
   padding: 10px;
-  width: 80%;
+  width: 100%;
 }
 
 .post {
