@@ -1,0 +1,17 @@
+.main-content{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: flex-start;
+    flex-direction: row;
+}
+
+.explore-content{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: flex-start;
+    flex-direction: column;
+    flex:2;
+    background-color: white;
+}

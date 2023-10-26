@@ -9,11 +9,11 @@ import Home from "../pages/Home";
 import NotFound from "../pages/NotFound/NotFound";
 import Recipe from "../pages/Recipes";
 import Trending from "../pages/Trending";
-import Welcome from "../pages/Welcome";
 import ProtectedRoute from "./ProtectedRoute";
 
 export default function AppRouter() {
   const userData = useContext(UserDataContext);
+
   return (
     <>
       <Routes>
@@ -25,7 +25,7 @@ export default function AppRouter() {
             userData && localStorage.getItem("persist") ? (
               <Navigate to="/home" />
             ) : (
-              <Welcome />
+              <Cusine />
             )
           }
         ></Route>

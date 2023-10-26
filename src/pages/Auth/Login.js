@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   APIResponse,
@@ -8,34 +8,17 @@ import {
   URL,
 } from "../../environment/APIService";
 
-import {
-  ShowNavContext,
-  ToggleShowNavContext,
-} from "../../context/NavDialogContext";
-
 import Notification from "../../components/ui/Notification";
 import {
-  NotificationDataContext,
   UpdateNotificationContext,
 } from "../../context/NotificationContext";
 import { UpdateUserDataContext } from "../../context/UserContext";
 import "./index.css";
 
 export default function Login() {
-  const showNavBar = useContext(ToggleShowNavContext);
-  const showNav = useContext(ShowNavContext);
-
   const updateUserData = useContext(UpdateUserDataContext);
 
-  const notificationData = useContext(NotificationDataContext);
-
   const setNotificationData = useContext(UpdateNotificationContext);
-
-  useEffect(() => {
-    if (showNav) {
-      showNavBar(false);
-    }
-  }, []);
 
   const navigate = useNavigate();
 
@@ -45,6 +28,37 @@ export default function Login() {
   });
 
   const [submit, setSubmit] = useState(false);
+
+  async function fetchUserDetails(email) {
+    fetch(URL.API_URL + PATH.FETCH_USER + email, {
+      method: "POST",
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else {
+          console.log(response.text());
+          return APIResponse.BAD_REQUEST;
+        }
+      })
+      .then((data) => {
+        if (data === APIResponse.UNAUTHORIZED) {
+          setNotificationData(
+            true,
+            "Error occured while fetching user data.",
+            NotificationType.INFO
+          );
+        } else if (data && data.email !== "") {
+          updateUserData(data);
+        }
+      })
+      .catch((err) => {
+        setNotificationData(
+          true,
+          "Error occured while fetching user data.",
+          NotificationType.INFO
+        );
+      });
+  }
 
   async function verifyUserService() {
     fetch(URL.API_URL + PATH.VERIFY_USER, {
@@ -70,14 +84,17 @@ export default function Login() {
           console.log("Unauthorized Access, show error pop up");
         } else if (data && data.email !== "") {
           localStorage.setItem("persist", JSON.stringify(data));
-          updateUserData(data);
-          showNavBar(true);
+          fetchUserDetails(data.email);
           navigate("/home");
         }
       })
       .catch((err) => {
         setSubmit((prev) => !prev);
-        setNotificationData(true, "Oops you got us! Kindly raise a bug.", NotificationType.INFO);
+        setNotificationData(
+          true,
+          "Oops you got us! Kindly raise a bug.",
+          NotificationType.INFO
+        );
         console.log("handle API Error in Popup..");
         return err;
       });

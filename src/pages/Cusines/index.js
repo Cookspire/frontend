@@ -1,8 +1,21 @@
+import SearchIcon from "@mui/icons-material/Search";
 import "./index.css";
 
 export default function Cusine() {
   return (
     <div className="cusine-container">
+
+      <div className="global-search">
+        <div className="search-content">
+          <div className="search-icon">
+            <SearchIcon htmlColor="hsl(0, 0%, 0%, 0.67)" />
+          </div>
+          <div className="search-input">
+            <input type="text" id="search" placeholder="Search Cookspire" />
+          </div>
+        </div>
+      </div>
+
       <div className="cusine-navigation">Recipes</div>
 
       <div className="content-name">Cuisines</div>
