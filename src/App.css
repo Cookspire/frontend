@@ -31,7 +31,6 @@
   width: 100%;
 }
 
-
 .left-container {
   display: flex;
   justify-content: flex-start;
@@ -40,7 +39,7 @@
   flex-direction: column;
   flex-wrap: wrap;
   background-color: var(--background);
-  border-right: 1px solid var(--border)
+  border-right: 1px solid var(--border);
 }
 
 .center-container {
@@ -52,7 +51,5 @@
   flex-direction: column;
   flex-wrap: wrap;
   height: 100%;
-  width:50%;
-} 
-
-
+  width: 860px;
+}

@@ -3,7 +3,9 @@
     justify-content: flex-start;
     align-items: center;
     align-content: flex-start;
+    flex-wrap: nowrap;
     flex-direction: row;
+    width:100%;
 }
 
 .explore-content{

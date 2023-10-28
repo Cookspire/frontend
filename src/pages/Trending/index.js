@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import HorizontalContent from "../../components/ui/HorizontalContent";
 import Posts from "../../components/ui/Posts";
 import Search from "../../components/ui/Search";
 import { UserDataContext } from "../../context/UserContext";
@@ -44,6 +45,11 @@ export default function Trending() {
         <div className="trend-heading">
           <div className="new-content">Trending Recipes</div>
         </div>
+
+        <div className="trend-content">
+          <HorizontalContent />
+        </div>
+
         {/* Add recipes cards here which is horizontal scroll */}
 
         <div className="trend-heading">
