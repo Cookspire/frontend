@@ -1,3 +1,4 @@
+import MenuIcon from "@mui/icons-material/Menu";
 import { useContext, useEffect, useState } from "react";
 import ReactDom from "react-dom";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -49,14 +50,12 @@ export default function HamburgerNav({ closeNav }) {
       <div className="hamburger-content" ref={hamRef}>
         <div className="ham-nav-container">
           <div className="name-content">
-            <a href="#" className="toggle-button" onClick={closeHam}>
-              <span className="bar"></span>
-              <span className="bar"></span>
-              <span className="bar"></span>
-            </a>
+            <div className="toggle-button" onClick={closeHam}>
+              <MenuIcon />
+            </div>
 
             <a href="/" className="app-name">
-              CookSpire
+              Cookspire
             </a>
           </div>
 
@@ -101,7 +100,6 @@ export default function HamburgerNav({ closeNav }) {
                   <NavLink to="/account">Account</NavLink>
                 </li>
               )}
-              
             </ul>
           </nav>
         </div>

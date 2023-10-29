@@ -1,15 +1,4 @@
-.post-container {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  align-content: flex-start;
-  flex-direction: column;
-  flex-wrap: wrap;
-  width: 70%;
-  padding: 5px;
-  height: 100%;
-  flex: 4;
-}
+
 
 .post-creation {
   display: flex;

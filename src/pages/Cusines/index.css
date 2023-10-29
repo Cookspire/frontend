@@ -61,8 +61,8 @@
 
 .cusine-type img {
   border-radius: var(--borderRadius);
-  height: 120px;
-  width: 200px;
+  height: 100px;
+  width: 150px;
 }
 
 .cusine-img {

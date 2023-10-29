@@ -50,8 +50,6 @@ export default function Trending() {
           <HorizontalContent />
         </div>
 
-        {/* Add recipes cards here which is horizontal scroll */}
-
         <div className="trend-heading">
           <div className="new-content">Trending Posts</div>
         </div>
@@ -59,7 +57,7 @@ export default function Trending() {
         <Posts />
       </div>
 
-      <div className="explore-content">
+      <div className="explore-container">
         <Search />
       </div>
     </div>

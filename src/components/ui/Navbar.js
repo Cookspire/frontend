@@ -1,4 +1,4 @@
-
+import MenuIcon from "@mui/icons-material/Menu";
 import { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { LogoutUserContext, UserDataContext } from "../../context/UserContext";
@@ -64,17 +64,14 @@ export default function Navbar() {
     <div className="cookspire-header">
       <nav className="nav">
         <div className="name-content">
-          <a href="#" className="toggle-button" onClick={toggleNav}>
-            <span className="bar"></span>
-            <span className="bar"></span>
-            <span className="bar"></span>
-          </a>
+          <div className="toggle-button" onClick={toggleNav}>
+            <MenuIcon />
+          </div>
 
           <a href="/" className="app-name">
             Cookspire
           </a>
         </div>
-
 
         {showProfile ? (
           <div

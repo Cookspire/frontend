@@ -36,7 +36,7 @@ export default function Home() {
         {newPost && <PostCreation closeDialog={setNewPost} />}
       </div>
 
-      <div className="explore-content">
+      <div className="explore">
         <Search />
       </div>
     </div>
