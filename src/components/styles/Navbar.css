@@ -36,7 +36,7 @@
 
 .nav ul {
   margin: 0;
-  padding: 0;
+  padding: 0px 10px 0px 10px;
   list-style-type: none;
   gap: 2em;
   display: flex;
@@ -61,6 +61,7 @@
   flex-wrap: wrap;
   color: var(--navbarColor);
   border-radius: var(--borderRadius);
+  padding: 0px 10px 0px 10px;
 }
 
 .profile:hover {
@@ -158,8 +159,6 @@
   display: none;
   flex-direction: column;
   justify-content: space-between;
-  width: 40px;
-  height: 36px;
   padding: 10px;
   background-color: var(--primaryBackground);
   border-radius: 4px;
@@ -167,12 +166,14 @@
 
 .toggle-button:hover {
   background-color: var(--primaryBackgroundHover);
+  cursor: pointer;
 }
 
 .toggle-button .bar {
   height: 2px;
   width: 100%;
   background-color: var(--primaryColor);
+  cursor: pointer;
 }
 
 

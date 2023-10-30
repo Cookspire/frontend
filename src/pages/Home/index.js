@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PostCreation from "../../components/ui/PostCreation";
 import Posts from "../../components/ui/Posts";
-import Search from "../../components/ui/Search";
+import QuickAction from "../../components/ui/QuickAction";
 import "./index.css";
 
 export default function Home() {
@@ -36,8 +36,8 @@ export default function Home() {
         {newPost && <PostCreation closeDialog={setNewPost} />}
       </div>
 
-      <div className="explore-content">
-        <Search />
+      <div className="explore-container">
+        <QuickAction />
       </div>
     </div>
   );

@@ -1,0 +1,46 @@
+.follower-content {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  flex-direction: row;
+  width: 100%;
+  flex-wrap: wrap;
+  height: 100%;
+}
+
+.follower-content .profile {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+  width:150px;
+  margin-left:10px;
+  margin-right:10px;
+  margin-bottom: 10px;
+}
+
+.profile .profile-name {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 100%;
+}
+
+.profile .profile-image {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+}
+
+
+.profile .profile-image img {
+  width: 120px;
+  height: 120px;
+}

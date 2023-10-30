@@ -43,7 +43,7 @@
   border-radius: var(--borderRadius);
   background-color: var(--navbarBackground);
   border: 3px solid var(--invisibleBorder);
-  margin: 5px;
+  margin-right: 10px;
   transition: border 300ms ease-in-out; 
 }
 

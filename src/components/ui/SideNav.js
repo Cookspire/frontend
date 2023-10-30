@@ -53,10 +53,10 @@ export default function SideNav() {
           {isLogged && (
             <li
               onClick={() => {
-                navigate("/account");
+                navigate("/profile");
               }}
             >
-              <NavLink to="/account">Account</NavLink>
+              <NavLink to="/profiles">Profile</NavLink>
             </li>
           )}
         </ul>

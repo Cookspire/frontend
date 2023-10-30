@@ -1,5 +1,5 @@
 :root {
-  --background: hsl(210, 19%, 88%);
+  --background: hsl(216deg 33.33% 97.06%);
   --themeColor: hsl(39, 100%, 50%);
   --primaryColor: hsl(0, 0%, 0%);
   --secondaryColor: hsl(0, 0%, 50%);
@@ -27,12 +27,13 @@
   --navbarColor: hsl(0, 0%, 0%);
   --navbarBackground: hsl(0, 0%, 100%);
 
-  --linkHover: hsl(194, 21%, 50%);
-  --linkActive: hsl(194, 21%, 57%);
+  --linkHover: hsl(39, 100%, 50%);
+  --linkActive: hsl(39, 100%, 57%);
 
   --dangerBorder: hsl(0, 100%, 50%);
   --border: hsl(0, 0%, 0%, 0.17);
   --borderRadius: 4px;
+  --roundBorder: 18px;
   --borderFocus: hsl(0, 0%, 50%);
   --invisibleBorder: hsla(0, 0%, 0%, 0);
 
@@ -40,7 +41,7 @@
   --buttonBg: hsl(0, 0%, 0%);
   --buttonColor: hsl(0, 0%, 100%);
   --buttonBorder: 6px;
-  --minimalButtonColor:hsla(0, 0%, 33%, 0.5);
+  --minimalButtonColor: hsla(0, 0%, 33%, 0.5);
 
   --buttonDisabled: hsl(0, 0%, 27%);
 
@@ -174,8 +175,16 @@ body {
   }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1050px) {
+  .side-nav-container {
+    display: none;
+  }
+  .toggle-button {
+    display: flex;
+  }
+}
 
+@media (max-width: 800px) {
   .side-nav-container {
     display: none;
   }
@@ -205,20 +214,51 @@ body {
   }
 
   .search-content input {
-    width:150px;
+    width: 150px;
   }
 
-  .explore-content{
+  .explore-container {
     display: none;
   }
 
   .center-container {
-    max-width:80%;
+    max-width: 100%;
   }
 
   .post-container {
-    width:100%;
+    width: 100%;
   }
 
+  .profile-content {
+    padding: 0px;
+    height: 100%;
+  }
+  .profile-content .profile-info {
+    padding: 0px;
+  }
 
+  .profile-info .profile-image img {
+    width: 90px;
+    height: 90px;
+  }
+
+  .profile-details {
+    margin-left: 10px;
+    width: auto;
+    justify-content: flex-start;
+    align-content: flex-start;
+  }
+
+  .profile-data nav {
+    gap: 1em;
+  }
+
+  .follower-content .profile {
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    width: 100px;
+  }
 }
+
+
