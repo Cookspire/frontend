@@ -36,7 +36,7 @@
 
 .nav ul {
   margin: 0;
-  padding: 0;
+  padding: 0px 10px 0px 10px;
   list-style-type: none;
   gap: 2em;
   display: flex;
@@ -61,6 +61,7 @@
   flex-wrap: wrap;
   color: var(--navbarColor);
   border-radius: var(--borderRadius);
+  padding: 0px 10px 0px 10px;
 }
 
 .profile:hover {

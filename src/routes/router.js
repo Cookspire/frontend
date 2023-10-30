@@ -1,15 +1,20 @@
 import { useContext } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import Account from "../components/ui/Account";
+import Followers from "../components/ui/Followers";
+import Posts from "../components/ui/Posts";
 import { UserDataContext } from "../context/UserContext";
-import Account from "../pages/Account";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import Cusine from "../pages/Cusines";
 import Home from "../pages/Home";
 import NotFound from "../pages/NotFound/NotFound";
+import Profile from "../pages/Profile";
 import Recipe from "../pages/Recipes";
 import Trending from "../pages/Trending";
 import ProtectedRoute from "./ProtectedRoute";
+import GeneralSettings from "../components/ui/GeneralSettings"
+import Verification from "../components/ui/Verification"
 
 export default function AppRouter() {
   const userData = useContext(UserDataContext);
@@ -62,7 +67,20 @@ export default function AppRouter() {
         <Route element={<ProtectedRoute />}>
           <Route path="/home" element={<Home />}></Route>
 
-          <Route path="/account" element={<Account />}></Route>
+          <Route exact path="/profile" element={<Profile />}>
+            <Route index path="/profile/:id/posts" element={<Posts />} />
+            <Route path="/profile/:id/followers" element={<Followers />} />
+            <Route path="/profile/:id/following" element={<Followers />} />
+
+            <Route exact path="/profile/:id/account" element={<Account />}>
+              <Route index path="/profile/:id/account/general" element={<GeneralSettings />} />
+              <Route
+                path="/profile/:id/account/verification"
+                element={<Verification />}
+              />
+            </Route>
+
+          </Route>
         </Route>
       </Routes>
     </>

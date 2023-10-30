@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PostCreation from "../../components/ui/PostCreation";
 import Posts from "../../components/ui/Posts";
-import Search from "../../components/ui/Search";
+import QuickAction from "../../components/ui/QuickAction";
 import "./index.css";
 
 export default function Home() {
@@ -37,7 +37,7 @@ export default function Home() {
       </div>
 
       <div className="explore-container">
-        <Search />
+        <QuickAction />
       </div>
     </div>
   );

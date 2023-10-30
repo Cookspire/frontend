@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import HorizontalContent from "../../components/ui/HorizontalContent";
 import Posts from "../../components/ui/Posts";
-import Search from "../../components/ui/Search";
+import QuickAction from "../../components/ui/QuickAction";
 import { UserDataContext } from "../../context/UserContext";
 import "./index.css";
 
@@ -58,7 +58,7 @@ export default function Trending() {
       </div>
 
       <div className="explore-container">
-        <Search />
+        <QuickAction />
       </div>
     </div>
   );
