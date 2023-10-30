@@ -165,12 +165,14 @@
 
 .toggle-button:hover {
   background-color: var(--primaryBackgroundHover);
+  cursor: pointer;
 }
 
 .toggle-button .bar {
   height: 2px;
   width: 100%;
   background-color: var(--primaryColor);
+  cursor: pointer;
 }
 
 

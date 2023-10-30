@@ -1,3 +1,106 @@
-.quick-actions-content{
-    
+.quick-actions-content {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 5px;
+  border-radius: var(--borderRadius);
+}
+
+.quick-actions-content .search-content {
+  width: 100%;
+}
+
+.suggestions-content {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 5px;
+  background-color: var(--cardBackgroundColor);
+  border-radius: var(--roundBorder);
+  border: 1px solid var(--border);
+}
+
+.suggestions-heading {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 15px 5px 15px 5px;
+  font-size: var(--text-1xl);
+  font-weight: 600;
+}
+
+.suggestions-profile {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top:10px;
+  margin-bottom: 10px;
+}
+
+.suggestions-profile .profile-name {
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+
+.suggestions-profile img {
+  width: 30px;
+  height: 30px;
+}
+
+.profile-info {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-direction: row;
+}
+.profile-info .profile-name{
+  margin-left: 5px;
+
+}
+
+.suggestions-profile .profile-action {
+  display: flex;
+  justify-content: flex-end;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.suggestions-profile button {
+  display: flex;
+  height: auto;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-direction: row;
+  padding: 5px 10px 5px 10px;
+  font-size: var(--text-small);
+  width: 100%;
+  border: 0;
+  background-color: var(--buttonBg);
+  color: var(--buttonColor);
+  border-radius: var(--roundBorder);
+  font-family: inherit;
+}
+
+.suggestions-profile button:hover{
+  background-color: var(--buttonHover);
+  cursor: pointer;
 }

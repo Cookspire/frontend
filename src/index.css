@@ -33,6 +33,7 @@
   --dangerBorder: hsl(0, 100%, 50%);
   --border: hsl(0, 0%, 0%, 0.17);
   --borderRadius: 4px;
+  --roundBorder: 18px;
   --borderFocus: hsl(0, 0%, 50%);
   --invisibleBorder: hsla(0, 0%, 0%, 0);
 
@@ -174,7 +175,7 @@ body {
   }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1060px) {
 
   .side-nav-container {
     display: none;
