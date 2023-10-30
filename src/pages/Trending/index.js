@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import HorizontalContent from "../../components/ui/HorizontalContent";
 import Posts from "../../components/ui/Posts";
-import Search from "../../components/ui/Search";
+import QuickAction from "../../components/ui/QuickAction";
 import { UserDataContext } from "../../context/UserContext";
 import "./index.css";
 
@@ -50,8 +50,6 @@ export default function Trending() {
           <HorizontalContent />
         </div>
 
-        {/* Add recipes cards here which is horizontal scroll */}
-
         <div className="trend-heading">
           <div className="new-content">Trending Posts</div>
         </div>
@@ -59,8 +57,8 @@ export default function Trending() {
         <Posts />
       </div>
 
-      <div className="explore-content">
-        <Search />
+      <div className="explore-container">
+        <QuickAction />
       </div>
     </div>
   );

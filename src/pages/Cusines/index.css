@@ -61,8 +61,8 @@
 
 .cusine-type img {
   border-radius: var(--borderRadius);
-  height: 120px;
-  width: 200px;
+  height: 100px;
+  width: 150px;
 }
 
 .cusine-img {
@@ -107,9 +107,9 @@
   align-items: center;
   align-content: flex-start;
   flex-direction: row;
-  width: 80%;
+  width: 100%;
   border: 1px solid var(--border);
-  border-radius: 18px;
+  border-radius: var(--roundBorder);
   padding-left: 10px;
   background-color: var(--cardBackgroundColor);
   margin-top:10px;
@@ -128,7 +128,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  border-radius: 18px;
+  border-radius: var(--roundBorder);
   outline: none;
   border: none;
   width:100%;
@@ -140,7 +140,7 @@
   align-items: center;
   font-size: 16px;
   padding: 10px 10px 10px 5px;
-  border-radius: 18px;
+  border-radius: var(--roundBorder);
   outline: none;
   border: none;
   width: 100%;

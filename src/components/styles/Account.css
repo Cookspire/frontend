@@ -1,0 +1,59 @@
+.account-settings {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 100%;
+}
+
+.account-menu {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  flex-direction: row;
+  border-radius: var(--borderRadius);
+  width: 100%;
+}
+
+.user-menu {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+
+.account-menu a {
+  text-decoration: none;
+  color: var(--primaryColor);
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.account-menu .active {
+  text-decoration: none;
+  border-radius: var(--borderRadius);
+  background-color: var(--buttonBg);
+  color: var(--buttonColor);
+}
+
+.account-menu .active:hover {
+  text-decoration: none;
+}
+
+.account-menu a:hover {
+  text-decoration: underline;
+}
+
+.account-settings nav {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-wrap: wrap;
+}
