@@ -1,0 +1,50 @@
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: flex-start;
+  flex-direction: row;
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
+  user-select: none;
+}
+
+.scrollmenu {
+  overflow: hidden;
+  white-space: nowrap;
+  display: flex;
+  justify-content: flex-start;
+  align-content: flex-start;
+  scroll-behavior: smooth;
+  padding-top: 15px 15px 15px 15px;
+}
+
+.content .child-left {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  left: 0;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 50%;
+  background-color: var(--minimalButtonColor);
+}
+
+.child-left:hover {
+  background-color: var(--themeColor);
+}
+
+.content .child-right {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 50%;
+  right: 0;
+  background-color: var(--minimalButtonColor);
+}
+
+.child-right:hover {
+  background-color: var(--themeColor);
+}
