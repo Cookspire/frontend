@@ -1,4 +1,4 @@
-.cusine-container {
+.cuisine-container {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -10,7 +10,7 @@
   height: 100%;
 }
 
-.cusine-navigation {
+.cuisine-navigation {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -33,7 +33,7 @@
   font-weight: 800;
 }
 
-.cusine-list {
+.cuisine-list {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -45,7 +45,7 @@
   width: 100%;
 }
 
-.cusine-type {
+.cuisine-type {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -59,13 +59,13 @@
   transition: border 300ms ease-in-out;
 }
 
-.cusine-type img {
+.cuisine-type img {
   border-radius: var(--borderRadius);
   height: 100px;
   width: 150px;
 }
 
-.cusine-img {
+.cuisine-img {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -74,7 +74,7 @@
   width: 100%;
 }
 
-.cusine-name {
+.cuisine-name {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -86,7 +86,7 @@
   padding: 5px 0px 5px 0px;
 }
 
-.cusine-type:hover {
+.cuisine-type:hover {
   cursor: pointer;
   border: 3px solid orange;
 }

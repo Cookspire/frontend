@@ -6,7 +6,7 @@ import Posts from "../components/ui/Posts";
 import { UserDataContext } from "../context/UserContext";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
-import Cusine from "../pages/Cusines";
+import Cuisine from "../pages/Cuisine";
 import Home from "../pages/Home";
 import NotFound from "../pages/NotFound/NotFound";
 import Profile from "../pages/Profile";
@@ -30,7 +30,7 @@ export default function AppRouter() {
             userData && localStorage.getItem("persist") ? (
               <Navigate to="/home" />
             ) : (
-              <Cusine />
+              <Cuisine />
             )
           }
         ></Route>
@@ -58,8 +58,8 @@ export default function AppRouter() {
         ></Route>
 
         <Route exact path="/explore">
-          <Route path="/explore" element={<Cusine />} />
-          <Route path="/explore/categories/recipes" element={<Recipe />} />
+          <Route path="/explore" element={<Cuisine />} />
+          <Route path="/explore/:name/recipes" element={<Recipe />} />
         </Route>
 
         <Route path="/trending" element={<Trending />} />
@@ -67,7 +67,7 @@ export default function AppRouter() {
         <Route element={<ProtectedRoute />}>
           <Route path="/home" element={<Home />}></Route>
 
-          <Route exact path="/profile" element={<Profile />}>
+          <Route path="/profile" element={<Profile />}>
             <Route index path="/profile/:id/posts" element={<Posts />} />
             <Route path="/profile/:id/followers" element={<Followers />} />
             <Route path="/profile/:id/following" element={<Followers />} />
@@ -79,7 +79,6 @@ export default function AppRouter() {
                 element={<Verification />}
               />
             </Route>
-
           </Route>
         </Route>
       </Routes>

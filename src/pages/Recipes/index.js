@@ -1,80 +1,52 @@
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import SearchIcon from "@mui/icons-material/Search";
+import { useEffect } from "react";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import "./index.css";
 
 export default function Recipe() {
+  const { name } = useParams();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (name && name.length === 0) {
+      navigate("/explore");
+    }
+  }, [name, navigate]);
+
   return (
     <div className="recipe-container">
+      <div className="global-search">
+        <div className="search-content">
+          <div className="search-icon">
+            <SearchIcon htmlColor="hsl(0, 0%, 0%, 0.67)" />
+          </div>
+          <div className="search-input">
+            <input type="text" id="search" placeholder="Search Recipes" />
+          </div>
+        </div>
+      </div>
 
       <div className="recipe-navigation">
-      <a href="/explore"> Cusines </a> &nbsp;&gt;&nbsp; Recipes
+        <NavLink to="/explore">
+          <div className="previous-page">Cuisines</div>
+        </NavLink>
+
+        <ArrowForwardIosIcon
+          htmlColor="black"
+          fontSize="6"
+          className="forward-icon"
+        />
+
+        <div className="heading">
+          {name.charAt(0).toUpperCase() + name.substring(1)}
+        </div>
       </div>
 
       <div className="recipe-list">
-        <div className="recipe-type">
-          <div className="recipe-img">
-            <img
-              alt="coffee"
-              src="https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            ></img>
-          </div>
-
-          <div className="recipe-name">Coffee</div>
-
-          <div className="recipe-duration">Total time : 20min</div>
-        </div>
-
-        <div className="recipe-type">
-          <div className="recipe-img">
-            <img
-              alt="coffee"
-              src="https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            ></img>
-          </div>
-
-          <div className="recipe-name">Coffee</div>
-
-          <div className="recipe-duration">Total time : 20min</div>
-        </div>
-
-        <div className="recipe-type">
-          <div className="recipe-img">
-            <img
-              alt="coffee"
-              src="https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            ></img>
-          </div>
-
-          <div className="recipe-name">Coffee</div>
-
-          <div className="recipe-duration">Total time : 20min</div>
-        </div>
-
-        <div className="recipe-type">
-          <div className="recipe-img">
-            <img
-              alt="coffee"
-              src="https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            ></img>
-          </div>
-
-          <div className="recipe-name">Coffee</div>
-
-          <div className="recipe-duration">Total time : 20min</div>
-        </div>
-
-        <div className="recipe-type">
-          <div className="recipe-img">
-            <img
-              alt="coffee"
-              src="https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            ></img>
-          </div>
-
-          <div className="recipe-name">Coffee</div>
-
-          <div className="recipe-duration">Total time : 20min</div>
-        </div>
+        <Recipe />
       </div>
-
     </div>
   );
 }
