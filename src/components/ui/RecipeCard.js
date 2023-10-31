@@ -1,8 +1,9 @@
 import { useState } from "react";
-import "../styles/Recipe.css";
+import { createPortal } from "react-dom";
+import "../styles/RecipeCard.css";
 import RecipeDetails from "./RecipeDetails";
 
-export default function Recipe() {
+export default function RecipeCard() {
   const [showRecipe, setShowRecipe] = useState(false);
 
   return (
@@ -19,7 +20,11 @@ export default function Recipe() {
 
         <div className="recipe-duration">Total time : 20min</div>
       </div>
-      {showRecipe && <RecipeDetails handleClose={setShowRecipe}/>}
+      {showRecipe &&
+        createPortal(
+          <RecipeDetails handleClose={setShowRecipe} />,
+          document.getElementById("recipe-details-portal")
+        )}
     </>
   );
 }

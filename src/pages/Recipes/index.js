@@ -2,6 +2,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import SearchIcon from "@mui/icons-material/Search";
 import { useEffect } from "react";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
+import RecipeCard from "../../components/ui/RecipeCard";
 import "./index.css";
 
 export default function Recipe() {
@@ -45,7 +46,7 @@ export default function Recipe() {
       </div>
 
       <div className="recipe-list">
-        <Recipe />
+        <RecipeCard />
       </div>
     </div>
   );

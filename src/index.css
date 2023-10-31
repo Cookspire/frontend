@@ -9,6 +9,8 @@
 
   --cardBackgroundColor: hsl(0, 0%, 100%);
 
+  --boxShadow: 0px 0px 2px hsl(0, 0%, 78%);
+
   --text-1xs: 0.6rem;
   --text-xs: 0.8rem;
   --text-small: 0.945rem;

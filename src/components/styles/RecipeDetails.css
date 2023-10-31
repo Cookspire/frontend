@@ -1,0 +1,14 @@
+.recipe-detail-container{
+    background-color: var(--cardBackgroundColor);
+    border-radius: var(--borderRadius);
+    min-width: 40%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    position: relative;
+}

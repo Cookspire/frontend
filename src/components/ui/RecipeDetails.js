@@ -1,10 +1,9 @@
-import ReactDom from "react-dom";
 import CloseModal from "../../hooks/CloseModal";
 import "../styles/RecipeDetails.css";
 
 const OVERLAY_STYLE = {
   backgroundColor: "rgb(0 0 0 / 70%)",
-  zIndex: 1000,
+  zIndex: 10000,
   display: "flex",
   justifyContent: "center",
   alignContent: "center",
@@ -22,10 +21,10 @@ export default function RecipeDetails({ handleClose }) {
     handleClose(false);
   }, true);
 
-  return ReactDom.render(
-    <div style={{ OVERLAY_STYLE }}>
-      <div className="recipe-detail-container">
-        <div className="recipe-dialog" ref={outsideClick}>
+  return (
+    <div style={OVERLAY_STYLE}>
+      <div className="recipe-detail-container" ref={outsideClick}>
+        <div className="recipe-dialog">
           <div className="image"></div>
 
           <div className="name"></div>
@@ -38,7 +37,6 @@ export default function RecipeDetails({ handleClose }) {
           </div>
         </div>
       </div>
-    </div>,
-    document.getElementById("recipe-details-portal")
+    </div>
   );
 }
