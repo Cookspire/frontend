@@ -1,0 +1,196 @@
+.settings-content {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  flex-direction: column;
+  width: 100%;
+  flex-wrap: wrap;
+  height: 100%;
+  border: 1px solid red;
+  padding: 10px;
+}
+
+.settings-content .general {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  flex-direction: column;
+  width: 100%;
+  flex-wrap: wrap;
+  height: 100%;
+}
+
+.settings-content .general .heading {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  flex-direction: column;
+  width: 100%;
+  flex-wrap: wrap;
+  font-size: var(--text-2xl);
+  font-weight: bolder;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.settings-content .general .sub-heading {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  flex-direction: column;
+  width: 100%;
+  flex-wrap: wrap;
+  font-size: var(--text-small);
+  padding-bottom: 10px;
+  color: var(--secondaryColor);
+}
+
+.settings-content .general-form {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  flex-direction: column;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.general-form .field {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.general-form .field-label {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  display: flex;
+  margin: 10px 0px 5px 0px;
+}
+
+.general-form .field-input {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  display: flex;
+}
+
+.general-form input {
+  outline: none;
+  margin: 0;
+  border: var(--fieldBorder);
+  border-radius: var(--borderRadius);
+  padding: 10px;
+  font-size: var(--text-base);
+  width: 100%;
+  font-family: inherit;
+  font-weight: 100;
+}
+
+.general-form input:focus {
+  outline: none;
+  border: var(--fieldFocusBorder);
+}
+
+.general-form input::placeholder {
+  font-size: var(--text-small);
+}
+
+.general-form textarea {
+  resize: none;
+  margin: 0;
+  padding: 15px 10px;
+  font-size: var(--text-base);
+  width: 100%;
+  outline: none;
+  margin: 0;
+  border: var(--fieldBorder);
+  border-radius: var(--borderRadius);
+  max-height: 500px;
+  font-family: "Roboto", sans-serif;
+}
+
+.general-form textarea:focus {
+    outline: none;
+    border: var(--fieldFocusBorder);
+  }
+  
+
+.general-form textarea::placeholder {
+  font-size: var(--text-base);
+}
+
+.general-form select{
+    outline: none;
+    margin: 0;
+    border: var(--fieldBorder);
+    border-radius: var(--borderRadius);
+    padding: 10px;
+    font-size: var(--text-base);
+    width: 100%;
+    font-family: inherit;
+    font-weight: 100;
+}
+
+.general-form .action {
+    display: flex;
+    align-items: center;
+    align-content: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 20px 0px 20px 0px;
+  }
+  
+  .general-form .action button {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-direction: row;
+    padding: 8px 20px;
+    background-color: var(--buttonBg);
+    border-radius: var(--borderRadius);
+    outline: none;
+    border-style: none;
+    font-size: var(--text-base);
+    cursor: pointer;
+    color: var(--buttonColor);
+  }
+  
+  .general-form .action button:hover {
+    background-color: var(--buttonHover);
+  }
+
+.settings-content .sensitive .heading {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  flex-direction: column;
+  width: 100%;
+  flex-wrap: wrap;
+  font-size: var(--text-2xl);
+  font-weight: bolder;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.settings-content .sensitive .sub-heading {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  flex-direction: column;
+  width: 100%;
+  flex-wrap: wrap;
+  font-size: var(--text-small);
+  padding-bottom: 10px;
+  color: var(--secondaryColor);
+}

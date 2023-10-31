@@ -24,7 +24,7 @@ export default function Recipe() {
             <SearchIcon htmlColor="hsl(0, 0%, 0%, 0.67)" />
           </div>
           <div className="search-input">
-            <input type="text" id="search" placeholder="Search Recipes" />
+            <input type="text"  autoComplete="off" id="search" placeholder="Search Recipes" />
           </div>
         </div>
       </div>

@@ -32,7 +32,7 @@ export default function Cuisine() {
             <SearchIcon htmlColor="hsl(0, 0%, 0%, 0.67)" />
           </div>
           <div className="search-input">
-            <input type="text" id="search" placeholder="Search Cookspire" />
+            <input type="text"  autoComplete="off" id="search" placeholder="Search Cookspire" />
           </div>
         </div>
       </div>
