@@ -1,4 +1,4 @@
-import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import { useContext, useEffect } from "react";
 import { UpdateNotificationContext } from "../../context/NotificationContext";
@@ -26,6 +26,52 @@ export default function Posts({ userFollower, currentUser }) {
 
   const updatePosts = useContext(UpdatePostDataContext);
 
+  const likePost = (post) => {
+    let likePost = post.hasLiked ? false : true;
+    persistInteraction(post, likePost);
+    console.log(likePost);
+  };
+
+  async function persistInteraction(post, likePost) {
+    fetch(URL.API_URL + PATH.PERSIST_INTERACTION, {
+      method: "PATCH",
+      body: JSON.stringify({
+        createdBy: userData.id,
+        postId: post.id,
+        liked: likePost,
+      }),
+      headers: JSON_HEADERS,
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else {
+          return APIResponse.BAD_REQUEST;
+        }
+      })
+      .then((data) => {
+        if (data !== APIResponse.BAD_REQUEST) {
+          if (!userFollower && !currentUser) fetchTrendingPost(0);
+          else if (userFollower && !currentUser)
+            fetchFollowersPost(userData.id);
+          else fetchUsersPost(userData.id);
+        } else {
+          setNotificationData(
+            true,
+            "Unable to fetch posts. Kindly raise a bug.",
+            NotificationType.INFO
+          );
+        }
+      })
+      .catch((err) => {
+        setNotificationData(
+          true,
+          "Oops you got us! Kindly raise a bug.",
+          NotificationType.INFO
+        );
+        return console.log("Error Occured, Reason : " + err);
+      });
+  }
+
   useEffect(() => {
     let id;
     if (userData === undefined) {
@@ -40,7 +86,7 @@ export default function Posts({ userFollower, currentUser }) {
   }, []);
 
   async function fetchFollowersPost(id) {
-    console.log("fetching user follower post!!")
+    console.log("fetching user follower post!!");
     fetch(URL.API_URL + PATH.FETCH_FOLLOWERS_POST + id, {
       method: "POST",
       headers: JSON_HEADERS,
@@ -73,7 +119,7 @@ export default function Posts({ userFollower, currentUser }) {
   }
 
   async function fetchUsersPost(id) {
-    console.log("fetching user post!!")
+    console.log("fetching user post!!");
     fetch(URL.API_URL + PATH.FETCH_USERS_POST + id, {
       method: "POST",
       headers: JSON_HEADERS,
@@ -106,7 +152,7 @@ export default function Posts({ userFollower, currentUser }) {
   }
 
   async function fetchTrendingPost(id) {
-    console.log("fetching trending post!!")
+    console.log("fetching trending post!!");
     fetch(URL.API_URL + PATH.FETCH_TRENDING_POST + id, {
       method: "POST",
       headers: JSON_HEADERS,
@@ -152,6 +198,14 @@ export default function Posts({ userFollower, currentUser }) {
 
                   <div className="profile-name">
                     {post.createdUser.username}
+                    {post.createdUser.isVerified && (
+                      <img
+                        src="/Verified/verified.svg"
+                        width={"10px"}
+                        height={"10px"}
+                        alt="verified"
+                      />
+                    )}
                   </div>
 
                   <div className="profile-image">&#183; 21hr</div>
@@ -160,11 +214,25 @@ export default function Posts({ userFollower, currentUser }) {
                 <div className="user-content">{post.content}</div>
 
                 <div className="post-interaction">
-                  <div className="interaction">
-                    <ThumbUpOutlinedIcon htmlColor="grey" fontSize="10px" />
-                  </div>
-                  <div className="interaction">
-                    <ThumbDownOutlinedIcon htmlColor="grey" fontSize="10px" />
+                  <div className="like" onClick={() => likePost(post)}>
+                    <div className="icon">
+                      {post.hasLiked && (
+                        <ThumbUpIcon
+                          className="like-icon"
+                          htmlColor="hsl(120, 43%, 47%)"
+                          fontSize="small"
+                        />
+                      )}
+
+                      {!post.hasLiked && (
+                        <ThumbUpOutlinedIcon
+                          className="like-icon"
+                          htmlColor="hsl(120, 43%, 47%)"
+                          fontSize="small"
+                        />
+                      )}
+                    </div>
+                    <div className="count">{post.likes}</div>
                   </div>
                 </div>
               </div>

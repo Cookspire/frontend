@@ -21,6 +21,8 @@ export const PATH = {
   FETCH_FOLLOWERS_POST: "/fetchAll/post/user/follower?userId=",
   FETCH_USERS_POST: "/fetchAll/post/user?userId=",
   FETCH_TRENDING_POST: "/fetchAll/trending/post?userId=",
+
+  PERSIST_INTERACTION: "/persist/interaction"
 };
 
 export const NotificationType = {

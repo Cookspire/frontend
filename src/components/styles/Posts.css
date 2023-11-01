@@ -60,9 +60,21 @@
 
 .profile-name {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
   padding-left: 5px;
   font-size: var(--text-xs);
   font-weight: 600;
+  gap:2px;
+}
+
+.profile-name img {
+  display: flex;
+  align-items: center;
+  width: 13px;
+  height: 13px;
+  justify-content: center;
 }
 
 .profile-image {
@@ -101,7 +113,34 @@
   padding: 5px;
 }
 
-.interaction {
+.like {
   padding-left: 10px;
   padding-right: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  padding: 5px;
+  gap: 1px;
+  color: var(--secondaryColor);
+  font-size: var(--text-small);
+}
+
+.like .count {
+  display: flex;
+  align-items: center;
+}
+
+.like .icon {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
+
+.like .icon:hover {
+  background-color: hsla(120, 43%, 47%, 0.311);
+  border-radius: 50%;
+}
+
+.like:hover .count {
+  color: hsl(120, 43%, 47%);
 }

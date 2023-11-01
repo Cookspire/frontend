@@ -177,7 +177,7 @@ body {
   }
 }
 
-@media (max-width: 1060px) {
+@media (max-width: 1070px) {
   .side-nav-container {
     display: none;
   }
@@ -186,7 +186,7 @@ body {
   }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
   .side-nav-container {
     display: none;
   }
