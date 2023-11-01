@@ -1,4 +1,4 @@
-.cusine-container {
+.cuisine-container {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -10,7 +10,7 @@
   height: 100%;
 }
 
-.cusine-navigation {
+.cuisine-navigation {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -18,7 +18,7 @@
   flex-direction: row;
   width: 100%;
   padding: 10px;
-  margin-top:10px;
+  margin-top: 10px;
 }
 
 .content-name {
@@ -33,7 +33,7 @@
   font-weight: 800;
 }
 
-.cusine-list {
+.cuisine-list {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -45,7 +45,7 @@
   width: 100%;
 }
 
-.cusine-type {
+.cuisine-type {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -54,18 +54,19 @@
   flex-wrap: wrap;
   border-radius: var(--borderRadius);
   background-color: var(--navbarBackground);
-  border: 3px solid hsla(0, 0%, 100%, 0);
+  border: 3px solid var(--invisibleBorder);
   margin: 5px;
+  box-shadow: var(--boxShadow);
   transition: border 300ms ease-in-out;
 }
 
-.cusine-type img {
+.cuisine-type img {
   border-radius: var(--borderRadius);
   height: 100px;
   width: 150px;
 }
 
-.cusine-img {
+.cuisine-img {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -74,7 +75,7 @@
   width: 100%;
 }
 
-.cusine-name {
+.cuisine-name {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -86,7 +87,7 @@
   padding: 5px 0px 5px 0px;
 }
 
-.cusine-type:hover {
+.cuisine-type:hover {
   cursor: pointer;
   border: 3px solid orange;
 }
@@ -112,8 +113,8 @@
   border-radius: var(--roundBorder);
   padding-left: 10px;
   background-color: var(--cardBackgroundColor);
-  margin-top:10px;
-  margin-bottom:10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .search-content form {
@@ -131,7 +132,7 @@
   border-radius: var(--roundBorder);
   outline: none;
   border: none;
-  width:100%;
+  width: 100%;
 }
 
 .search-content input {
@@ -146,7 +147,7 @@
   width: 100%;
 }
 
-.search-icon{
+.search-icon {
   display: flex;
 }
 

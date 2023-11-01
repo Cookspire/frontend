@@ -1,0 +1,233 @@
+.recipe-detail-container {
+  background-color: var(--cardBackgroundColor);
+  border-radius: var(--borderRadius);
+  margin: 0;
+  padding: 0;
+  width: 500px;
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: auto;
+}
+
+.recipe-dialog {
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 100%;
+  padding: 5px;
+}
+
+.recipe-dialog .header {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  margin: 10px 5px 10px 5px;
+  width: 100%;
+  font-size: var(--text-3xl);
+  font-weight: bolder;
+}
+
+.recipe-dialog .image {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 10px 5px 10px 5px;
+  width: 100%;
+}
+
+.recipe-dialog .name {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: var(--text-xl);
+  margin: 5px;
+  width: 100%;
+  font-weight: 600;
+}
+
+.recipe-dialog .duration {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 5px;
+  width: 100%;
+}
+
+.recipe-dialog .actions {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 5px;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 5px;
+  width: 100%;
+}
+
+.actions-header {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  border: none;
+  align-items: center;
+  align-content: center;
+  flex-wrap: wrap;
+  background-color: var(--background);
+  padding: 10px;
+  border-radius: var(--borderRadius);
+  flex-direction: row;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  overflow: auto;
+}
+
+.actions-header .details-block {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  display: flex;
+  justify-content: center;
+  color: var(--secondaryColor);
+  align-items: center;
+  align-content: center;
+  flex-wrap: wrap;
+  font-weight: 600;
+  background-color: var(--invisibleBorder);
+  border: none;
+  border-radius: var(--borderRadius);
+  cursor: pointer;
+  width: 50%;
+  overflow: auto;
+}
+
+.actions-header .active-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  color: var(--themeColor);
+  border: var(--border);
+  background-color: var(--navbarBackground);
+  padding-top: 5px;
+  padding-bottom: 5px;
+  width: 50%;
+  font-weight: 600;
+  overflow: auto;
+  box-shadow: var(--boxShadow);
+}
+
+.header-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  overflow: auto;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.menu-control {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.menu-body {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  background-color: white;
+  overflow: auto;
+  width: 100%;
+  margin: 10px 0px 10px 0px;
+  padding: 10px;
+  border-radius: var(--borderRadius);
+}
+
+.menu-table {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.menu-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.menu-table td,
+th {
+  border-bottom: 1px solid var(--border);
+  padding: 7px;
+  text-align: left;
+}
+
+.menu-table tr {
+  width: 100%;
+}
+
+.menu-table th {
+  color: var(--secondaryColor);
+}
+
+.menu-table tr:hover {
+  cursor: pointer;
+  background-color: var(--primaryBackground);
+}
+
+.menu-body .heading {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  margin: 10px 0px 0px 0px;
+  font-size: var(--text-xl);
+  font-weight: 600;
+}
+.menu-body .sub-heading {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  margin: 10px 0px 10px 0px;
+  font-size: var(--text-base);
+  color: var(--secondaryColor)
+}
+
+.menu-body .steps {
+    display: block;
+}
+
+.menu-body li{
+    list-style: disc outside none;
+    display: list-item;
+    margin-left: 1em;
+    line-height: 1.5em;
+}
+
+

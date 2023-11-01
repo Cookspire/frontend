@@ -31,7 +31,7 @@ export default function Home() {
 
         {/* show followers posts */}
 
-        <Posts />
+        <Posts userFollower={true} currentUser={false}/>
 
         {newPost && <PostCreation closeDialog={setNewPost} />}
       </div>

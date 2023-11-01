@@ -32,7 +32,6 @@ export default function Navbar() {
   }, showProfile);
 
   useEffect(() => {
-    console.log(userData);
     if (
       userData &&
       userData.email !== "" &&

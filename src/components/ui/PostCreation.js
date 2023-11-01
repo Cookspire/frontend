@@ -1,6 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import ReactDom from "react-dom";
 import { UpdateNotificationContext } from "../../context/NotificationContext";
+import {
+  UpdatePostDataContext
+} from "../../context/PostContext";
 import { UserDataContext } from "../../context/UserContext";
 import {
   APIResponse,
@@ -33,8 +36,10 @@ export default function PostCreation({ closeDialog }) {
 
   const setNotificationData = useContext(UpdateNotificationContext);
 
-  const [posts, setPosts] = useState({
-    post: "",
+  const updatePosts = useContext(UpdatePostDataContext);
+
+  const [post, setPost] = useState({
+    content: "",
   });
 
   const [valid, setValid] = useState({
@@ -43,7 +48,6 @@ export default function PostCreation({ closeDialog }) {
   });
 
   useEffect(() => {
-    console.log(userData);
     document.getElementById("post").style.overflow = "hidden";
     document.getElementById("post").style.height = "0px";
     document.getElementById("post").style.height =
@@ -51,18 +55,52 @@ export default function PostCreation({ closeDialog }) {
     if (document.getElementById("post").scrollHeight >= 500) {
       document.getElementById("post").style.overflowY = "scroll";
     }
-  }, [posts.post]);
+  }, [post.content]);
 
   const closePost = CloseModal(() => {
     closeDialog(false);
   }, true);
 
   const handlePostInput = (e) => {
-    setPosts((prev) => ({ ...prev, post: e.target.value }));
+    setPost((prev) => ({ ...prev, content: e.target.value }));
     e.target.value.length > 0
       ? setValid((prev) => ({ ...prev, showDisable: false }))
       : setValid((prev) => ({ ...prev, showDisable: true }));
   };
+
+  async function fetchUsersPost(id) {
+    fetch(URL.API_URL + PATH.FETCH_USERS_POST + id, {
+      method: "POST",
+      headers: JSON_HEADERS,
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else {
+          return APIResponse.BAD_REQUEST;
+        }
+      })
+      .then((data) => {
+        
+        if (data !== APIResponse.BAD_REQUEST) {
+          updatePosts(data);
+          closeDialog(false);
+        } else {
+          setNotificationData(
+            true,
+            "Unable to fetch posts. Kindly raise a bug.",
+            NotificationType.INFO
+          );
+        }
+      })
+      .catch((err) => {
+        setNotificationData(
+          true,
+          "Oops you got us! Kindly raise a bug.",
+          NotificationType.INFO
+        );
+        return console.log("Error Occured, Reason : " + err);
+      });
+  }
 
   async function persistPosts(postData) {
     fetch(URL.API_URL + PATH.PERSIST_POST, {
@@ -84,8 +122,8 @@ export default function PostCreation({ closeDialog }) {
           showBuffer: false,
         }));
         if (data !== APIResponse.BAD_REQUEST) {
-          setPosts((prev) => ({ ...prev, post: "" }));
-          closeDialog(false);
+          setPost((prev) => ({ ...prev, content: "" }));
+          fetchUsersPost(userData.id);
         } else {
           setNotificationData(true, "Post not created", NotificationType.INFO);
         }
@@ -104,7 +142,7 @@ export default function PostCreation({ closeDialog }) {
     e.preventDefault();
     setValid((prev) => ({ ...prev, showDisable: false, showBuffer: true }));
     persistPosts({
-      content: posts.post,
+      content: post.content,
       createdBy: userData.id,
       likes: 0,
       dislikes: 0,
@@ -124,7 +162,7 @@ export default function PostCreation({ closeDialog }) {
                 autoComplete="off"
                 rows={2}
                 onChange={(e) => handlePostInput(e)}
-                value={posts.post}
+                value={post.content}
                 placeholder="What's Cooking?"
                 autoFocus
               />

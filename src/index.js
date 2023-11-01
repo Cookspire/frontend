@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import NavDialogContext from "./context/NavDialogContext";
 import { NotificationContext } from "./context/NotificationContext";
+import PostContext from "./context/PostContext";
 import { UserContext } from "./context/UserContext";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
@@ -14,9 +15,11 @@ root.render(
     <React.StrictMode>
       <NavDialogContext>
         <NotificationContext>
-          <UserContext>
-            <App />
-          </UserContext>
+          <PostContext>
+            <UserContext>
+              <App />
+            </UserContext>
+          </PostContext>
         </NotificationContext>
       </NavDialogContext>
     </React.StrictMode>
