@@ -28,7 +28,7 @@ export function UserContext({ children }) {
 
   const [userData, setUserData] = useState(() => {
     let userDetails = JSON.parse(localStorage.getItem("persist"));
-    if (userDetails && userDetails.email !=="") {
+    if (userDetails && userDetails.email !== "") {
       setHasLogged(true);
       fetchUserDetails(userDetails.email);
     } else return null;
@@ -70,6 +70,10 @@ export function UserContext({ children }) {
       fetchUserDetails(userData?.email);
     }
   }, []);
+
+  useEffect(() => {
+    console.log("here is the userData:" + JSON.stringify(userData));
+  }, [userData]);
 
   const updateUserData = (data) => {
     setUserData(data);

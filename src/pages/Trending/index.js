@@ -54,7 +54,7 @@ export default function Trending() {
           <div className="new-content">Trending Posts</div>
         </div>
 
-        <Posts />
+        <Posts userFollower={false} currentUser={false} />
       </div>
 
       <div className="explore-container">

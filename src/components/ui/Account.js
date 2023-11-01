@@ -10,6 +10,10 @@ export default function Account() {
             <div className="user-menu">General</div>
           </NavLink>
 
+          <NavLink to="/profile/1/account/sensitive">
+            <div className="user-menu">Password</div>
+          </NavLink>
+
           <NavLink to="/profile/1/account/verification">
             <div className="user-menu">Verification</div>
           </NavLink>

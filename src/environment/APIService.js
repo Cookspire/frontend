@@ -13,13 +13,14 @@ export const JSON_HEADERS = {
 };
 
 export const PATH = {
-
   CREATE_USER: "/persist/user",
   VERIFY_USER: "/verify/user",
   FETCH_USER: "/fetch/user?email=",
 
   PERSIST_POST: "/persist/post",
-
+  FETCH_FOLLOWERS_POST: "/fetchAll/post/user/follower?userId=",
+  FETCH_USERS_POST: "/fetchAll/post/user?userId=",
+  FETCH_TRENDING_POST: "/fetchAll/trending/post?userId=",
 };
 
 export const NotificationType = {

@@ -1,6 +1,8 @@
 import "../styles/Verification.css";
-
+import { useState } from "react";
 export default function Verification() {
+  const [blockSubmit, setBlockSubmit] = useState(true);
+
   return (
     <div className="verify-content">
       <div className="heading">Verify your account</div>
@@ -15,7 +17,9 @@ export default function Verification() {
       </div>
 
       <div className="action">
-        <button>Submit for Verification</button>
+        {!blockSubmit && <button>Submit for Verification</button>}
+
+        {blockSubmit && <button className="invalid-button">Verification in progress</button>}
       </div>
     </div>
   );

@@ -263,8 +263,7 @@ body {
   }
 
   .recipe-detail-container{
-    max-width: 90%;
-    width:auto;
+    width: 90%;
   }
 }
 
