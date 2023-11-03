@@ -31,7 +31,7 @@ export default function AppRouter() {
             userData && localStorage.getItem("persist") ? (
               <Navigate to="/home" />
             ) : (
-              <Cuisine />
+              <Navigate to="/explore" />
             )
           }
         ></Route>
@@ -70,7 +70,7 @@ export default function AppRouter() {
 
           <Route path="/profile" element={<Profile />}>
             <Route
-              index
+              exact
               path="/profile/:id/posts"
               element={<Posts userFollower={false} currentUser={true} />}
             />

@@ -16,9 +16,10 @@
   align-content: center;
   flex-wrap: wrap;
   flex-direction: row;
-  width:150px;
-  margin-left:10px;
-  margin-right:10px;
+  flex-basis: 150px;
+  flex-grow: inherit;
+  margin-left: 10px;
+  margin-right: 10px;
   margin-bottom: 10px;
 }
 
@@ -38,7 +39,6 @@
   align-items: center;
   align-content: flex-start;
 }
-
 
 .profile .profile-image img {
   width: 120px;

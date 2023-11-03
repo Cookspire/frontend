@@ -1,6 +1,7 @@
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { UpdateNotificationContext } from "../../context/NotificationContext";
 import {
   PostDataContext,
@@ -26,10 +27,15 @@ export default function Posts({ userFollower, currentUser }) {
 
   const updatePosts = useContext(UpdatePostDataContext);
 
+  const navigate = useNavigate();
+
   const likePost = (post) => {
-    let likePost = post.hasLiked ? false : true;
-    persistInteraction(post, likePost);
-    console.log(likePost);
+    if (userData === undefined || userData === null) {
+      navigate("/login");
+    } else {
+      let likePost = post.hasLiked ? false : true;
+      persistInteraction(post, likePost);
+    }
   };
 
   async function persistInteraction(post, likePost) {
@@ -74,7 +80,7 @@ export default function Posts({ userFollower, currentUser }) {
 
   useEffect(() => {
     let id;
-    if (userData === undefined) {
+    if (userData === undefined || userData === null) {
       id = 0;
     } else {
       id = userData.id;
@@ -193,7 +199,7 @@ export default function Posts({ userFollower, currentUser }) {
               <div className="user-post" key={post.id}>
                 <div className="user-data">
                   <div className="profile-image">
-                    <img src="/posts/profile.svg" />
+                    <img src="/posts/profile.svg" alt="profile" />
                   </div>
 
                   <div className="profile-name">
@@ -219,7 +225,7 @@ export default function Posts({ userFollower, currentUser }) {
                       {post.hasLiked && (
                         <ThumbUpIcon
                           className="like-icon"
-                          htmlColor="hsl(120, 43%, 47%)"
+                          htmlColor="grey"
                           fontSize="small"
                         />
                       )}
@@ -227,7 +233,7 @@ export default function Posts({ userFollower, currentUser }) {
                       {!post.hasLiked && (
                         <ThumbUpOutlinedIcon
                           className="like-icon"
-                          htmlColor="hsl(120, 43%, 47%)"
+                          htmlColor="grey"
                           fontSize="small"
                         />
                       )}

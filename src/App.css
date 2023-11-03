@@ -34,16 +34,17 @@
 .left-container {
   display: flex;
   justify-content: flex-start;
-  align-items: center;
-  align-content: center;
+  align-items: flex-start;
   flex-direction: column;
   flex-wrap: wrap;
+  position: sticky;
+  top: 50px;
+  width:200px;
   background-color: var(--background);
   border-right: 1px solid var(--border);
 }
 
 .center-container {
-  overflow: auto;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -51,5 +52,6 @@
   flex-direction: column;
   flex-wrap: wrap;
   height: 100%;
-  width: 920px;
+  width: 1020px;
+
 }
