@@ -179,6 +179,9 @@ export default function Register() {
   return (
     <div className="center-modal">
       <Notification />
+      <div className="content-image">
+        <img src="/Auth/register.svg" alt="login_image" />
+      </div>
       <div className="center-content">
         <div className="center-content-header">
           <div className="auth-header">Join CookSpire today!</div>

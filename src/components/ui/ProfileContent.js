@@ -1,7 +1,11 @@
 import { NavLink, Outlet } from "react-router-dom";
 import "../styles/ProfileContent.css";
+import { useContext } from "react";
+import { UserDataContext } from "../../context/UserContext";
 
 export default function Profile() {
+  const userData = useContext(UserDataContext);
+
   return (
     <div className="profile-content">
       <div className="profile-info">
@@ -31,17 +35,17 @@ export default function Profile() {
 
       <div className="profile-data">
         <nav>
-          <NavLink to="/profile/1/posts">
+          <NavLink to={"/profile/" + userData.id + "/posts"}>
             <div className="profile-nav">Posts</div>
           </NavLink>
-          <NavLink to="/profile/1/followers">
+          <NavLink to={"/profile/" + userData.id + "/followers"}>
             <div className="profile-nav">Followers</div>
           </NavLink>
 
-          <NavLink to="/profile/1/followers">
+          <NavLink to={"/profile/" + userData.id + "/followers"}>
             <div className="profile-nav">Following</div>
           </NavLink>
-          <NavLink to="/profile/1/account/general">
+          <NavLink to={"/profile/" + userData.id + "/account/general"}>
             <div className="profile-nav">Account</div>
           </NavLink>
         </nav>

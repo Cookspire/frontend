@@ -20,6 +20,7 @@
   font-size: var(--text-1xl);
   border-radius: var(--borderRadius);
   padding: 8px 20px 8px 20px;
+  margin-top:5px;
 }
 
 .side-nav {

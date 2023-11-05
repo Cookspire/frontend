@@ -73,6 +73,10 @@
   margin: 10px 0px 5px 0px;
 }
 
+.general-form .field textarea {
+  max-height: 100px;
+}
+
 .general-form .field-input {
   padding: 0;
   margin: 0;
@@ -139,8 +143,8 @@ select {
   border: var(--fieldFocusBorder);
 }
 
-option{
-    padding: .5em
+option {
+  padding: 0.5em;
 }
 
 .general-form .action {
@@ -169,6 +173,11 @@ option{
   color: var(--buttonColor);
 }
 
-.general-form .action button:hover {
-  background-color: var(--buttonHover);
+.general-form .action button:disabled {
+  cursor: not-allowed;
+  background-color: hsl(0, 0%, 50%);
+}
+
+.general-form .action .side-loader {
+  width: auto;
 }

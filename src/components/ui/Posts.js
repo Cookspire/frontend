@@ -225,7 +225,7 @@ export default function Posts({ userFollower, currentUser }) {
                       {post.hasLiked && (
                         <ThumbUpIcon
                           className="like-icon"
-                          htmlColor="grey"
+                          htmlColor="hsl(120, 43%, 47%)"
                           fontSize="small"
                         />
                       )}
@@ -233,7 +233,7 @@ export default function Posts({ userFollower, currentUser }) {
                       {!post.hasLiked && (
                         <ThumbUpOutlinedIcon
                           className="like-icon"
-                          htmlColor="grey"
+                          htmlColor="hsl(120, 43%, 47%)"
                           fontSize="small"
                         />
                       )}
