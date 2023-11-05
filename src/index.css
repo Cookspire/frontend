@@ -9,7 +9,7 @@
 
   --cardBackgroundColor: hsl(0, 0%, 100%);
 
-  --boxShadow:  0px 1px 5px 0px hsla(0, 0%, 44%, 0.158);
+  --boxShadow: 0px 1px 5px 0px hsla(0, 0%, 44%, 0.158);
 
   --text-1xs: 0.6rem;
   --text-xs: 0.8rem;
@@ -177,7 +177,7 @@ body {
   }
 }
 
-@media (max-width: 1070px) {
+@media (max-width: 1250px) {
   .side-nav-container {
     display: none;
   }
@@ -187,6 +187,90 @@ body {
 }
 
 @media (max-width: 900px) {
+  .side-nav-container {
+    display: none;
+  }
+
+  .toggle-button {
+    display: flex;
+  }
+
+  .post-content {
+    width: 90%;
+    align-content: center;
+  }
+
+  .post-creation {
+    width: 90%;
+    align-content: center;
+  }
+
+  .post-creation-content {
+    min-width: 80%;
+  }
+
+  .trend-heading {
+    width: 100%;
+  }
+
+  .search-content {
+    width: 100%;
+  }
+
+  .search-content input {
+    width: 150px;
+  }
+
+  .explore-container {
+    display: none;
+  }
+
+  .center-container {
+    max-width: 100%;
+  }
+
+  .post-container {
+    width: 100%;
+    align-content: center;
+  }
+
+  .profile-content {
+    padding: 0px;
+    height: 100%;
+  }
+  .profile-content .profile-info {
+    padding: 0px;
+  }
+
+  .profile-info .profile-image img {
+    width: 90px;
+    height: 90px;
+  }
+
+  .profile-details {
+    margin-left: 10px;
+    width: auto;
+    justify-content: flex-start;
+    align-content: flex-start;
+  }
+
+  .profile-data nav {
+    gap: 1em;
+  }
+
+  .follower-content .profile {
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    width: 100px;
+  }
+
+  .recipe-detail-container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 500px) {
   .side-nav-container {
     display: none;
   }
@@ -262,9 +346,7 @@ body {
     width: 100px;
   }
 
-  .recipe-detail-container{
+  .recipe-detail-container {
     width: 90%;
   }
 }
-
-

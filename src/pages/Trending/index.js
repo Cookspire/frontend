@@ -31,7 +31,7 @@ export default function Trending() {
             <div className="new-content">
               <div className="creation-form">
                 <div className="profile-image">
-                  <img src="/posts/profile.svg" />
+                  <img src="/posts/profile.svg"  alt="profile"/>
                 </div>
 
                 <div className="new-post" onClick={createPost}>

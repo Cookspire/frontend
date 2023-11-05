@@ -41,7 +41,7 @@ export default function Profile() {
           <NavLink to="/profile/1/followers">
             <div className="profile-nav">Following</div>
           </NavLink>
-          <NavLink to="/profile/1/account">
+          <NavLink to="/profile/1/account/general">
             <div className="profile-nav">Account</div>
           </NavLink>
         </nav>

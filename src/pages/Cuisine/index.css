@@ -47,17 +47,20 @@
 
 .cuisine-type {
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  align-content: flex-start;
-  flex-direction: column;
-  flex-wrap: wrap;
-  border-radius: var(--borderRadius);
-  background-color: var(--navbarBackground);
-  border: 3px solid var(--invisibleBorder);
-  margin: 5px;
-  box-shadow: var(--boxShadow);
-  transition: border 300ms ease-in-out;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: flex-start;
+    flex-direction: column;
+    flex-wrap: wrap;
+    flex-basis: 200px;
+    flex-grow: 1;
+    border-radius: var(--borderRadius);
+    background-color: var(--navbarBackground);
+    border: 3px solid var(--invisibleBorder);
+    margin: 5px;
+    box-shadow: var(--boxShadow);
+    transition: border 300ms ease-in-out;
+
 }
 
 .cuisine-type img {
