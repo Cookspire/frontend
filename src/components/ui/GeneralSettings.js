@@ -110,7 +110,11 @@ export default function GeneralSettings() {
         if (data !== APIResponse.BAD_REQUEST) {
           setValid(true);
           updateUserData(data);
-          setNotificationData(true, "Update Success.", NotificationType.INFO);
+          setNotificationData(
+            true,
+            "Update Successful.",
+            NotificationType.INFO
+          );
         } else {
           setNotificationData(
             true,
