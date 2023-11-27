@@ -41,7 +41,7 @@
   top: 50px;
   width:200px;
   background-color: var(--background);
-  border-right: 1px solid var(--border);
+  /* border-right: 1px solid var(--border); */
 }
 
 .center-container {
@@ -53,5 +53,4 @@
   flex-wrap: wrap;
   height: 100%;
   width: 1020px;
-
 }

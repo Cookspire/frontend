@@ -1,8 +1,149 @@
+import { useContext, useState } from "react";
+import { UpdateNotificationContext } from "../../context/NotificationContext";
+import {
+  LogoutUserContext,
+  UpdateUserDataContext,
+  UserDataContext,
+} from "../../context/UserContext";
+import {
+  APIResponse,
+  JSON_HEADERS,
+  NotificationType,
+  PATH,
+  URL,
+} from "../../environment/APIService";
 import "../styles/GeneralSettings.css";
+import Notification from "./Notification";
 
 export default function GeneralSettings() {
+  const updateUserData = useContext(UpdateUserDataContext);
+
+  const setNotificationData = useContext(UpdateNotificationContext);
+
+  const userData = useContext(UserDataContext);
+
+  const [submit, setSubmit] = useState(false);
+
+  const logout = useContext(LogoutUserContext);
+
+  const [userForm, setUserForm] = useState({
+    username: { value: userData?.username, err: "" },
+    bio: { value: userData?.bio, err: "" },
+    country: { value: userData?.country, err: "" },
+  });
+
+  const [isValid, setValid] = useState(true);
+
+  function formErrorHandler(field, value) {
+    let response = "";
+    switch (field) {
+      case "username":
+        if (!/^[A-Za-z0-9]{5,20}$/.test(value)) {
+          response = "*Min: 5, Max: 20 AlphaNumeric characters.";
+        }
+        break;
+      case "bio":
+        if (!/^[A-Za-z0-9!@#$%^&*()_+\\[\].,:\-<>\/?\s]{0,150}$/.test(value))
+          response = '*Special characters =, ", {, } are not allowed';
+        break;
+      case "country":
+        if (!/^[A-Za-z\s]{4,70}$/.test(value))
+          response = "Enter a valid country name";
+        break;
+      default:
+        response = "";
+    }
+
+    if (response !== "") {
+      document
+        .getElementById(field)
+        .style.setProperty("--fieldBorder", "2px solid hsl(0, 100%, 50%)");
+    } else {
+      document
+        .getElementById(field)
+        .style.setProperty("--fieldBorder", "2px solid hsl(0, 0%, 0%, 0.17)");
+    }
+
+    return response;
+  }
+
+  const changeValues = (e) => {
+    const errResponse = formErrorHandler(e.target.id, e.target.value);
+    setUserForm((prev) => ({
+      ...prev,
+      [e.target.id]: { value: e.target.value, err: errResponse },
+    }));
+    console.log(e.target.id, e.target.value);
+    if (
+      userForm.username.value.length > 0 &&
+      userForm.bio.value.length > 0 &&
+      errResponse === ""
+    ) {
+      setValid(true);
+    } else {
+      setValid(false);
+    }
+  };
+
+  async function persistUser() {
+    fetch(URL.API_URL + PATH.CREATE_USER, {
+      method: "PUT",
+      body: JSON.stringify({
+        username: userForm.username.value,
+        email: userData.email,
+        password: userData.password,
+        country: userForm.country.value,
+        isVerified: false,
+        bio: userForm.bio.value,
+        id: userData.id,
+      }),
+      headers: JSON_HEADERS,
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else if (response.status === 403 || response.status === 401) logout();
+        else return APIResponse.BAD_REQUEST;
+      })
+      .then((data) => {
+        setSubmit(false);
+
+        if (data !== APIResponse.BAD_REQUEST) {
+          setValid(true);
+          updateUserData(data);
+          setNotificationData(
+            true,
+            "Update Successful.",
+            NotificationType.INFO
+          );
+        } else {
+          setNotificationData(
+            true,
+            "Account not created",
+            NotificationType.INFO
+          );
+          console.log("Error during API call.");
+        }
+      })
+      .catch((err) => {
+        setSubmit(false);
+        setNotificationData(
+          true,
+          "Oops you got us! Kindly raise a bug.",
+          NotificationType.INFO
+        );
+        return console.log("Error Occured, Reason : " + err);
+      });
+  }
+
+  const submitForm = (event) => {
+    event.preventDefault();
+    setSubmit((prev) => !prev);
+    persistUser();
+  };
+
   return (
     <div className="settings-content">
+      <Notification />
       <div className="general">
         <div className="heading">User Settings</div>
 
@@ -10,7 +151,7 @@ export default function GeneralSettings() {
           Make changes to your account here. Click save when you're done
         </div>
 
-        <form className="general-form">
+        <form className="general-form" onSubmit={submitForm}>
           <div className="field">
             <div className="field-label">
               <label htmlFor="username">Username</label>
@@ -22,8 +163,13 @@ export default function GeneralSettings() {
                 type="text"
                 placeholder="your name"
                 autoComplete="off"
+                value={userForm.username.value}
+                onChange={(e) => changeValues(e)}
               />
             </div>
+            {userForm.username.err && userForm.username.err.length > 0 && (
+              <div className="err-msg">{userForm.username.err}</div>
+            )}
           </div>
 
           <div className="field">
@@ -35,10 +181,17 @@ export default function GeneralSettings() {
               <textarea
                 id="bio"
                 autoComplete="off"
-                rows={2}
+                rows={4}
+                maxLength={150}
                 placeholder="Tell us more about you..."
+                value={userForm.bio.value}
+                onChange={(e) => changeValues(e)}
               />
             </div>
+
+            {userForm.bio.err && userForm.bio.err.length > 0 && (
+              <div className="err-msg">{userForm.bio.err}</div>
+            )}
           </div>
 
           <div className="field">
@@ -47,7 +200,13 @@ export default function GeneralSettings() {
             </div>
 
             <div className="field-input">
-              <select id="country" type="text">
+              <select
+                id="country"
+                type="text"
+                value={userForm.country.value}
+                onChange={(e) => changeValues(e)}
+              >
+                <option value="choose">--choose country--</option>
                 <option value="Afghanistan">Afghanistan</option>
                 <option value="Åland Islands">Åland Islands</option>
                 <option value="Albania">Albania</option>
@@ -361,12 +520,27 @@ export default function GeneralSettings() {
           </div>
 
           <div className="action">
-            <button>Update Info</button>
+            {!submit && (
+              <div className="field-button">
+                <button type="submit" disabled={!isValid}>
+                  Update Info
+                </button>
+              </div>
+            )}
+
+            {submit && (
+              <div className=" field-button disabled">
+                <button type="submit" className="disabled">
+                  Updating Info...
+                  <div className="side-loader">
+                    <div className="loader"></div>
+                  </div>
+                </button>
+              </div>
+            )}
           </div>
         </form>
       </div>
-
-      
     </div>
   );
 }

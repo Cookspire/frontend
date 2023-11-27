@@ -8,8 +8,7 @@
   border: 1px solid var(--border);
   background-color: var(--cardBackgroundColor);
   animation: load-up 100ms ease-in;
-  min-width: 23%;
-  min-height: 50px;
+  min-width: 350px;
   display: flex;
   justify-content: flex-start;
   cursor: pointer;
