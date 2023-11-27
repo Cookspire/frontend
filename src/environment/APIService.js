@@ -16,14 +16,16 @@ export const PATH = {
   CREATE_USER: "/persist/user",
   VERIFY_USER: "/verify/user",
   FETCH_USER: "/fetch/user?email=",
-  FETCH_GENERAL_ANALYSIS: "/fetch/general/userAnalysis?userId=",
 
   PERSIST_POST: "/persist/post",
   FETCH_FOLLOWERS_POST: "/fetchAll/post/user/follower?userId=",
   FETCH_USERS_POST: "/fetchAll/post/user?userId=",
   FETCH_TRENDING_POST: "/fetchAll/trending/post?userId=",
 
-  PERSIST_INTERACTION: "/persist/interaction",
+  FETCH_RECIPE_CUISINE: "/fetch/recipe/cuisine?name=",
+  FETCH_RECIPE_COURSE: "/fetch/recipe/course?name=",
+
+  PERSIST_INTERACTION: "/persist/interaction"
 };
 
 export const NotificationType = {

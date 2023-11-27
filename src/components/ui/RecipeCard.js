@@ -3,22 +3,25 @@ import { createPortal } from "react-dom";
 import "../styles/RecipeCard.css";
 import RecipeDetails from "./RecipeDetails";
 
-export default function RecipeCard() {
+export default function RecipeCard({recipeData}) {
   const [showRecipe, setShowRecipe] = useState(false);
+
+  const [recipeDetails, setRecipeDetails]= useState(recipeData);
 
   return (
     <>
       <div className="recipe-type" onClick={() => setShowRecipe(true)}>
         <div className="recipe-img">
           <img
-            alt="coffee"
-            src="https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt={recipeDetails.name.trim()}
+            src={recipeDetails.imageType==='url'?recipeDetails.imageName:""}
           ></img>
+         {/* add default image!! */}
         </div>
 
-        <div className="recipe-name">Coffee</div>
+        <div className="recipe-name"><p className="trim-title">{recipeDetails.name.trim()}</p></div>
 
-        <div className="recipe-duration">Total time : 20min</div>
+        <div className="recipe-duration">Total time : {recipeDetails.cook_time_mins}min</div>
       </div>
       {showRecipe &&
         createPortal(

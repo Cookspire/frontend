@@ -12,7 +12,7 @@ import {
 } from "../../environment/APIService";
 import "./index.css";
 
-export default function Cuisine() {
+export default function Course() {
   const { name } = useParams();
 
   const navigate = useNavigate();
@@ -21,8 +21,8 @@ export default function Cuisine() {
 
   const [recipeList, setRecipeList] = useState([]);
 
-  async function fetchRecipeByCuisine(cuisine) {
-    fetch(URL.API_URL + PATH.FETCH_RECIPE_CUISINE + cuisine, {
+  async function fetchRecipeByCourse(cuisine) {
+    fetch(URL.API_URL + PATH.FETCH_RECIPE_COURSE + cuisine, {
       method: "POST",
     })
       .then((response) => {
@@ -56,7 +56,7 @@ export default function Cuisine() {
     if (name && name.length === 0) {
       navigate("/explore");
     } else {
-      fetchRecipeByCuisine(name);
+      fetchRecipeByCourse(name);
     }
   }, [name, navigate]);
 
@@ -80,7 +80,7 @@ export default function Cuisine() {
 
       <div className="recipe-navigation">
         <NavLink to="/explore">
-          <div className="previous-page">Cuisines</div>
+          <div className="previous-page">Courses</div>
         </NavLink>
 
         <ArrowForwardIosIcon

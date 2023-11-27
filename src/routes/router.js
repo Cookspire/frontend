@@ -13,9 +13,10 @@ import Cuisine from "../pages/Cuisine";
 import Home from "../pages/Home";
 import NotFound from "../pages/NotFound/NotFound";
 import Profile from "../pages/Profile";
-import Recipe from "../pages/Recipes";
+import Recipe from "../pages/Recipe";
 import Trending from "../pages/Trending";
 import ProtectedRoute from "./ProtectedRoute";
+import Course from "../pages/Course";
 
 export default function AppRouter() {
   const userData = useContext(UserDataContext);
@@ -59,8 +60,9 @@ export default function AppRouter() {
         ></Route>
 
         <Route exact path="/explore">
-          <Route path="/explore" element={<Cuisine />} />
-          <Route path="/explore/:name/recipes" element={<Recipe />} />
+          <Route path="/explore" element={<Recipe />} />
+          <Route path="/explore/cuisine/:name" element={<Cuisine />} />
+          <Route path="/explore/course/:name" element={<Course />} />
         </Route>
 
         <Route path="/trending" element={<Trending />} />
