@@ -12,6 +12,11 @@ export const JSON_HEADERS = {
   "Content-Type": "application/json",
 };
 
+export const MULTI_PART_HEADERS = {
+  "Content-Type": "multipart/form-data",
+};
+
+
 export const PATH = {
   CREATE_USER: "/persist/user",
   VERIFY_USER: "/verify/user",

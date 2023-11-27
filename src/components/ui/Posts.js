@@ -194,7 +194,7 @@ export default function Posts({ userFollower, currentUser }) {
       <Notification />
       <div className="post-content">
         <div className="post">
-          {postsList.map((post) => {
+          {postsList.length >0 && postsList.map((post) => {
             return (
               <div className="user-post" key={post.id}>
                 <div className="user-data">
@@ -244,6 +244,16 @@ export default function Posts({ userFollower, currentUser }) {
               </div>
             );
           })}
+
+          {
+            postsList.length === 0 && (
+              <div className="new-user">
+                <h1>Welcome to Cookspire!</h1>
+                <br/>
+                 Follow users / create posts to get started...
+              </div>
+            )
+          }
         </div>
       </div>
     </>

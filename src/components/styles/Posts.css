@@ -144,3 +144,16 @@
 .like:hover .count {
   color: hsl(120, 43%, 47%);
 }
+
+.new-user{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 10px;
+  width: 100%;
+  color: var(--secondaryColor);
+}
+

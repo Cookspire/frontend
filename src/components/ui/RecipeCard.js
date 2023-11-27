@@ -10,7 +10,7 @@ export default function RecipeCard({recipeData}) {
 
   return (
     <>
-      <div className="recipe-type" onClick={() => setShowRecipe(true)}>
+      <div className="recipe-type" title={recipeDetails.name.trim()} onClick={() => setShowRecipe(true)}>
         <div className="recipe-img">
           <img
             alt={recipeDetails.name.trim()}

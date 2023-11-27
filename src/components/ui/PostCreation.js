@@ -1,13 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import ReactDom from "react-dom";
 import { UpdateNotificationContext } from "../../context/NotificationContext";
-import {
-  UpdatePostDataContext
-} from "../../context/PostContext";
+import { UpdatePostDataContext } from "../../context/PostContext";
 import { UserDataContext } from "../../context/UserContext";
 import {
   APIResponse,
   JSON_HEADERS,
+  MULTI_PART_HEADERS,
   NotificationType,
   PATH,
   URL,
@@ -80,7 +79,6 @@ export default function PostCreation({ closeDialog }) {
         }
       })
       .then((data) => {
-        
         if (data !== APIResponse.BAD_REQUEST) {
           updatePosts(data);
           closeDialog(false);
@@ -103,10 +101,13 @@ export default function PostCreation({ closeDialog }) {
   }
 
   async function persistPosts(postData) {
+    const formdata = new FormData();
+    formdata.set("data", JSON.stringify(postData));
+
+    console.log(formdata);
     fetch(URL.API_URL + PATH.PERSIST_POST, {
       method: "PUT",
-      body: JSON.stringify(postData),
-      headers: JSON_HEADERS,
+      body: formdata,
     })
       .then((response) => {
         if (response.status === 200) return response.json();
@@ -163,6 +164,7 @@ export default function PostCreation({ closeDialog }) {
                 rows={2}
                 onChange={(e) => handlePostInput(e)}
                 value={post.content}
+                maxLength={1000}
                 placeholder="What's Cooking?"
                 autoFocus
               />
