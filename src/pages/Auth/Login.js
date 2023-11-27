@@ -110,6 +110,9 @@ export default function Login() {
     <>
       <Notification />
       <div className="center-modal">
+        <div className="content-image">
+          <img src="/Auth/login.svg" alt="login_image"/>
+        </div>
         <div className="center-content">
           <div className="center-content-header">
             <div className="auth-header">Sign in to CookSpire</div>

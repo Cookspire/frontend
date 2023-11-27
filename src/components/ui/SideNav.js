@@ -1,24 +1,14 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { UserDataContext } from "../../context/UserContext";
+import { UserDataContext, UserLoggedStatus } from "../../context/UserContext";
 import "../styles/SideNav.css";
 
 export default function SideNav() {
   const userData = useContext(UserDataContext);
 
-  const [isLogged, setIsLogged] = useState(false);
+  const isLogged = useContext(UserLoggedStatus);
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (
-      userData &&
-      userData.email !== "" &&
-      localStorage.getItem("persist") !== ""
-    ) {
-      setIsLogged(true);
-    }
-  }, [userData]);
 
   return (
     <div className="side-nav-container">
@@ -53,10 +43,12 @@ export default function SideNav() {
           {isLogged && (
             <li
               onClick={() => {
-                navigate("/profile/1/posts");
+                navigate("/profile/" + userData.id + "/posts");
               }}
             >
-              <NavLink to="/profile/1/posts">Profile</NavLink>
+              <NavLink to={"/profile/" + userData.id + "/posts"}>
+                Profile
+              </NavLink>
             </li>
           )}
         </ul>

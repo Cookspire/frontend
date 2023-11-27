@@ -80,6 +80,10 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-y: scroll !important;
+}
+
 html,
 body {
   min-height: 100vh;
@@ -106,65 +110,6 @@ body {
   flex-wrap: wrap;
 }
 
-.center-modal {
-  display: flex;
-  height: 50em;
-  width: auto;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  flex-direction: column;
-  flex-wrap: wrap;
-  letter-spacing: normal;
-}
-
-.center-content {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  align-content: center;
-  flex-direction: column;
-  flex-wrap: wrap;
-  border: 1px solid var(--border);
-  border-radius: var(--borderRadius);
-  padding: 20px;
-  background-color: var(--cardBackgroundColor);
-  max-width: 25em;
-}
-
-.center-content-header {
-  display: flex;
-  height: auto;
-  width: 100%;
-  justify-content: flex-start;
-  align-items: center;
-  align-content: center;
-  flex-direction: column;
-  flex-wrap: wrap;
-}
-
-.center-content-body {
-  display: flex;
-  height: auto;
-  width: 100%;
-  justify-content: flex-start;
-  align-items: center;
-  align-content: center;
-  flex-direction: column;
-  flex-wrap: wrap;
-}
-
-.center-content-footer {
-  display: flex;
-  height: auto;
-  width: 100%;
-  justify-content: flex-start;
-  align-items: center;
-  align-content: center;
-  flex-direction: column;
-  flex-wrap: wrap;
-}
-
 @media (width<=800px) {
   body {
     --text-small: 0.8rem;
@@ -178,15 +123,30 @@ body {
 }
 
 @media (max-width: 1250px) {
+  .left-container {
+    display: none;
+  }
   .side-nav-container {
     display: none;
   }
   .toggle-button {
     display: flex;
   }
+  .center-container {
+    max-width: 100%;
+  }
+
+  .content-image img {
+    width: 400px;
+    height: 400px;
+    margin: 0px 10px 0px 10px;
+  }
 }
 
 @media (max-width: 900px) {
+  .content-image {
+    display: none;
+  }
   .side-nav-container {
     display: none;
   }
@@ -205,12 +165,18 @@ body {
     align-content: center;
   }
 
-  .post-creation-content {
-    min-width: 80%;
+  .trend-heading {
+    width: 90%;
+    align-content: center;
   }
 
-  .trend-heading {
-    width: 100%;
+  .trend-content {
+    width: 80%;
+    align-content: center;
+  }
+
+  .post-creation-content {
+    min-width: 80%;
   }
 
   .search-content {
@@ -271,6 +237,18 @@ body {
 }
 
 @media (max-width: 500px) {
+  .content-image {
+    display: none;
+  }
+
+  .trend-heading {
+    width: 100%;
+  }
+
+  .trend-content {
+    width: 100%;
+  }
+
   .side-nav-container {
     display: none;
   }
