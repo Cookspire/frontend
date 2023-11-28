@@ -216,18 +216,47 @@ th {
   flex-direction: column;
   margin: 10px 0px 10px 0px;
   font-size: var(--text-base);
-  color: var(--secondaryColor)
+  color: var(--secondaryColor);
 }
 
 .menu-body .steps {
-    display: block;
+  display: block;
 }
 
-.menu-body li{
-    list-style: disc outside none;
-    display: list-item;
-    margin-left: 1em;
-    line-height: 1.5em;
+.menu-body li {
+  list-style: disc outside none;
+  display: list-item;
+  margin-left: 1em;
+  line-height: 1.5em;
 }
 
+.remove-pic {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--text-4xl);
+  background-color: var(--closeImageButton);
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  right: 15px;
+  top: 20px;
+  width: 30px;
+  height: 30px;
+  font-weight: 100;
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--primaryBackground);
+}
 
+.remove-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: inherit;
+  height: inherit;
+}
+
+.remove-pic:hover {
+  background-color: var(--closeImageButtonHover);
+}

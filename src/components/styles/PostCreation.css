@@ -1,7 +1,7 @@
 .post-creation-content {
   background-color: var(--cardBackgroundColor);
   border-radius: var(--borderRadius);
-  min-width: 500px;
+  width: 500px;
   margin: 0;
   padding: 0;
   display: flex;
@@ -81,56 +81,71 @@
   font-size: 1rem;
   width: 100%;
   border: none;
-  max-height: 500px;
+  max-height: 250px;
   font-size: var(--text-lg);
 }
 
-.form-content textarea:focus{
+.form-content textarea:focus {
   border: none;
   outline: none;
 }
 
-.form-content .post-attachments{
+.form-content .post-attachments {
   display: flex;
   justify-content: flex-start;
   align-content: center;
   align-items: flex-start;
   flex-wrap: wrap;
   flex-direction: row;
-  width:100%;
+  width: 100%;
 }
 
-.photo-attachment{
+.photo-attachment {
   display: flex;
   justify-content: flex-start;
   align-content: center;
   align-items: flex-start;
   flex-wrap: wrap;
   flex-direction: row;
-  padding:10px;
+  padding: 10px;
   cursor: pointer;
 }
 
-.photo-attachment:hover{
+.photo-attachment:hover {
   background-color: var(--primaryBackgroundHover);
   border-radius: 50%;
 }
 
-.photo-attachment:hover .css-i4bv87-MuiSvgIcon-root{
-  color:black;
+.photo-attachment:hover .css-i4bv87-MuiSvgIcon-root {
+  color: black;
 }
 
+.post-image {
+  height: 100%;
+  width: 100%;
+}
+
+.post-image-container {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width:100%;
+  position: relative;
+  padding: 10px 5px 10px 5px;
+}
 
 .form-content textarea::placeholder {
   font-size: var(--text-lg);
 }
 
-.form-action .invalid-button{
+.form-action .invalid-button {
   cursor: not-allowed;
   background-color: var(--buttonDisabled);
 }
 
-.form-action .invalid-button:hover{
+.form-action .invalid-button:hover {
   background-color: var(--buttonDisabled);
 }
 
@@ -148,12 +163,11 @@
   animation: spin 0.75s ease infinite;
 }
 
-
-.posts-form .profile-image{
-  padding:0px;
+.posts-form .profile-image {
+  padding: 0px;
 }
 
-.posts-form .user-data{
+.posts-form .user-data {
   margin: 10px 0px 0px 0px;
 }
 

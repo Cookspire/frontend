@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import "../styles/RecipeCard.css";
 import RecipeDetails from "./RecipeDetails";
 
-export default function RecipeCard({recipeData}) {
+export default function RecipeCard({recipeData, recipeCreation}) {
   const [showRecipe, setShowRecipe] = useState(false);
 
   const [recipeDetails, setRecipeDetails]= useState(recipeData);
@@ -25,7 +25,7 @@ export default function RecipeCard({recipeData}) {
       </div>
       {showRecipe &&
         createPortal(
-          <RecipeDetails handleClose={setShowRecipe} />,
+          <RecipeDetails handleClose={setShowRecipe} createRecipe={false}/>,
           document.getElementById("recipe-details-portal")
         )}
     </>

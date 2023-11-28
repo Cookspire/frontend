@@ -96,7 +96,7 @@ export default function Course() {
       <div className="recipe-list">
         {recipeList.length > 0 &&
           recipeList.map((x) => {
-            return <RecipeCard key={x.id} recipeData={x} />;
+            return <RecipeCard key={x.id} recipeData={x} recipeCreation={false}/>;
           })}
       </div>
     </div>

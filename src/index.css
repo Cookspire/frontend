@@ -45,6 +45,9 @@
   --buttonBorder: 6px;
   --minimalButtonColor: hsla(0, 0%, 33%, 0.5);
 
+  --closeImageButton: hsla(0, 0%, 0%, 0.350);
+  --closeImageButtonHover: hsla(0, 0%, 0%, 0.700);
+
   --buttonDisabled: hsl(0, 0%, 27%);
 
   --placeHolderFontSize: 16px;
@@ -135,7 +138,7 @@ body {
   .center-container {
     max-width: 100%;
   }
-
+  
   .content-image img {
     width: 400px;
     height: 400px;
@@ -176,7 +179,7 @@ body {
   }
 
   .post-creation-content {
-    min-width: 80%;
+    width: 70%;
   }
 
   .search-content {
@@ -266,7 +269,7 @@ body {
   }
 
   .post-creation-content {
-    min-width: 80%;
+    width: 80%;
   }
 
   .trend-heading {

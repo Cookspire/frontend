@@ -1,9 +1,10 @@
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import { useContext, useEffect, useRef, useState } from "react";
-import ReactDom from "react-dom";
+import ReactDom, { createPortal } from "react-dom";
 import { UpdateNotificationContext } from "../../context/NotificationContext";
 import { UpdatePostDataContext } from "../../context/PostContext";
 import { UserDataContext } from "../../context/UserContext";
+import PostAddIcon from "@mui/icons-material/PostAdd";
 
 import {
   APIResponse,
@@ -15,6 +16,7 @@ import {
 import CloseModal from "../../hooks/CloseModal";
 import "../styles/PostCreation.css";
 import Notification from "./Notification";
+import RecipeDetails from "./RecipeDetails";
 
 const OVERLAY_STYLE = {
   backgroundColor: "rgb(0 0 0 / 70%)",
@@ -38,11 +40,16 @@ export default function PostCreation({ closeDialog }) {
 
   const updatePosts = useContext(UpdatePostDataContext);
 
+  const [showRecipe, setShowRecipe] = useState(false);
+
   const [post, setPost] = useState({
     content: "",
   });
 
-  const [filePreview, setFilePreview] = useState(null);
+  const [filePreview, setFilePreview] = useState({
+    show: false,
+    imageURL: null,
+  });
 
   const [valid, setValid] = useState({
     showDisable: true,
@@ -54,14 +61,14 @@ export default function PostCreation({ closeDialog }) {
     document.getElementById("post").style.height = "0px";
     document.getElementById("post").style.height =
       document.getElementById("post").scrollHeight + "px";
-    if (document.getElementById("post").scrollHeight >= 500) {
+    if (document.getElementById("post").scrollHeight >= 250) {
       document.getElementById("post").style.overflowY = "scroll";
     }
   }, [post.content]);
 
-  const closePost = CloseModal(() => {
-    closeDialog(false);
-  }, true);
+  // const closePost = CloseModal(() => {
+  //   closeDialog(false);
+  // }, true);
 
   const handlePostInput = (e) => {
     setPost((prev) => ({ ...prev, content: e.target.value }));
@@ -109,7 +116,6 @@ export default function PostCreation({ closeDialog }) {
     const formdata = new FormData();
     formdata.set("data", JSON.stringify(postData));
 
-    console.log(formdata);
     fetch(BACKEND.API_URL + PATH.PERSIST_POST, {
       method: "PUT",
       body: formdata,
@@ -160,17 +166,59 @@ export default function PostCreation({ closeDialog }) {
     uploadPostImageRef.current.click();
   };
 
+  const removeImage = (e) => {
+    e.preventDefault();
+    setFilePreview((prev) => ({
+      ...prev,
+      show: false,
+      imageURL: null,
+    }));
+  };
+
   const handleFileUpload = (event) => {
     event.preventDefault();
+    if (
+      uploadPostImageRef.current.files[0] &&
+      uploadPostImageRef.current.files[0] !== null
+    ) {
+      let file = uploadPostImageRef.current.files[0];
+      if (
+        file.type === "image/jpeg" ||
+        file.type === "image/png" ||
+        file.type === "image/jpg"
+      ) {
 
-    setFilePreview(URL.createObjectURL(uploadPostImageRef.current.files[0]));
+        if(file.size<=50000){
+          setFilePreview((prev) => ({
+            ...prev,
+            show: true,
+            imageURL: URL.createObjectURL(uploadPostImageRef.current.files[0]),
+          }));
+        }
+        else{
+          setNotificationData(
+            true,
+            "Kindly upload image size less than 50KB.",
+            NotificationType.INFO
+          );
+        }
+       
+      }
+      else{
+        setNotificationData(
+          true,
+          "Only .jpg and .png files are allowed.",
+          NotificationType.INFO
+        );
+      }
+    }
   };
 
   return ReactDom.createPortal(
     <>
       <Notification />
       <div style={OVERLAY_STYLE}>
-        <div className="post-creation-content" ref={closePost}>
+        <div className="post-creation-content">
           <div className="posts-form">
             <div className="form-header">Create Post</div>
             <div className="user-data">
@@ -210,14 +258,40 @@ export default function PostCreation({ closeDialog }) {
                 accept=".png, .jpg, image/png, image/jg"
                 onChange={(e) => handleFileUpload(e)}
               />
-              <div className="post-attachments">
+
+              {filePreview.show && (
+                <>
+                  <div className="post-image-container">
+                    <img
+                      className="post-image"
+                      alt="imagePreview"
+                      src={filePreview.imageURL}
+                    />
+                    <div
+                      className="remove-pic"
+                      title="remove photo"
+                      onClick={(e) => removeImage(e)}
+                    >
+                      <div className="remove-icon">&times;</div>
+                    </div>
+                  </div>
+                </>
+              )}
+              <div className="post-attachments" title="Upload image">
                 <div
                   className="photo-attachment"
                   onClick={(e) => openFileUpload(e)}
                 >
                   <AddPhotoAlternateIcon htmlColor="grey" fontSize="medium" />
                 </div>
-                <img alt="imagePreview" src={filePreview} />
+
+                <div
+                  className="photo-attachment"
+                  title="Add Recipe"
+                  onClick={() => setShowRecipe(true)}
+                >
+                  <PostAddIcon htmlColor="grey" fontSize="medium" />
+                </div>
               </div>
             </div>
 
@@ -238,6 +312,12 @@ export default function PostCreation({ closeDialog }) {
             </div>
           </div>
         </div>
+
+        {showRecipe &&
+          createPortal(
+            <RecipeDetails handleClose={setShowRecipe} createRecipe={true} />,
+            document.getElementById("recipe-details-portal")
+          )}
       </div>
     </>,
     document.getElementById("posts-portal")
