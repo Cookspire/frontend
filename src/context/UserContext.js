@@ -5,7 +5,7 @@ import {
   APIResponse,
   NotificationType,
   PATH,
-  URL,
+  BACKEND,
 } from "../environment/APIService";
 import { UpdateNotificationContext } from "./NotificationContext";
 
@@ -35,7 +35,7 @@ export function UserContext({ children }) {
   });
 
   async function fetchUserDetails(email) {
-    fetch(URL.API_URL + PATH.FETCH_USER + email, {
+    fetch(BACKEND.API_URL + PATH.FETCH_USER + email, {
       method: "POST",
     })
       .then((response) => {

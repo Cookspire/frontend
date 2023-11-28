@@ -13,7 +13,7 @@ import {
   JSON_HEADERS,
   NotificationType,
   PATH,
-  URL,
+  BACKEND,
 } from "../../environment/APIService";
 import "../styles/Posts.css";
 import Notification from "./Notification";
@@ -39,7 +39,7 @@ export default function Posts({ userFollower, currentUser }) {
   };
 
   async function persistInteraction(post, likePost) {
-    fetch(URL.API_URL + PATH.PERSIST_INTERACTION, {
+    fetch(BACKEND.API_URL + PATH.PERSIST_INTERACTION, {
       method: "PATCH",
       body: JSON.stringify({
         createdBy: userData.id,
@@ -93,7 +93,7 @@ export default function Posts({ userFollower, currentUser }) {
 
   async function fetchFollowersPost(id) {
     console.log("fetching user follower post!!");
-    fetch(URL.API_URL + PATH.FETCH_FOLLOWERS_POST + id, {
+    fetch(BACKEND.API_URL + PATH.FETCH_FOLLOWERS_POST + id, {
       method: "POST",
       headers: JSON_HEADERS,
     })
@@ -126,7 +126,7 @@ export default function Posts({ userFollower, currentUser }) {
 
   async function fetchUsersPost(id) {
     console.log("fetching user post!!");
-    fetch(URL.API_URL + PATH.FETCH_USERS_POST + id, {
+    fetch(BACKEND.API_URL + PATH.FETCH_USERS_POST + id, {
       method: "POST",
       headers: JSON_HEADERS,
     })
@@ -159,7 +159,7 @@ export default function Posts({ userFollower, currentUser }) {
 
   async function fetchTrendingPost(id) {
     console.log("fetching trending post!!");
-    fetch(URL.API_URL + PATH.FETCH_TRENDING_POST + id, {
+    fetch(BACKEND.API_URL + PATH.FETCH_TRENDING_POST + id, {
       method: "POST",
       headers: JSON_HEADERS,
     })

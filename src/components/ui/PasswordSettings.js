@@ -10,7 +10,7 @@ import {
   JSON_HEADERS,
   NotificationType,
   PATH,
-  URL,
+  BACKEND,
 } from "../../environment/APIService";
 import "../styles/PasswordSettings.css";
 import Notification from "./Notification";
@@ -182,7 +182,7 @@ export default function PasswordSettings() {
   }
 
   async function persistUser() {
-    fetch(URL.API_URL + PATH.CREATE_USER, {
+    fetch(BACKEND.API_URL + PATH.CREATE_USER, {
       method: "PUT",
       body: JSON.stringify({
         username: userData.username,

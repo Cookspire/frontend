@@ -1,7 +1,7 @@
 .post-creation-content {
   background-color: var(--cardBackgroundColor);
   border-radius: var(--borderRadius);
-  min-width: 40%;
+  min-width: 500px;
   margin: 0;
   padding: 0;
   display: flex;
@@ -32,6 +32,7 @@
   width: 100%;
   font-size: var(--text-2xl);
   font-weight: 600;
+  padding: 10px 0px 10px 0px;
 }
 
 .form-content {
@@ -41,7 +42,6 @@
   justify-content: flex-start;
   flex-wrap: wrap;
   width: 100%;
-  margin-top: 10px;
 }
 
 .form-action {
@@ -80,12 +80,49 @@
   padding: 15px 10px;
   font-size: 1rem;
   width: 100%;
-  border: 1px solid var(--border);
+  border: none;
   max-height: 500px;
+  font-size: var(--text-lg);
 }
 
+.form-content textarea:focus{
+  border: none;
+  outline: none;
+}
+
+.form-content .post-attachments{
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  flex-direction: row;
+  width:100%;
+}
+
+.photo-attachment{
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  flex-direction: row;
+  padding:10px;
+  cursor: pointer;
+}
+
+.photo-attachment:hover{
+  background-color: var(--primaryBackgroundHover);
+  border-radius: 50%;
+}
+
+.photo-attachment:hover .css-i4bv87-MuiSvgIcon-root{
+  color:black;
+}
+
+
 .form-content textarea::placeholder {
-  font-size: var(--text-base);
+  font-size: var(--text-lg);
 }
 
 .form-action .invalid-button{
@@ -96,7 +133,6 @@
 .form-action .invalid-button:hover{
   background-color: var(--buttonDisabled);
 }
-
 
 .form-action .loader {
   width: 15px;
@@ -110,6 +146,15 @@
   border-left: 2px solid var(--background);
   border-top: 2px solid var(--buttonDisabled);
   animation: spin 0.75s ease infinite;
+}
+
+
+.posts-form .profile-image{
+  padding:0px;
+}
+
+.posts-form .user-data{
+  margin: 10px 0px 0px 0px;
 }
 
 @keyframes spin {

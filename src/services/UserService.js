@@ -1,8 +1,8 @@
-import { JSON_HEADERS, PATH, URL } from "../environment/APIService";
+import { JSON_HEADERS, PATH, BACKEND } from "../environment/APIService";
 
 export const userService = {
   verify: (request) => {
-    fetch(URL.API_URL + PATH.VERIFY_USER, {
+    fetch(BACKEND.API_URL + PATH.VERIFY_USER, {
       headers: JSON_HEADERS,
       body: {
         email: request.email,

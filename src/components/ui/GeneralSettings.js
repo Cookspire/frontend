@@ -10,7 +10,7 @@ import {
   JSON_HEADERS,
   NotificationType,
   PATH,
-  URL,
+  BACKEND,
 } from "../../environment/APIService";
 import "../styles/GeneralSettings.css";
 import Notification from "./Notification";
@@ -86,7 +86,7 @@ export default function GeneralSettings() {
   };
 
   async function persistUser() {
-    fetch(URL.API_URL + PATH.CREATE_USER, {
+    fetch(BACKEND.API_URL + PATH.CREATE_USER, {
       method: "PUT",
       body: JSON.stringify({
         username: userForm.username.value,

@@ -8,7 +8,7 @@ import {
   APIResponse,
   NotificationType,
   PATH,
-  URL,
+  BACKEND,
 } from "../../environment/APIService";
 import "./index.css";
 
@@ -22,7 +22,7 @@ export default function Cuisine() {
   const [recipeList, setRecipeList] = useState([]);
 
   async function fetchRecipeByCuisine(cuisine) {
-    fetch(URL.API_URL + PATH.FETCH_RECIPE_CUISINE + cuisine, {
+    fetch(BACKEND.API_URL + PATH.FETCH_RECIPE_CUISINE + cuisine, {
       method: "POST",
     })
       .then((response) => {

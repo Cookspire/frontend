@@ -1,15 +1,16 @@
-import { useContext, useEffect, useState } from "react";
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import { useContext, useEffect, useRef, useState } from "react";
 import ReactDom from "react-dom";
 import { UpdateNotificationContext } from "../../context/NotificationContext";
 import { UpdatePostDataContext } from "../../context/PostContext";
 import { UserDataContext } from "../../context/UserContext";
+
 import {
   APIResponse,
   JSON_HEADERS,
-  MULTI_PART_HEADERS,
   NotificationType,
   PATH,
-  URL,
+  BACKEND,
 } from "../../environment/APIService";
 import CloseModal from "../../hooks/CloseModal";
 import "../styles/PostCreation.css";
@@ -41,6 +42,8 @@ export default function PostCreation({ closeDialog }) {
     content: "",
   });
 
+  const [filePreview, setFilePreview] = useState(null);
+
   const [valid, setValid] = useState({
     showDisable: true,
     showBuffer: false,
@@ -68,7 +71,7 @@ export default function PostCreation({ closeDialog }) {
   };
 
   async function fetchUsersPost(id) {
-    fetch(URL.API_URL + PATH.FETCH_USERS_POST + id, {
+    fetch(BACKEND.API_URL + PATH.FETCH_USERS_POST + id, {
       method: "POST",
       headers: JSON_HEADERS,
     })
@@ -100,12 +103,14 @@ export default function PostCreation({ closeDialog }) {
       });
   }
 
+  const uploadPostImageRef = useRef();
+
   async function persistPosts(postData) {
     const formdata = new FormData();
     formdata.set("data", JSON.stringify(postData));
 
     console.log(formdata);
-    fetch(URL.API_URL + PATH.PERSIST_POST, {
+    fetch(BACKEND.API_URL + PATH.PERSIST_POST, {
       method: "PUT",
       body: formdata,
     })
@@ -150,6 +155,17 @@ export default function PostCreation({ closeDialog }) {
     });
   };
 
+  const openFileUpload = (event) => {
+    event.preventDefault();
+    uploadPostImageRef.current.click();
+  };
+
+  const handleFileUpload = (event) => {
+    event.preventDefault();
+
+    setFilePreview(URL.createObjectURL(uploadPostImageRef.current.files[0]));
+  };
+
   return ReactDom.createPortal(
     <>
       <Notification />
@@ -157,6 +173,23 @@ export default function PostCreation({ closeDialog }) {
         <div className="post-creation-content" ref={closePost}>
           <div className="posts-form">
             <div className="form-header">Create Post</div>
+            <div className="user-data">
+              <div className="profile-image">
+                <img src="/posts/profile.svg" alt="profile" />
+              </div>
+
+              <div className="profile-name">
+                {userData.username}
+                {userData.isVerified && (
+                  <img
+                    src="/Verified/verified.svg"
+                    width={"10px"}
+                    height={"10px"}
+                    alt="verified"
+                  />
+                )}
+              </div>
+            </div>
             <div className="form-content">
               <textarea
                 id="post"
@@ -168,6 +201,24 @@ export default function PostCreation({ closeDialog }) {
                 placeholder="What's Cooking?"
                 autoFocus
               />
+
+              <input
+                type="file"
+                ref={uploadPostImageRef}
+                id="post-image"
+                style={{ display: "none" }}
+                accept=".png, .jpg, image/png, image/jg"
+                onChange={(e) => handleFileUpload(e)}
+              />
+              <div className="post-attachments">
+                <div
+                  className="photo-attachment"
+                  onClick={(e) => openFileUpload(e)}
+                >
+                  <AddPhotoAlternateIcon htmlColor="grey" fontSize="medium" />
+                </div>
+                <img alt="imagePreview" src={filePreview} />
+              </div>
             </div>
 
             <div className="form-action">

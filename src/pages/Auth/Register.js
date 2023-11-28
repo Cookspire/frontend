@@ -6,7 +6,7 @@ import {
   JSON_HEADERS,
   NotificationType,
   PATH,
-  URL,
+  BACKEND,
 } from "../../environment/APIService";
 
 import Notification from "../../components/ui/Notification";
@@ -34,7 +34,7 @@ export default function Register() {
   const [submit, setSubmit] = useState(false);
 
   async function createUser(userData) {
-    fetch(URL.API_URL + PATH.CREATE_USER, {
+    fetch(BACKEND.API_URL + PATH.CREATE_USER, {
       method: "PUT",
       body: JSON.stringify({
         username: userData.username.value,

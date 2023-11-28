@@ -7,7 +7,7 @@ import {
   JSON_HEADERS,
   NotificationType,
   PATH,
-  URL,
+  BACKEND,
 } from "../../environment/APIService";
 import "../styles/ProfileContent.css";
 import Notification from "./Notification";
@@ -26,7 +26,7 @@ export default function Profile() {
   }, []);
 
   async function fetchUserAnalysis() {
-    fetch(URL.API_URL + PATH.FETCH_GENERAL_ANALYSIS + userData.id, {
+    fetch(BACKEND.API_URL + PATH.FETCH_GENERAL_ANALYSIS + userData.id, {
       method: "POST",
       headers: JSON_HEADERS,
     })
