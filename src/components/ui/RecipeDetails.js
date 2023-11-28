@@ -1,7 +1,9 @@
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import CloseModal from "../../hooks/CloseModal";
 import "../styles/RecipeDetails.css";
+import { UpdateNotificationContext } from "../../context/NotificationContext";
+import { NotificationType } from "../../environment/APIService";
 
 const OVERLAY_STYLE = {
   backgroundColor: "rgb(0 0 0 / 70%)",
@@ -19,6 +21,10 @@ const OVERLAY_STYLE = {
 };
 
 export default function RecipeDetails({ handleClose, createRecipe }) {
+
+  const setNotificationData = useContext(UpdateNotificationContext);
+
+
   const outsideClick = CloseModal(() => {
     handleClose(false);
   }, true);
@@ -28,6 +34,11 @@ export default function RecipeDetails({ handleClose, createRecipe }) {
   const ingredientsBlock = useRef();
 
   const uploadPostImageRef = useRef();
+
+  const openFileUpload = (event) => {
+    event.preventDefault();
+    uploadPostImageRef.current.click();
+  };
 
   const handleFileUpload = (event) => {
     event.preventDefault();
@@ -65,20 +76,6 @@ export default function RecipeDetails({ handleClose, createRecipe }) {
           NotificationType.INFO
         );
       }
-    }
-  };
-
-
-  const handleFileUpload = (event) => {
-    event.preventDefault();
-   
-    if (uploadPostImageRef.current.files[0] && uploadPostImageRef.current.files[0] !== null) {
-      
-      setFilePreview((prev) => ({
-        ...prev,
-        show: true,
-        imageURL: URL.createObjectURL(uploadPostImageRef.current.files[0]),
-      }));
     }
   };
 
