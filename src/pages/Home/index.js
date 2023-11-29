@@ -7,6 +7,7 @@ import "./index.css";
 export default function Home() {
   const [newPost, setNewPost] = useState(false);
 
+  
   return (
     <div className="main-content">
       <div className="post-container">
@@ -16,7 +17,6 @@ export default function Home() {
               <div className="profile-image">
                 <img alt="profile" src="/posts/profile.svg" />
               </div>
-
               <div
                 className="new-post"
                 onClick={() => {
@@ -31,7 +31,7 @@ export default function Home() {
 
         {/* show followers posts */}
 
-        <Posts userFollower={true} currentUser={false}/>
+        <Posts userFollower={true} currentUser={false} />
 
         {newPost && <PostCreation closeDialog={setNewPost} />}
       </div>

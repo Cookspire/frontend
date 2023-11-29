@@ -26,6 +26,8 @@ export const PATH = {
   FETCH_FOLLOWERS_POST: "/fetchAll/post/user/follower?userId=",
   FETCH_USERS_POST: "/fetchAll/post/user?userId=",
   FETCH_TRENDING_POST: "/fetchAll/trending/post?userId=",
+  
+  FETCH_GENERAL_ANALYSIS: "/fetch/general/userAnalysis?userId=",
 
   FETCH_RECIPE_CUISINE: "/fetch/recipe/cuisine?name=",
   FETCH_RECIPE_COURSE: "/fetch/recipe/course?name=",

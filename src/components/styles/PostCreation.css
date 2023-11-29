@@ -11,6 +11,7 @@
   flex-direction: column;
   border: 1px solid var(--border);
   position: relative;
+  overflow: auto;
 }
 .posts-form {
   display: flex;

@@ -1,5 +1,5 @@
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { UpdateNotificationContext } from "../../context/NotificationContext";
 import { NotificationType } from "../../environment/APIService";
 import CloseModal from "../../hooks/CloseModal";

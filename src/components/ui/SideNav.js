@@ -8,8 +8,6 @@ export default function SideNav() {
 
   const [isLogged, setIsLogged] = useState(false);
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     if (
       userData &&
@@ -19,6 +17,9 @@ export default function SideNav() {
       setIsLogged(true);
     }
   }, [userData]);
+
+
+  const navigate = useNavigate();
 
   return (
     <div className="side-nav-container">
@@ -53,10 +54,12 @@ export default function SideNav() {
           {isLogged && (
             <li
               onClick={() => {
-                navigate("/profile/"+userData.id+"/posts");
+                navigate("/profile/" + userData.id + "/posts");
               }}
             >
-              <NavLink to={"/profile/"+userData.id+"/posts"}>Profile</NavLink>
+              <NavLink to={"/profile/" + userData.id + "/posts"}>
+                Profile
+              </NavLink>
             </li>
           )}
         </ul>

@@ -1,13 +1,11 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 import {
   APIResponse,
-  NotificationType,
   PATH,
   BACKEND,
 } from "../environment/APIService";
-import { UpdateNotificationContext } from "./NotificationContext";
 
 export const UserDataContext = createContext();
 
@@ -20,8 +18,6 @@ export const UserLoggedStatus = createContext();
 export const UpdateWelcomeNotifyContext = createContext();
 
 export function UserContext({ children }) {
-  const setNotificationData = useContext(UpdateNotificationContext);
-
   const navigate = useNavigate();
 
   const [hasLogged, setHasLogged] = useState(false);
@@ -40,40 +36,28 @@ export function UserContext({ children }) {
     })
       .then((response) => {
         if (response.status === 200) return response.json();
-        else {
-          console.log(response.text());
-          return APIResponse.BAD_REQUEST;
-        }
+        else return APIResponse.UNAUTHORIZED;
       })
       .then((data) => {
         if (data === APIResponse.UNAUTHORIZED) {
-          setNotificationData(
-            true,
-            "Error occured while fetching user data.",
-            NotificationType.INFO
-          );
+          logoutUser();
         } else if (data && data.email !== "") {
           setUserData(data);
         }
       })
       .catch((err) => {
-        setNotificationData(
-          true,
-          "Error occured while fetching user data.",
-          NotificationType.INFO
-        );
+        logoutUser();
       });
   }
 
   useEffect(() => {
+   
     if (userData && userData.email !== "") {
       fetchUserDetails(userData?.email);
+      console.log("In userCOntext loginc"+JSON.stringify(userData))
     }
+   
   }, []);
-
-  useEffect(() => {
-    console.log("here is the userData:" + JSON.stringify(userData));
-  }, [userData]);
 
   const updateUserData = (data) => {
     setUserData(data);

@@ -81,8 +81,10 @@ export default function Navbar() {
             ref={onClickOutside}
           >
             <div className="round">
-              {userData?.username.charAt(0).toUpperCase() +
-                userData?.username.charAt(1).toUpperCase()}
+              {userData !== null
+                ? userData.username.charAt(0).toUpperCase() +
+                  userData.username.charAt(1).toUpperCase()
+                : ""}
             </div>
             <div className="dropdown-logo">
               {!showQuickSettings ? (

@@ -27,9 +27,15 @@ export default function GeneralSettings() {
   const logout = useContext(LogoutUserContext);
 
   const [userForm, setUserForm] = useState({
-    username: { value: userData?.username, err: "" },
-    bio: { value: userData?.bio, err: "" },
-    country: { value: userData?.country, err: "" },
+    username: {
+      value: userData.username === null ? "" : userData.username,
+      err: "",
+    },
+    bio: { value: userData.bio === null ? "" : userData.bio, err: "" },
+    country: {
+      value: userData.country === null ? "" : userData.country,
+      err: "",
+    },
   });
 
   const [isValid, setValid] = useState(true);

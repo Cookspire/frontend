@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 
 export const PostDataContext = createContext();
 export const UpdatePostDataContext = createContext();
@@ -9,10 +9,6 @@ export default function PostContext({ children }) {
   const updatePostData = (data) => {
     setPosts(data);
   };
-
-  useEffect(() => {
-    console.log("post list updated!!")
-  }, [posts]);
 
   return (
     <UpdatePostDataContext.Provider value={updatePostData}>

@@ -21,6 +21,8 @@ import Notification from "./Notification";
 export default function Posts({ userFollower, currentUser }) {
   const userData = useContext(UserDataContext);
 
+  console.log("User fetch in Post page::"+JSON.stringify(userData))
+
   const setNotificationData = useContext(UpdateNotificationContext);
 
   const postsList = useContext(PostDataContext);
@@ -189,6 +191,7 @@ export default function Posts({ userFollower, currentUser }) {
         return console.log("Error Occured, Reason : " + err);
       });
   }
+
   return (
     <>
       <Notification />

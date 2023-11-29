@@ -2,6 +2,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
 import "./index.css";
 import { useState } from "react";
+import CloseModal from "../../hooks/CloseModal";
 
 export const TYPE = {
   FUSION: "fusion",
@@ -19,35 +20,53 @@ export const TYPE = {
   DESSERT: "dessert",
   LUNCH: "lunch",
   SNACK: "snack",
-  DINNER: "dinner"
+  DINNER: "dinner",
 };
 
 export default function Recipe() {
   const navigate = useNavigate();
 
-  const [globalSearch, setGlobalSearch]= useState("");
+  const [globalSearch, setGlobalSearch] = useState("");
 
-  const [showSuggestions, setShowSuggestions]= useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
+  const [suggestionsList, setSuggestionsList] = useState([]);
+
+  const onClickOutside = CloseModal(() => {
+    setShowSuggestions(false);
+  }, true);
 
   return (
     <div className="cuisine-container">
       <div className="global-search">
-        <div className="search-content">
+        <div className="search-content" ref={onClickOutside}>
           <div className="search-icon">
             <SearchIcon htmlColor="hsl(0, 0%, 0%, 0.67)" />
           </div>
-          <div className="search-input">
+          <div
+            className="search-input"
+            onClick={() => setShowSuggestions(true)}
+          >
             <input
               type="text"
               autoComplete="off"
               id="search"
               placeholder="Search Cookspire"
               maxLength={1000}
-
+              onChange={(e) => setGlobalSearch(e.target.value)}
+              value={globalSearch}
             />
           </div>
         </div>
+        {showSuggestions && (
+          <div className="search-suggestions">
+            {suggestionsList.length === 0 && (
+              <div className="suggestion-data">
+                Try searching for people / recipes.
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       <div className="cuisine-navigation">Recipes</div>
@@ -159,7 +178,6 @@ export default function Recipe() {
       <div className="content-name">Courses</div>
 
       <div className="cuisine-list">
-
         <div
           className="cuisine-type"
           onClick={() => {
