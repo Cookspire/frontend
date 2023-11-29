@@ -191,7 +191,7 @@ body {
   }
 
   .search-content {
-    width: 100%;
+    width: 60%;
   }
 
   .search-content input {
@@ -345,5 +345,9 @@ body {
 
   .ingredient-form .full-field{
     gap:1px;
+  }
+
+  .search-suggestions{
+    width:100%;
   }
 }

@@ -3,7 +3,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import ReactDom, { createPortal } from "react-dom";
 import { UpdateNotificationContext } from "../../context/NotificationContext";
 import { UpdatePostDataContext } from "../../context/PostContext";
-import { UserDataContext } from "../../context/UserContext";
+import { LogoutUserContext, UserDataContext } from "../../context/UserContext";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 
 import {
@@ -34,7 +34,19 @@ const OVERLAY_STYLE = {
 };
 
 export default function PostCreation({ closeDialog }) {
-  const userData = useContext(UserDataContext);
+  const [userData, setUserData] = useState();
+
+  const userLogged = useContext(UserDataContext);
+
+  useEffect(() => {
+    if (userLogged && userLogged.email) {
+      fetchUserDetails(userLogged.email);
+    } else {
+      logout();
+    }
+  }, []);
+
+  const logout = useContext(LogoutUserContext);
 
   const setNotificationData = useContext(UpdateNotificationContext);
 
@@ -65,6 +77,26 @@ export default function PostCreation({ closeDialog }) {
       document.getElementById("post").style.overflowY = "scroll";
     }
   }, [post.content]);
+
+  async function fetchUserDetails(email) {
+    await fetch(BACKEND.API_URL + PATH.FETCH_USER + email, {
+      method: "POST",
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else return APIResponse.UNAUTHORIZED;
+      })
+      .then((data) => {
+        if (data === APIResponse.UNAUTHORIZED) {
+          logout();
+        } else if (data && data.email !== "") {
+          setUserData(() => data);
+        }
+      })
+      .catch((err) => {
+        logout();
+      });
+  }
 
   // const closePost = CloseModal(() => {
   //   closeDialog(false);
@@ -210,10 +242,10 @@ export default function PostCreation({ closeDialog }) {
     }
   };
 
-  const closeRecipeDialog=(e)=>{
+  const closeRecipeDialog = (e) => {
     e.preventDefault();
     closeDialog(false);
-  }
+  };
 
   return ReactDom.createPortal(
     <>
@@ -235,8 +267,8 @@ export default function PostCreation({ closeDialog }) {
               </div>
 
               <div className="profile-name">
-                {userData.username}
-                {userData.isVerified && (
+                {userData && userData.username}
+                {userData && userData.isVerified && (
                   <img
                     src="/Verified/verified.svg"
                     width={"10px"}
@@ -286,7 +318,6 @@ export default function PostCreation({ closeDialog }) {
                 </>
               )}
               <div className="post-attachments" title="Upload image">
-                
                 <div className="text-content">Add to your post</div>
                 <div
                   className="photo-attachment"

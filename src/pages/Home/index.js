@@ -1,13 +1,49 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import PostCreation from "../../components/ui/PostCreation";
 import Posts from "../../components/ui/Posts";
 import QuickAction from "../../components/ui/QuickAction";
 import "./index.css";
+import { LogoutUserContext, UserDataContext } from "../../context/UserContext";
+import { APIResponse, BACKEND, PATH } from "../../environment/APIService";
 
 export default function Home() {
   const [newPost, setNewPost] = useState(false);
 
-  
+  const logout = useContext(LogoutUserContext);
+
+  const userLogged = useContext(UserDataContext);
+
+  const [userData, setUserData] = useState();
+
+  useEffect(() => {
+    console.log(userLogged.email)
+    if (userLogged && userLogged.email) {
+      fetchUserDetails(userLogged.email);
+      console.log("called fetch user details api");
+    }
+  }, []);
+
+  async function fetchUserDetails(email) {
+    fetch(BACKEND.API_URL + PATH.FETCH_USER + email, {
+      method: "POST",
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else return APIResponse.UNAUTHORIZED;
+      })
+      .then((data) => {
+        if (data === APIResponse.UNAUTHORIZED) {
+          logout();
+        } else if (data && data.email !== "") {
+          console.log("call finished")
+          setUserData(()=>data);
+        }
+      })
+      .catch((err) => {
+        logout();
+      });
+  }
+
   return (
     <div className="main-content">
       <div className="post-container">
@@ -31,7 +67,7 @@ export default function Home() {
 
         {/* show followers posts */}
 
-        <Posts userFollower={true} currentUser={false} />
+       {userData && userData.email && <Posts userFollower={true} currentUser={false} userData={userData}/>}
 
         {newPost && <PostCreation closeDialog={setNewPost} />}
       </div>

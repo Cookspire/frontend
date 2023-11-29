@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Account from "../components/ui/Account";
 import Followers from "../components/ui/Followers";
@@ -17,8 +17,10 @@ import Recipe from "../pages/Recipe";
 import Trending from "../pages/Trending";
 import ProtectedRoute from "./ProtectedRoute";
 import Course from "../pages/Course";
+import Test from "../pages/UserProfile";
 
 export default function AppRouter() {
+
   const userData = useContext(UserDataContext);
 
   return (
@@ -29,7 +31,7 @@ export default function AppRouter() {
         <Route
           path="/"
           element={
-            userData && localStorage.getItem("persist") ? (
+            userData && userData.email ? (
               <Navigate to="/home" />
             ) : (
               <Navigate to="/explore" />
@@ -39,24 +41,12 @@ export default function AppRouter() {
 
         <Route
           path="/login"
-          element={
-            userData && localStorage.getItem("persist") ? (
-              <Navigate to="/home" />
-            ) : (
-              <Login />
-            )
-          }
+          element={userData && userData.email ? <Navigate to="/home" /> : <Login />}
         ></Route>
 
         <Route
           path="/register"
-          element={
-            userData && localStorage.getItem("persist") ? (
-              <Navigate to="/home" />
-            ) : (
-              <Register />
-            )
-          }
+          element={userData && userData.email ? <Navigate to="/home" /> : <Register />}
         ></Route>
 
         <Route exact path="/explore">
@@ -70,11 +60,13 @@ export default function AppRouter() {
         <Route element={<ProtectedRoute />}>
           <Route path="/home" element={<Home />}></Route>
 
+          <Route path="/test" element={<Test />}></Route>
+
           <Route path="/profile" element={<Profile />}>
             <Route
               exact
               path="/profile/:id/posts"
-              element={<Posts userFollower={false} currentUser={true} />}
+              element={<Posts userFollower={false} currentUser={true} userData={null}/>}
             />
             <Route path="/profile/:id/followers" element={<Followers />} />
             <Route path="/profile/:id/following" element={<Followers />} />

@@ -31,7 +31,7 @@ export default function Trending() {
             <div className="new-content">
               <div className="creation-form">
                 <div className="profile-image">
-                  <img src="/posts/profile.svg"  alt="profile"/>
+                  <img src="/posts/profile.svg" alt="profile" />
                 </div>
 
                 <div className="new-post" onClick={createPost}>
@@ -54,7 +54,7 @@ export default function Trending() {
           <div className="new-content">Trending Posts</div>
         </div>
 
-        <Posts userFollower={false} currentUser={false} />
+        <Posts userFollower={false} currentUser={false} userData={null}/>
       </div>
 
       <div className="explore-container">

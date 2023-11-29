@@ -22,17 +22,25 @@ export default function PasswordSettings() {
     repeatPassword: { value: "", err: "" },
   });
 
-  const updateUserData = useContext(UpdateUserDataContext);
+  const [userData, setUserData] = useState();
 
   const setNotificationData = useContext(UpdateNotificationContext);
 
-  const userData = useContext(UserDataContext);
+  const userLogged = useContext(UserDataContext);
 
   const [submit, setSubmit] = useState(false);
 
   const logout = useContext(LogoutUserContext);
 
   const [disablePasswordSave, setDisablePasswordSave] = useState(false);
+
+  useEffect(() => {
+    if (userLogged && userLogged.email != null) {
+      fetchUserDetails(userLogged.email);
+    } else {
+      logout();
+    }
+  }, []);
 
   useEffect(() => {
     if (
@@ -54,6 +62,26 @@ export default function PasswordSettings() {
       setDisablePasswordSave(false);
     }
   }, [passwordData]);
+
+  async function fetchUserDetails(email) {
+    fetch(BACKEND.API_URL + PATH.FETCH_USER + email, {
+      method: "POST",
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else return APIResponse.UNAUTHORIZED;
+      })
+      .then((data) => {
+        if (data === APIResponse.UNAUTHORIZED) {
+          logout();
+        } else if (data && data.email !== "") {
+          setUserData(data);
+        }
+      })
+      .catch((err) => {
+        logout();
+      });
+  }
 
   function updatePasswordData(event) {
     let { id, value } = event.target;
@@ -213,7 +241,6 @@ export default function PasswordSettings() {
           if (data.errorMessage) {
             setNotificationData(true, data.errorMessage, NotificationType.INFO);
           } else {
-            updateUserData(data);
             setNotificationData(
               true,
               "Update Successful.",

@@ -1,17 +1,19 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UpdateNotificationContext } from "../../context/NotificationContext";
 import {
   LogoutUserContext,
   UpdateUserDataContext,
   UserDataContext,
 } from "../../context/UserContext";
+
 import {
   APIResponse,
+  BACKEND,
   JSON_HEADERS,
   NotificationType,
   PATH,
-  BACKEND,
 } from "../../environment/APIService";
+
 import "../styles/GeneralSettings.css";
 import Notification from "./Notification";
 
@@ -20,7 +22,37 @@ export default function GeneralSettings() {
 
   const setNotificationData = useContext(UpdateNotificationContext);
 
-  const userData = useContext(UserDataContext);
+  const [userData, setUserData] = useState({});
+
+  const userLogged = useContext(UserDataContext);
+
+  useEffect(() => {
+    if (userLogged && userLogged.email != null) {
+      fetchUserDetails(userLogged.email);
+    } else {
+      logout();
+    }
+  }, []);
+
+  async function fetchUserDetails(email) {
+    fetch(BACKEND.API_URL + PATH.FETCH_USER + email, {
+      method: "POST",
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else return APIResponse.UNAUTHORIZED;
+      })
+      .then((data) => {
+        if (data === APIResponse.UNAUTHORIZED) {
+          logout();
+        } else if (data && data.email !== "") {
+          setUserData(data);
+        }
+      })
+      .catch((err) => {
+        logout();
+      });
+  }
 
   const [submit, setSubmit] = useState(false);
 
