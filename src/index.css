@@ -3,6 +3,7 @@
   --themeColor: hsl(39, 100%, 50%);
   --primaryColor: hsl(0, 0%, 0%);
   --secondaryColor: hsl(0, 0%, 50%);
+  --infoFontColor: hsl(0, 0%, 27%);
 
   --primaryBackground: hsl(210, 19%, 94%);
   --primaryBackgroundHover: hsl(210, 19%, 85%);
@@ -31,6 +32,8 @@
 
   --linkHover: hsl(39, 100%, 50%);
   --linkActive: hsl(39, 100%, 57%);
+
+  --lightDashed: hsl(210, 12%, 94%);
 
   --dangerBorder: hsl(0, 100%, 50%);
   --border: hsl(0, 0%, 0%, 0.17);
@@ -163,6 +166,11 @@ body {
     align-content: center;
   }
 
+  .post-image {
+    height: 200px;
+    width: 100%;
+  }
+
   .post-creation {
     width: 90%;
     align-content: center;
@@ -179,7 +187,7 @@ body {
   }
 
   .post-creation-content {
-    width: 70%;
+    width: 60%;
   }
 
   .search-content {
@@ -235,7 +243,11 @@ body {
   }
 
   .recipe-detail-container {
-    width: 90%;
+    width: 70%;
+  }
+
+  .ingredient-form .full-field{
+    gap:3px;
   }
 }
 
@@ -328,6 +340,10 @@ body {
   }
 
   .recipe-detail-container {
-    width: 90%;
+    width: 80%;
+  }
+
+  .ingredient-form .full-field{
+    gap:1px;
   }
 }

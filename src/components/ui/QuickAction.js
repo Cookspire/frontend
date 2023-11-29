@@ -9,7 +9,7 @@ export default function QuickAction() {
           <SearchIcon htmlColor="hsl(0, 0%, 0%, 0.67)" />
         </div>
         <div className="search-input">
-          <input type="text" id="search"  autoComplete="off" placeholder="Search Cookspire" />
+          <input type="text" id="search" maxLength={1000} autoComplete="off" placeholder="Search Cookspire" />
         </div>
       </div>
 

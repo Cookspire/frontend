@@ -71,6 +71,7 @@ export default function Course() {
             <input
               type="text"
               autoComplete="off"
+              maxLength={1000}
               id="search"
               placeholder="Search Recipes"
             />

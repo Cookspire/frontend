@@ -1,6 +1,7 @@
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
 import "./index.css";
+import { useState } from "react";
 
 export const TYPE = {
   FUSION: "fusion",
@@ -24,6 +25,11 @@ export const TYPE = {
 export default function Recipe() {
   const navigate = useNavigate();
 
+  const [globalSearch, setGlobalSearch]= useState("");
+
+  const [showSuggestions, setShowSuggestions]= useState(false);
+
+
   return (
     <div className="cuisine-container">
       <div className="global-search">
@@ -37,6 +43,8 @@ export default function Recipe() {
               autoComplete="off"
               id="search"
               placeholder="Search Cookspire"
+              maxLength={1000}
+
             />
           </div>
         </div>

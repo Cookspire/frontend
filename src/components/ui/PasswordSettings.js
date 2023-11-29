@@ -265,6 +265,7 @@ export default function PasswordSettings() {
                 onChange={(e) => {
                   updatePasswordData(e);
                 }}
+                maxLength={1000}
               />
             </div>
 
@@ -287,6 +288,7 @@ export default function PasswordSettings() {
                 onChange={(e) => {
                   updatePasswordData(e);
                 }}
+                maxLength={1000}
                 value={passwordData.newPassword.value}
               />
             </div>
@@ -309,6 +311,7 @@ export default function PasswordSettings() {
                 onChange={(e) => {
                   updatePasswordData(e);
                 }}
+                maxLength={1000}
                 value={passwordData.repeatPassword.value}
               />
             </div>

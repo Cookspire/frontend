@@ -187,24 +187,20 @@ export default function PostCreation({ closeDialog }) {
         file.type === "image/png" ||
         file.type === "image/jpg"
       ) {
-
-        if(file.size<=50000){
+        if (file.size <= 300000) {
           setFilePreview((prev) => ({
             ...prev,
             show: true,
             imageURL: URL.createObjectURL(uploadPostImageRef.current.files[0]),
           }));
-        }
-        else{
+        } else {
           setNotificationData(
             true,
-            "Kindly upload image size less than 50KB.",
+            "Kindly upload image size less than 300KB.",
             NotificationType.INFO
           );
         }
-       
-      }
-      else{
+      } else {
         setNotificationData(
           true,
           "Only .jpg and .png files are allowed.",
@@ -214,11 +210,23 @@ export default function PostCreation({ closeDialog }) {
     }
   };
 
+  const closeRecipeDialog=(e)=>{
+    e.preventDefault();
+    closeDialog(false);
+  }
+
   return ReactDom.createPortal(
     <>
       <Notification />
       <div style={OVERLAY_STYLE}>
         <div className="post-creation-content">
+          <div
+            className="close-dialog"
+            title="close"
+            onClick={(e) => closeRecipeDialog(e)}
+          >
+            <div className="remove-icon">&times;</div>
+          </div>
           <div className="posts-form">
             <div className="form-header">Create Post</div>
             <div className="user-data">
@@ -269,7 +277,7 @@ export default function PostCreation({ closeDialog }) {
                     />
                     <div
                       className="remove-pic"
-                      title="remove photo"
+                      title="Remove Image"
                       onClick={(e) => removeImage(e)}
                     >
                       <div className="remove-icon">&times;</div>
@@ -278,11 +286,13 @@ export default function PostCreation({ closeDialog }) {
                 </>
               )}
               <div className="post-attachments" title="Upload image">
+                
+                <div className="text-content">Add to your post</div>
                 <div
                   className="photo-attachment"
                   onClick={(e) => openFileUpload(e)}
                 >
-                  <AddPhotoAlternateIcon htmlColor="grey" fontSize="medium" />
+                  <AddPhotoAlternateIcon htmlColor="blue" fontSize="medium" />
                 </div>
 
                 <div
@@ -290,7 +300,7 @@ export default function PostCreation({ closeDialog }) {
                   title="Add Recipe"
                   onClick={() => setShowRecipe(true)}
                 >
-                  <PostAddIcon htmlColor="grey" fontSize="medium" />
+                  <PostAddIcon htmlColor="orange" fontSize="medium" />
                 </div>
               </div>
             </div>

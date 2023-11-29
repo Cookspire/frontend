@@ -163,6 +163,7 @@ export default function GeneralSettings() {
                 type="text"
                 placeholder="your name"
                 autoComplete="off"
+                maxLength={1000}
                 value={userForm.username.value}
                 onChange={(e) => changeValues(e)}
               />

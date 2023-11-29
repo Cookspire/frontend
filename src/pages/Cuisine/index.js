@@ -72,6 +72,7 @@ export default function Cuisine() {
               type="text"
               autoComplete="off"
               id="search"
+              maxLength={1000}
               placeholder="Search Recipes"
             />
           </div>
