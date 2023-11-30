@@ -5,7 +5,7 @@ import {
   JSON_HEADERS,
   NotificationType,
   PATH,
-  URL,
+  BACKEND,
 } from "../../environment/APIService";
 
 import Notification from "../../components/ui/Notification";
@@ -30,7 +30,7 @@ export default function Login() {
   const [submit, setSubmit] = useState(false);
 
   async function fetchUserDetails(email) {
-    fetch(URL.API_URL + PATH.FETCH_USER + email, {
+    fetch(BACKEND.API_URL + PATH.FETCH_USER + email, {
       method: "POST",
     })
       .then((response) => {
@@ -61,7 +61,7 @@ export default function Login() {
   }
 
   async function verifyUserService() {
-    fetch(URL.API_URL + PATH.VERIFY_USER, {
+    fetch(BACKEND.API_URL + PATH.VERIFY_USER, {
       method: "POST",
       headers: JSON_HEADERS,
       body: JSON.stringify(userDetails),

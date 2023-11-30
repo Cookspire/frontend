@@ -1,7 +1,7 @@
 .post-creation-content {
   background-color: var(--cardBackgroundColor);
   border-radius: var(--borderRadius);
-  min-width: 40%;
+  width: 500px;
   margin: 0;
   padding: 0;
   display: flex;
@@ -11,6 +11,7 @@
   flex-direction: column;
   border: 1px solid var(--border);
   position: relative;
+  overflow: auto;
 }
 .posts-form {
   display: flex;
@@ -32,6 +33,7 @@
   width: 100%;
   font-size: var(--text-2xl);
   font-weight: 600;
+  padding: 10px 0px 10px 0px;
 }
 
 .form-content {
@@ -41,7 +43,6 @@
   justify-content: flex-start;
   flex-wrap: wrap;
   width: 100%;
-  margin-top: 10px;
 }
 
 .form-action {
@@ -68,6 +69,7 @@
   font-size: var(--text-base);
   cursor: pointer;
   color: var(--buttonColor);
+  width:100%;
 }
 
 .form-action button:hover {
@@ -76,27 +78,93 @@
 
 .form-content textarea {
   resize: none;
-  margin: 0;
-  padding: 15px 10px;
+  margin: 0px 0px 10px 0px;
+  padding: 15px 5px;
   font-size: 1rem;
   width: 100%;
+  border: none;
+  max-height: 250px;
+  font-size: var(--text-lg);
+}
+
+.form-content textarea:focus {
+  border: none;
+  outline: none;
+}
+
+.form-content .post-attachments {
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  flex-direction: row;
+  width: 100%;
   border: 1px solid var(--border);
-  max-height: 500px;
+  border-radius: var(--borderRadius);
+  padding: 5px;
+}
+
+.post-attachments .text-content{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  padding:15px;
+  font-weight: 600;
+  color: var(--infoFontColor);
+  font-size: var(--text-small);
+}
+
+.photo-attachment {
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  flex-direction: row;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.photo-attachment:hover {
+  background-color: var(--primaryBackgroundHover);
+  border-radius: 50%;
+}
+
+.photo-attachment:hover .css-i4bv87-MuiSvgIcon-root {
+  color: var(--primaryColor);
+}
+
+.post-image {
+  height: 290px;
+  width: 100%;
+}
+
+.post-image-container {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width:100%;
+  position: relative;
+  padding: 10px 5px 10px 5px;
 }
 
 .form-content textarea::placeholder {
-  font-size: var(--text-base);
+  font-size: var(--text-lg);
 }
 
-.form-action .invalid-button{
+.form-action .invalid-button {
   cursor: not-allowed;
   background-color: var(--buttonDisabled);
 }
 
-.form-action .invalid-button:hover{
+.form-action .invalid-button:hover {
   background-color: var(--buttonDisabled);
 }
-
 
 .form-action .loader {
   width: 15px;
@@ -110,6 +178,14 @@
   border-left: 2px solid var(--background);
   border-top: 2px solid var(--buttonDisabled);
   animation: spin 0.75s ease infinite;
+}
+
+.posts-form .profile-image {
+  padding: 0px;
+}
+
+.posts-form .user-data {
+  margin: 10px 0px 0px 0px;
 }
 
 @keyframes spin {

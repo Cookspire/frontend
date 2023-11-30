@@ -1,17 +1,19 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UpdateNotificationContext } from "../../context/NotificationContext";
 import {
   LogoutUserContext,
   UpdateUserDataContext,
   UserDataContext,
 } from "../../context/UserContext";
+
 import {
   APIResponse,
+  BACKEND,
   JSON_HEADERS,
   NotificationType,
   PATH,
-  URL,
 } from "../../environment/APIService";
+
 import "../styles/GeneralSettings.css";
 import Notification from "./Notification";
 
@@ -20,17 +22,59 @@ export default function GeneralSettings() {
 
   const setNotificationData = useContext(UpdateNotificationContext);
 
-  const userData = useContext(UserDataContext);
+  const [userData, setUserData] = useState();
+
+  const userLogged = useContext(UserDataContext);
+
+  const [userForm, setUserForm] = useState({
+    username: {
+      value: "",
+      err: "",
+    },
+    bio: { value: "", err: "" },
+    country: {
+      value: "",
+      err: "",
+    },
+  });
+
+  useEffect(() => {
+    if (userLogged && userLogged.email != null) {
+      fetchUserDetails(userLogged.email);
+    } else {
+      logout();
+    }
+  }, []);
+
+  async function fetchUserDetails(email) {
+    fetch(BACKEND.API_URL + PATH.FETCH_USER + email, {
+      method: "POST",
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else return APIResponse.UNAUTHORIZED;
+      })
+      .then((data) => {
+        if (data === APIResponse.UNAUTHORIZED) {
+          logout();
+        } else if (data && data.email !== "") {
+          setUserData(() => data);
+          setUserForm((prev) => ({
+            ...prev,
+            username: { value: data.username, err: "" },
+            bio: { value: data.bio, err: "" },
+            country: { value: data.country, err: "" },
+          }));
+        }
+      })
+      .catch((err) => {
+        logout();
+      });
+  }
 
   const [submit, setSubmit] = useState(false);
 
   const logout = useContext(LogoutUserContext);
-
-  const [userForm, setUserForm] = useState({
-    username: { value: userData?.username, err: "" },
-    bio: { value: userData?.bio, err: "" },
-    country: { value: userData?.country, err: "" },
-  });
 
   const [isValid, setValid] = useState(true);
 
@@ -86,7 +130,7 @@ export default function GeneralSettings() {
   };
 
   async function persistUser() {
-    fetch(URL.API_URL + PATH.CREATE_USER, {
+    fetch(BACKEND.API_URL + PATH.CREATE_USER, {
       method: "PUT",
       body: JSON.stringify({
         username: userForm.username.value,
@@ -163,6 +207,7 @@ export default function GeneralSettings() {
                 type="text"
                 placeholder="your name"
                 autoComplete="off"
+                maxLength={1000}
                 value={userForm.username.value}
                 onChange={(e) => changeValues(e)}
               />
@@ -521,7 +566,7 @@ export default function GeneralSettings() {
 
           <div className="action">
             {!submit && (
-              <div className="field-button">
+              <div className="button-control">
                 <button type="submit" disabled={!isValid}>
                   Update Info
                 </button>
@@ -529,7 +574,7 @@ export default function GeneralSettings() {
             )}
 
             {submit && (
-              <div className=" field-button disabled">
+              <div className="button-control disabled">
                 <button type="submit" className="disabled">
                   Updating Info...
                   <div className="side-loader">

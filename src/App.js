@@ -10,6 +10,7 @@ import {
 import AppRouter from "./routes/router";
 
 function App() {
+
   const showNav = useContext(ShowNavContext);
   const showNavBar = useContext(ToggleShowNavContext);
 

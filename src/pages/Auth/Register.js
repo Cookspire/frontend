@@ -6,7 +6,7 @@ import {
   JSON_HEADERS,
   NotificationType,
   PATH,
-  URL,
+  BACKEND,
 } from "../../environment/APIService";
 
 import Notification from "../../components/ui/Notification";
@@ -34,7 +34,7 @@ export default function Register() {
   const [submit, setSubmit] = useState(false);
 
   async function createUser(userData) {
-    fetch(URL.API_URL + PATH.CREATE_USER, {
+    fetch(BACKEND.API_URL + PATH.CREATE_USER, {
       method: "PUT",
       body: JSON.stringify({
         username: userData.username.value,
@@ -198,6 +198,7 @@ export default function Register() {
                 <input
                   type="text"
                   id="username"
+                  maxLength={1000}
                   placeholder="foodie name..."
                   onChange={changeValues}
                   value={userForm.username.value}
@@ -218,6 +219,7 @@ export default function Register() {
                 <input
                   type="text"
                   id="email"
+                  maxLength={1000}
                   placeholder="foodie@example.com"
                   onChange={changeValues}
                   value={userForm.email.value}
@@ -239,6 +241,7 @@ export default function Register() {
                   type="password"
                   id="password"
                   placeholder="shh..."
+                  maxLength={1000}
                   onChange={changeValues}
                   value={userForm.password.value}
                   required
@@ -260,6 +263,7 @@ export default function Register() {
                   id="rpassword"
                   placeholder="repeat your secret..."
                   onChange={changeValues}
+                  maxLength={1000}
                   value={userForm.rpassword.value}
                   required
                 />

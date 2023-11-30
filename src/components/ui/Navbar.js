@@ -2,6 +2,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { LogoutUserContext, UserDataContext } from "../../context/UserContext";
+import { APIResponse, BACKEND, PATH } from "../../environment/APIService";
 import CloseModal from "../../hooks/CloseModal";
 import "../styles/Navbar.css";
 import HamburgerNav from "./HamburgerNav";
@@ -12,6 +13,10 @@ export default function Navbar() {
     winHeight: window.innerHeight,
   });
 
+  const userLogged = useContext(UserDataContext);
+
+  const [userData, setUserData] = useState();
+
   const detectSize = () => {
     setHW({
       winWidth: window.innerWidth,
@@ -19,7 +24,31 @@ export default function Navbar() {
     });
   };
 
-  const userData = useContext(UserDataContext);
+  useEffect(() => {
+    if (userLogged && userLogged.email != null) {
+      fetchUserDetails(userLogged.email);
+    }
+  }, []);
+
+  async function fetchUserDetails(email) {
+    fetch(BACKEND.API_URL + PATH.FETCH_USER + email, {
+      method: "POST",
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else return APIResponse.UNAUTHORIZED;
+      })
+      .then((data) => {
+        if (data === APIResponse.UNAUTHORIZED) {
+          logout();
+        } else if (data && data.email !== "") {
+          setUserData(data);
+        }
+      })
+      .catch((err) => {
+        logout();
+      });
+  }
 
   const [showProfile, setShowProfile] = useState(false);
 
@@ -81,8 +110,10 @@ export default function Navbar() {
             ref={onClickOutside}
           >
             <div className="round">
-              {userData?.username.charAt(0).toUpperCase() +
-                userData?.username.charAt(1).toUpperCase()}
+              {userData !== null
+                ? userData.username.charAt(0).toUpperCase() +
+                  userData.username.charAt(1).toUpperCase()
+                : ""}
             </div>
             <div className="dropdown-logo">
               {!showQuickSettings ? (
@@ -95,14 +126,14 @@ export default function Navbar() {
             {showQuickSettings && (
               <div className="nav-user-dropdown">
                 <div className="menu-items">
-                  <div className="menu-item">
+                  {/* <div className="menu-item">
                     <div className="item">User Settings</div>
                   </div>
                   <div className="menu-item">
                     <div className="item">
                       Dark Theme <input type="checkbox" />
                     </div>
-                  </div>
+                  </div> */}
                   <div className="menu-item" onClick={logout}>
                     <div className="item">Logout</div>
                   </div>

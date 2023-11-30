@@ -10,7 +10,7 @@ import {
   JSON_HEADERS,
   NotificationType,
   PATH,
-  URL,
+  BACKEND,
 } from "../../environment/APIService";
 import "../styles/PasswordSettings.css";
 import Notification from "./Notification";
@@ -22,17 +22,25 @@ export default function PasswordSettings() {
     repeatPassword: { value: "", err: "" },
   });
 
-  const updateUserData = useContext(UpdateUserDataContext);
+  const [userData, setUserData] = useState();
 
   const setNotificationData = useContext(UpdateNotificationContext);
 
-  const userData = useContext(UserDataContext);
+  const userLogged = useContext(UserDataContext);
 
   const [submit, setSubmit] = useState(false);
 
   const logout = useContext(LogoutUserContext);
 
   const [disablePasswordSave, setDisablePasswordSave] = useState(false);
+
+  useEffect(() => {
+    if (userLogged && userLogged.email != null) {
+      fetchUserDetails(userLogged.email);
+    } else {
+      logout();
+    }
+  }, []);
 
   useEffect(() => {
     if (
@@ -54,6 +62,26 @@ export default function PasswordSettings() {
       setDisablePasswordSave(false);
     }
   }, [passwordData]);
+
+  async function fetchUserDetails(email) {
+    fetch(BACKEND.API_URL + PATH.FETCH_USER + email, {
+      method: "POST",
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else return APIResponse.UNAUTHORIZED;
+      })
+      .then((data) => {
+        if (data === APIResponse.UNAUTHORIZED) {
+          logout();
+        } else if (data && data.email !== "") {
+          setUserData(data);
+        }
+      })
+      .catch((err) => {
+        logout();
+      });
+  }
 
   function updatePasswordData(event) {
     let { id, value } = event.target;
@@ -182,7 +210,7 @@ export default function PasswordSettings() {
   }
 
   async function persistUser() {
-    fetch(URL.API_URL + PATH.CREATE_USER, {
+    fetch(BACKEND.API_URL + PATH.CREATE_USER, {
       method: "PUT",
       body: JSON.stringify({
         username: userData.username,
@@ -213,7 +241,6 @@ export default function PasswordSettings() {
           if (data.errorMessage) {
             setNotificationData(true, data.errorMessage, NotificationType.INFO);
           } else {
-            updateUserData(data);
             setNotificationData(
               true,
               "Update Successful.",
@@ -265,6 +292,7 @@ export default function PasswordSettings() {
                 onChange={(e) => {
                   updatePasswordData(e);
                 }}
+                maxLength={1000}
               />
             </div>
 
@@ -287,6 +315,7 @@ export default function PasswordSettings() {
                 onChange={(e) => {
                   updatePasswordData(e);
                 }}
+                maxLength={1000}
                 value={passwordData.newPassword.value}
               />
             </div>
@@ -309,6 +338,7 @@ export default function PasswordSettings() {
                 onChange={(e) => {
                   updatePasswordData(e);
                 }}
+                maxLength={1000}
                 value={passwordData.repeatPassword.value}
               />
             </div>
@@ -324,7 +354,7 @@ export default function PasswordSettings() {
 
           <div className="action">
             {!submit && (
-              <div className="field-button">
+              <div className="button-control">
                 <button type="submit" disabled={disablePasswordSave}>
                   Update Password
                 </button>
@@ -332,7 +362,7 @@ export default function PasswordSettings() {
             )}
 
             {submit && (
-              <div className=" field-button disabled">
+              <div className="button-control disabled">
                 <button type="submit" className="disabled">
                   Updating Password...
                   <div className="side-loader">

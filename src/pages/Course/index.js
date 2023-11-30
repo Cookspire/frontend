@@ -6,13 +6,13 @@ import RecipeCard from "../../components/ui/RecipeCard";
 import { UpdateNotificationContext } from "../../context/NotificationContext";
 import {
   APIResponse,
-  BACKEND,
   NotificationType,
   PATH,
+  BACKEND,
 } from "../../environment/APIService";
 import "./index.css";
 
-export default function Cuisine() {
+export default function Course() {
   const { name } = useParams();
 
   const navigate = useNavigate();
@@ -21,8 +21,8 @@ export default function Cuisine() {
 
   const [recipeList, setRecipeList] = useState([]);
 
-  async function fetchRecipeByCuisine(cuisine) {
-    fetch(BACKEND.API_URL + PATH.FETCH_RECIPE_CUISINE + cuisine, {
+  async function fetchRecipeByCourse(cuisine) {
+    fetch(BACKEND.API_URL + PATH.FETCH_RECIPE_COURSE + cuisine, {
       method: "POST",
     })
       .then((response) => {
@@ -56,7 +56,7 @@ export default function Cuisine() {
     if (name && name.length === 0) {
       navigate("/explore");
     } else {
-      fetchRecipeByCuisine(name);
+      fetchRecipeByCourse(name);
     }
   }, [name, navigate]);
 
@@ -71,8 +71,8 @@ export default function Cuisine() {
             <input
               type="text"
               autoComplete="off"
-              id="search"
               maxLength={1000}
+              id="search"
               placeholder="Search Recipes"
             />
           </div>
@@ -82,7 +82,7 @@ export default function Cuisine() {
       <div className="recipe-navigation">
         <div className="nav-data">
           <NavLink to="/explore">
-            <div className="previous-page">Cuisines</div>
+            <div className="previous-page">Courses</div>
           </NavLink>
 
           <ArrowForwardIosIcon
@@ -124,7 +124,9 @@ export default function Cuisine() {
       <div className="recipe-list">
         {recipeList.length > 0 &&
           recipeList.map((x) => {
-            return <RecipeCard key={x.id} recipeData={x} />;
+            return (
+              <RecipeCard key={x.id} recipeData={x} recipeCreation={false} />
+            );
           })}
       </div>
     </div>

@@ -3,6 +3,7 @@
   --themeColor: hsl(39, 100%, 50%);
   --primaryColor: hsl(0, 0%, 0%);
   --secondaryColor: hsl(0, 0%, 50%);
+  --infoFontColor: hsl(0, 0%, 27%);
 
   --primaryBackground: hsl(210, 19%, 94%);
   --primaryBackgroundHover: hsl(210, 19%, 85%);
@@ -32,6 +33,8 @@
   --linkHover: hsl(39, 100%, 50%);
   --linkActive: hsl(39, 100%, 57%);
 
+  --lightDashed: hsl(210, 12%, 94%);
+
   --dangerBorder: hsl(0, 100%, 50%);
   --border: hsl(0, 0%, 0%, 0.17);
   --borderRadius: 4px;
@@ -44,6 +47,9 @@
   --buttonColor: hsl(0, 0%, 100%);
   --buttonBorder: 6px;
   --minimalButtonColor: hsla(0, 0%, 33%, 0.5);
+
+  --closeImageButton: hsla(0, 0%, 0%, 0.35);
+  --closeImageButtonHover: hsla(0, 0%, 0%, 0.7);
 
   --buttonDisabled: hsl(0, 0%, 27%);
 
@@ -160,6 +166,11 @@ body {
     align-content: center;
   }
 
+  .post-image {
+    height: 200px;
+    width: 100%;
+  }
+
   .post-creation {
     width: 90%;
     align-content: center;
@@ -176,11 +187,11 @@ body {
   }
 
   .post-creation-content {
-    min-width: 80%;
+    width: 60%;
   }
 
   .search-content {
-    width: 100%;
+    width: 60%;
   }
 
   .search-content input {
@@ -205,7 +216,7 @@ body {
     height: 100%;
   }
   .profile-content .profile-info {
-    padding: 0px;
+    padding: 10px 0px;
   }
 
   .profile-info .profile-image img {
@@ -232,7 +243,11 @@ body {
   }
 
   .recipe-detail-container {
-    width: 90%;
+    width: 70%;
+  }
+
+  .ingredient-form .full-field {
+    gap: 3px;
   }
 }
 
@@ -266,7 +281,7 @@ body {
   }
 
   .post-creation-content {
-    min-width: 80%;
+    width: 80%;
   }
 
   .trend-heading {
@@ -298,7 +313,7 @@ body {
     height: 100%;
   }
   .profile-content .profile-info {
-    padding: 0px;
+    padding: 10px 0px;
   }
 
   .profile-info .profile-image img {
@@ -325,6 +340,22 @@ body {
   }
 
   .recipe-detail-container {
-    width: 90%;
+    width: 80%;
+  }
+
+  .ingredient-form .full-field {
+    gap: 1px;
+  }
+
+  .search-suggestions {
+    width: 100%;
+  }
+
+  .recipe-navigation .nav-data {
+    gap: 0.5em;
+  }
+
+  .recipe-navigation .recipe-filter{
+    gap: 0.5em;
   }
 }

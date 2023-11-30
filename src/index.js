@@ -12,17 +12,15 @@ import reportWebVitals from "./reportWebVitals";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
-    <React.StrictMode>
+    <UserContext>
       <NavDialogContext>
         <NotificationContext>
           <PostContext>
-            <UserContext>
-              <App />
-            </UserContext>
+            <App />
           </PostContext>
         </NotificationContext>
       </NavDialogContext>
-    </React.StrictMode>
+    </UserContext>
   </BrowserRouter>
 );
 

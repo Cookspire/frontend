@@ -23,6 +23,7 @@
   width: 100%;
   padding: 10px;
   margin: 10px 0px 0px 0px;
+  gap: 0.5em;
   font-weight: bold;
 }
 
@@ -47,45 +48,4 @@
 
 .recipe-navigation a:hover {
   text-decoration: underline;
-}
-
-.recipe-navigation .nav-data {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  align-content: flex-start;
-  flex-direction: row;
-  gap:1em;
-}
-
-.recipe-navigation .recipe-filter {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  align-content: flex-start;
-  flex-direction: row;
-  width: 100%;
-  gap:2em;
-}
-
-.recipe-filter .filter-data {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  align-content: flex-start;
-  flex-direction: row;
-
-}
-
-.filter-data select {
-  padding: 5px;
-}
-
-.filter-data .field {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  align-content: flex-start;
-  flex-wrap: wrap;
-  flex-direction: row;
 }

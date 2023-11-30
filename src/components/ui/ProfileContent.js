@@ -4,16 +4,18 @@ import { UpdateNotificationContext } from "../../context/NotificationContext";
 import { LogoutUserContext, UserDataContext } from "../../context/UserContext";
 import {
   APIResponse,
+  BACKEND,
   JSON_HEADERS,
   NotificationType,
   PATH,
-  URL,
 } from "../../environment/APIService";
 import "../styles/ProfileContent.css";
 import Notification from "./Notification";
 
 export default function Profile() {
-  const userData = useContext(UserDataContext);
+  const userLogged = useContext(UserDataContext);
+
+  const [userData, setUserData] = useState();
 
   const logout = useContext(LogoutUserContext);
 
@@ -22,11 +24,34 @@ export default function Profile() {
   const [userGeneralAnalysis, setUserGeneralAnalysis] = useState({});
 
   useEffect(() => {
-    fetchUserAnalysis();
+    if (userLogged && userLogged.email != null) {
+      fetchUserDetails(userLogged.email);
+    } 
   }, []);
 
-  async function fetchUserAnalysis() {
-    fetch(URL.API_URL + PATH.FETCH_GENERAL_ANALYSIS + userData.id, {
+  async function fetchUserDetails(email) {
+    fetch(BACKEND.API_URL + PATH.FETCH_USER + email, {
+      method: "POST",
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else return APIResponse.UNAUTHORIZED;
+      })
+      .then((data) => {
+        if (data === APIResponse.UNAUTHORIZED) {
+          logout();
+        } else if (data && data.email !== "") {
+          setUserData(() => data);
+          fetchUserAnalysis(data.id);
+        }
+      })
+      .catch((err) => {
+        logout();
+      });
+  }
+
+  async function fetchUserAnalysis(id) {
+    fetch(BACKEND.API_URL + PATH.FETCH_GENERAL_ANALYSIS + id, {
       method: "POST",
       headers: JSON_HEADERS,
     })
@@ -56,7 +81,9 @@ export default function Profile() {
       });
   }
 
-  return (
+  return userData && userData.id === null ? (
+    <>Loading...</>
+  ) : (
     <div className="profile-content">
       <Notification />
       <div className="profile-info">
@@ -64,7 +91,7 @@ export default function Profile() {
           <img src="/posts/profile.svg" alt="profile" />
         </div>
         <div className="profile-details">
-          <div className="profile-name">{userData.username}</div>
+          <div className="profile-name">{userData && userData.username}</div>
 
           <div className="profile-stats">
             <div className="stats">
@@ -80,27 +107,31 @@ export default function Profile() {
             </div>
           </div>
 
-          <div className="profile-bio">{userData.bio}</div>
+          {userData && userData.bio.length > 0 && (
+            <div className="profile-bio">{userData && userData.bio}</div>
+          )}
         </div>
       </div>
 
-      <div className="profile-data">
-        <nav>
-          <NavLink to={"/profile/" + userData.id + "/posts"}>
-            <div className="profile-nav">Posts</div>
-          </NavLink>
-          <NavLink to={"/profile/" + userData.id + "/followers"}>
-            <div className="profile-nav">Followers</div>
-          </NavLink>
+      {userData && userData.id && (
+        <div className="profile-data">
+          <nav>
+            <NavLink to={"/profile/" + userData.id + "/posts"}>
+              <div className="profile-nav">Posts</div>
+            </NavLink>
+            <NavLink to={"/profile/" + userData.id + "/followers"}>
+              <div className="profile-nav">Followers</div>
+            </NavLink>
 
-          <NavLink to={"/profile/" + userData.id + "/followers"}>
-            <div className="profile-nav">Following</div>
-          </NavLink>
-          <NavLink to={"/profile/" + userData.id + "/account/general"}>
-            <div className="profile-nav">Account</div>
-          </NavLink>
-        </nav>
-      </div>
+            <NavLink to={"/profile/" + userData.id + "/followers"}>
+              <div className="profile-nav">Following</div>
+            </NavLink>
+            <NavLink to={"/profile/" + userData.id + "/account/general"}>
+              <div className="profile-nav">Account</div>
+            </NavLink>
+          </nav>
+        </div>
+      )}
 
       <Outlet />
     </div>

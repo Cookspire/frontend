@@ -2,9 +2,11 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useContext, useEffect, useState } from "react";
 import ReactDom from "react-dom";
 import { NavLink, useNavigate } from "react-router-dom";
-import { UserDataContext } from "../../context/UserContext";
+import { UserDataContext,LogoutUserContext } from "../../context/UserContext";
 import CloseModal from "../../hooks/CloseModal";
 import "../styles/HamburgerNav.css";
+import { APIResponse, PATH, BACKEND } from "../../environment/APIService";
+
 
 const OVERLAY = {
   backgroundColor: "rgb(0 0 0 / 70%)",
@@ -21,9 +23,19 @@ const OVERLAY = {
 };
 
 export default function HamburgerNav({ closeNav }) {
-  const userData = useContext(UserDataContext);
+  const [userData, setUserData] = useState();
+
+  const userLogged = useContext(UserDataContext);
 
   const [isLogged, setIsLogged] = useState(false);
+
+  const logout = useContext(LogoutUserContext);
+
+  useEffect(() => {
+    if (userLogged && userLogged.email != null) {
+      fetchUserDetails(userLogged.email);
+    }
+  }, []);
 
   useEffect(() => {
     if (
@@ -34,6 +46,24 @@ export default function HamburgerNav({ closeNav }) {
       setIsLogged(true);
     }
   }, [userData]);
+
+  async function fetchUserDetails(email) {
+    fetch(BACKEND.API_URL + PATH.FETCH_USER + email, {
+      method: "POST",
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else return APIResponse.UNAUTHORIZED;
+      })
+      .then((data) => {
+        if (data !== APIResponse.UNAUTHORIZED && data.id !== null) {
+          setUserData(data);
+        }
+      })
+      .catch((err) => {
+        logout();
+      });
+  }
 
   const navigate = useNavigate();
 
