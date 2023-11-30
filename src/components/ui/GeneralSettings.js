@@ -22,9 +22,21 @@ export default function GeneralSettings() {
 
   const setNotificationData = useContext(UpdateNotificationContext);
 
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState();
 
   const userLogged = useContext(UserDataContext);
+
+  const [userForm, setUserForm] = useState({
+    username: {
+      value: "",
+      err: "",
+    },
+    bio: { value: "", err: "" },
+    country: {
+      value: "",
+      err: "",
+    },
+  });
 
   useEffect(() => {
     if (userLogged && userLogged.email != null) {
@@ -46,7 +58,13 @@ export default function GeneralSettings() {
         if (data === APIResponse.UNAUTHORIZED) {
           logout();
         } else if (data && data.email !== "") {
-          setUserData(data);
+          setUserData(() => data);
+          setUserForm((prev) => ({
+            ...prev,
+            username: { value: data.username, err: "" },
+            bio: { value: data.bio, err: "" },
+            country: { value: data.country, err: "" },
+          }));
         }
       })
       .catch((err) => {
@@ -57,18 +75,6 @@ export default function GeneralSettings() {
   const [submit, setSubmit] = useState(false);
 
   const logout = useContext(LogoutUserContext);
-
-  const [userForm, setUserForm] = useState({
-    username: {
-      value: userData.username === null ? "" : userData.username,
-      err: "",
-    },
-    bio: { value: userData.bio === null ? "" : userData.bio, err: "" },
-    country: {
-      value: userData.country === null ? "" : userData.country,
-      err: "",
-    },
-  });
 
   const [isValid, setValid] = useState(true);
 
@@ -560,7 +566,7 @@ export default function GeneralSettings() {
 
           <div className="action">
             {!submit && (
-              <div className="field-button">
+              <div className="button-control">
                 <button type="submit" disabled={!isValid}>
                   Update Info
                 </button>
@@ -568,7 +574,7 @@ export default function GeneralSettings() {
             )}
 
             {submit && (
-              <div className=" field-button disabled">
+              <div className="button-control disabled">
                 <button type="submit" className="disabled">
                   Updating Info...
                   <div className="side-loader">

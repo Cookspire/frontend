@@ -6,9 +6,9 @@ import RecipeCard from "../../components/ui/RecipeCard";
 import { UpdateNotificationContext } from "../../context/NotificationContext";
 import {
   APIResponse,
+  BACKEND,
   NotificationType,
   PATH,
-  BACKEND,
 } from "../../environment/APIService";
 import "./index.css";
 
@@ -80,18 +80,45 @@ export default function Cuisine() {
       </div>
 
       <div className="recipe-navigation">
-        <NavLink to="/explore">
-          <div className="previous-page">Cuisines</div>
-        </NavLink>
+        <div className="nav-data">
+          <NavLink to="/explore">
+            <div className="previous-page">Cuisines</div>
+          </NavLink>
 
-        <ArrowForwardIosIcon
-          htmlColor="black"
-          fontSize="6"
-          className="forward-icon"
-        />
+          <ArrowForwardIosIcon
+            htmlColor="black"
+            fontSize="6"
+            className="forward-icon"
+          />
 
-        <div className="heading">
-          {name.charAt(0).toUpperCase() + name.substring(1)}
+          <div className="heading">
+            {name.charAt(0).toUpperCase() + name.substring(1)}
+          </div>
+        </div>
+
+        <div className="recipe-filter">
+          <div className="filter-data">
+            <div className="field">
+              <select id="diet" type="text">
+                <option value="choose">--Diet Plan--</option>
+                <option value="choose">Vegiterian</option>
+                <option value="choose">Non Vegiterian</option>
+                <option value="choose">Eggeterian</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="filter-data">
+            <div className="field">
+              <select id="diet" type="text">
+                <option value="choose">--By time--</option>
+                <option value="choose">&lt;10 mins</option>
+                <option value="choose">10-20 mins</option>
+                <option value="choose">20-40 mins</option>
+                <option value="choose">&gt;40min</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
       <div className="recipe-list">

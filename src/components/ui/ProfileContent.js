@@ -26,9 +26,7 @@ export default function Profile() {
   useEffect(() => {
     if (userLogged && userLogged.email != null) {
       fetchUserDetails(userLogged.email);
-    } else {
-      fetchUserAnalysis();
-    }
+    } 
   }, []);
 
   async function fetchUserDetails(email) {
@@ -43,8 +41,8 @@ export default function Profile() {
         if (data === APIResponse.UNAUTHORIZED) {
           logout();
         } else if (data && data.email !== "") {
-          setUserData(data);
-          console.log();
+          setUserData(() => data);
+          fetchUserAnalysis(data.id);
         }
       })
       .catch((err) => {
@@ -52,8 +50,8 @@ export default function Profile() {
       });
   }
 
-  async function fetchUserAnalysis() {
-    fetch(BACKEND.API_URL + PATH.FETCH_GENERAL_ANALYSIS + userData.id, {
+  async function fetchUserAnalysis(id) {
+    fetch(BACKEND.API_URL + PATH.FETCH_GENERAL_ANALYSIS + id, {
       method: "POST",
       headers: JSON_HEADERS,
     })
@@ -109,7 +107,9 @@ export default function Profile() {
             </div>
           </div>
 
-          <div className="profile-bio">{userData && userData.bio}</div>
+          {userData && userData.bio.length > 0 && (
+            <div className="profile-bio">{userData && userData.bio}</div>
+          )}
         </div>
       </div>
 

@@ -25,7 +25,7 @@ export default function RecipeCard({recipeData, recipeCreation}) {
       </div>
       {showRecipe &&
         createPortal(
-          <RecipeDetails handleClose={setShowRecipe} createRecipe={false}/>,
+          <RecipeDetails handleClose={setShowRecipe} createRecipe={false} recipeId={recipeDetails.id}/>,
           document.getElementById("recipe-details-portal")
         )}
     </>

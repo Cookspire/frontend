@@ -12,6 +12,7 @@
   border: 1px solid var(--border);
   position: relative;
   overflow: auto;
+  max-height: 80%;
 }
 
 .recipe-dialog {
@@ -69,6 +70,12 @@
   margin: 5px;
   width: 100%;
   font-weight: 600;
+}
+
+.recipe-dialog img {
+  border-radius: var(--borderRadius);
+  height: 150px;
+  width: 220px;
 }
 
 .recipe-dialog .name input {

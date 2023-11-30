@@ -32,6 +32,8 @@ export const PATH = {
   FETCH_RECIPE_CUISINE: "/fetch/recipe/cuisine?name=",
   FETCH_RECIPE_COURSE: "/fetch/recipe/course?name=",
 
+  FETCH_COMPLETE_RECIPE: "/fetch/complete/recipe?recipeId=",
+
   PERSIST_INTERACTION: "/persist/interaction"
 };
 

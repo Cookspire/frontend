@@ -354,7 +354,7 @@ export default function PasswordSettings() {
 
           <div className="action">
             {!submit && (
-              <div className="field-button">
+              <div className="button-control">
                 <button type="submit" disabled={disablePasswordSave}>
                   Update Password
                 </button>
@@ -362,7 +362,7 @@ export default function PasswordSettings() {
             )}
 
             {submit && (
-              <div className=" field-button disabled">
+              <div className="button-control disabled">
                 <button type="submit" className="disabled">
                   Updating Password...
                   <div className="side-loader">

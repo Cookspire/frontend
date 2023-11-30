@@ -126,14 +126,14 @@ export default function Navbar() {
             {showQuickSettings && (
               <div className="nav-user-dropdown">
                 <div className="menu-items">
-                  <div className="menu-item">
+                  {/* <div className="menu-item">
                     <div className="item">User Settings</div>
                   </div>
                   <div className="menu-item">
                     <div className="item">
                       Dark Theme <input type="checkbox" />
                     </div>
-                  </div>
+                  </div> */}
                   <div className="menu-item" onClick={logout}>
                     <div className="item">Logout</div>
                   </div>

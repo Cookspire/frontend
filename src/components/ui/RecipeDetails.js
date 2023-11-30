@@ -1,7 +1,13 @@
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { UpdateNotificationContext } from "../../context/NotificationContext";
-import { NotificationType } from "../../environment/APIService";
+import { LogoutUserContext } from "../../context/UserContext";
+import {
+  APIResponse,
+  BACKEND,
+  NotificationType,
+  PATH,
+} from "../../environment/APIService";
 import CloseModal from "../../hooks/CloseModal";
 import "../styles/RecipeDetails.css";
 import Notification from "./Notification";
@@ -21,8 +27,10 @@ const OVERLAY_STYLE = {
   flexDirection: "column",
 };
 
-export default function RecipeDetails({ handleClose, createRecipe }) {
+export default function RecipeDetails({ handleClose, createRecipe, recipeId }) {
   const setNotificationData = useContext(UpdateNotificationContext);
+
+  const logout = useContext(LogoutUserContext);
 
   const outsideClick = CloseModal(() => {
     handleClose(false);
@@ -31,6 +39,14 @@ export default function RecipeDetails({ handleClose, createRecipe }) {
   const [showInstructions, setShowInstructions] = useState(false);
   const instructionsBlock = useRef();
   const ingredientsBlock = useRef();
+
+  const [verifiedRecipe, setVerifiedRecipe] = useState(false);
+
+  useEffect(() => {
+    if (!createRecipe) {
+      fetchRecipeDetails(recipeId);
+    }
+  }, []);
 
   const uploadPostImageRef = useRef();
 
@@ -46,6 +62,54 @@ export default function RecipeDetails({ handleClose, createRecipe }) {
     imageName: "",
     imageData: "",
   });
+
+  const [verifiedRecipeData, setVerifiedRecipeData] = useState({
+    name: "",
+    cook_time_mins: "",
+    instructions: "",
+    imageURL: "",
+    items: "",
+    ingredients: "",
+  });
+
+  async function fetchRecipeDetails(recipeId) {
+    await fetch(BACKEND.API_URL + PATH.FETCH_COMPLETE_RECIPE + recipeId, {
+      method: "POST",
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else if (response.status === 401 || response.status === 403)
+          return APIResponse.UNAUTHORIZED;
+        else return APIResponse.BAD_REQUEST;
+      })
+      .then((data) => {
+        if (data === APIResponse.UNAUTHORIZED) {
+          logout();
+        } else if (data === APIResponse.BAD_REQUEST) {
+          setNotificationData(
+            true,
+            "Error occured while fetching recipe details.",
+            NotificationType.INFO
+          );
+        } else {
+          if (data.recipe._Verified && data.recipe && data.ingredient[0]) {
+            setVerifiedRecipe(true);
+            setVerifiedRecipeData((prev) => ({
+              ...prev,
+              name: data.recipe.name,
+              cook_time_mins: data.recipe.cook_time_mins,
+              instructions: data.recipe.instructions,
+              imageURL: data.recipe.imageName,
+              items: data.ingredient[0].item,
+              quantity: data.ingredient[0].quantity,
+            }));
+          }
+        }
+      })
+      .catch((err) => {
+        logout();
+      });
+  }
 
   const [ingredientList, setIngredientList] = useState([]);
 
@@ -182,7 +246,8 @@ export default function RecipeDetails({ handleClose, createRecipe }) {
       show: false,
       imageURL: null,
     }));
-    document.getElementById("image").style.border = "1px dashed var(--lightDashed)";
+    document.getElementById("image").style.border =
+      "1px dashed var(--lightDashed)";
   };
 
   const [filePreview, setFilePreview] = useState({
@@ -190,10 +255,10 @@ export default function RecipeDetails({ handleClose, createRecipe }) {
     imageURL: null,
   });
 
-  const closeRecipeDialog=(e)=>{
+  const closeRecipeDialog = (e) => {
     e.preventDefault();
     handleClose(false);
-  }
+  };
 
   return (
     <>
@@ -207,96 +272,109 @@ export default function RecipeDetails({ handleClose, createRecipe }) {
           >
             <div className="remove-icon">&times;</div>
           </div>
-          {!createRecipe && (
-            <div className="recipe-dialog">
-              <div className="header">Let's Cook!</div>
+          {!createRecipe &&
+            (verifiedRecipe ? (
+              <div className="recipe-dialog">
+                <div className="header">Let's Cook!</div>
 
-              <div className="image">
-                <img
-                  alt="coffee"
-                  src="https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                ></img>
-              </div>
+                <div className="image">
+                  <img
+                    alt={verifiedRecipeData.name}
+                    src={verifiedRecipeData.imageURL}
+                  ></img>
+                </div>
 
-              <div className="name">Coffee</div>
+                <div className="name">{verifiedRecipeData.name}</div>
 
-              <div className="duration">Total time: 20min</div>
+                <div className="duration">
+                  Total time: {verifiedRecipeData.cook_time_mins} min
+                </div>
 
-              <div className="actions">
-                <nav className="menu">
-                  <div className="actions-header">
-                    <div className="header-block">
-                      <div
-                        className="details-block active-block"
-                        ref={ingredientsBlock}
-                        onClick={() => {
-                          ingredientsBlock.current.className =
-                            "details-block active-block";
-                          instructionsBlock.current.className = "details-block";
-                          setShowInstructions(false);
-                        }}
-                      >
-                        Ingredients
+                <div className="actions">
+                  <nav className="menu">
+                    <div className="actions-header">
+                      <div className="header-block">
+                        <div
+                          className="details-block active-block"
+                          ref={ingredientsBlock}
+                          onClick={() => {
+                            ingredientsBlock.current.className =
+                              "details-block active-block";
+                            instructionsBlock.current.className =
+                              "details-block";
+                            setShowInstructions(false);
+                          }}
+                        >
+                          Ingredients
+                        </div>
+
+                        <div
+                          className="details-block"
+                          ref={instructionsBlock}
+                          onClick={(e) => {
+                            ingredientsBlock.current.className =
+                              "details-block";
+                            instructionsBlock.current.className =
+                              "details-block active-block";
+                            setShowInstructions(true);
+                          }}
+                        >
+                          Instructions
+                        </div>
                       </div>
 
-                      <div
-                        className="details-block"
-                        ref={instructionsBlock}
-                        onClick={(e) => {
-                          ingredientsBlock.current.className = "details-block";
-                          instructionsBlock.current.className =
-                            "details-block active-block";
-                          setShowInstructions(true);
-                        }}
-                      >
-                        Instructions
+                      <div className="menu-control">
+                        {!showInstructions && (
+                          <>
+                            <div className="menu-body">
+                              <div className="heading">Items</div>
+                              <div className="sub-heading">
+                                Follow step by step to cook the recipe
+                                perfectly!
+                              </div>
+                              <div className="steps">
+                                {verifiedRecipeData.items}
+                              </div>
+                            </div>
+
+                            <div className="menu-body">
+                              <div className="heading">Quantity</div>
+                              <div className="sub-heading">
+                                Follow step by step to cook the recipe
+                                perfectly!
+                              </div>
+                              <div className="steps">
+                                {verifiedRecipeData.quantity}
+                              </div>
+                            </div>
+                          </>
+                        )}
+
+                        {showInstructions && (
+                          <div className="menu-body">
+                            <div className="heading">Cooking Instructions</div>
+
+                            <div className="sub-heading">
+                              Follow step by step to cook the recipe perfectly!
+                            </div>
+                            <div className="steps">
+                              {/* <ol>
+                                <li>Add milk</li>
+                                <li>Add sugar</li>
+                                <li>Mix coffee powder</li>
+                              </ol> */}
+                              {verifiedRecipeData.instructions}
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
-
-                    <div className="menu-control">
-                      {!showInstructions && (
-                        <div className="menu-body">
-                          <div className="menu-table">
-                            <table>
-                              <tr>
-                                <th>Item</th>
-                                <th>Quantity</th>
-                              </tr>
-                              <tr>
-                                <td>Milk</td>
-                                <td>1 ltr</td>
-                              </tr>
-                              <tr>
-                                <td>Coffee Powder</td>
-                                <td>1 spoon</td>
-                              </tr>
-                            </table>
-                          </div>
-                        </div>
-                      )}
-
-                      {showInstructions && (
-                        <div className="menu-body">
-                          <div className="heading">Cooking Instructions</div>
-
-                          <div className="sub-heading">
-                            Follow step by step to cook the recipe perfectly!
-                          </div>
-                          <div className="steps">
-                            <ol>
-                              <li>Add milk</li>
-                              <li>Add sugar</li>
-                              <li>Mix coffee powder</li>
-                            </ol>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </nav>
+                  </nav>
+                </div>
               </div>
-            </div>
-          )}
+            ) : (
+              <h1>show Recipe!!</h1>
+            ))}
 
           {createRecipe && (
             <div className="recipe-dialog">
