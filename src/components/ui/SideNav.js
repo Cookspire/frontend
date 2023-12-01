@@ -78,10 +78,10 @@ export default function SideNav() {
             {userData && userData.email != null && (
               <li
                 onClick={() => {
-                  navigate("/profile/" + userData.id + "/posts");
+                  navigate("/profile/" + userData.email + "/posts");
                 }}
               >
-                <NavLink to={"/profile/" + userData.id + "/posts"}>
+                <NavLink to={"/profile/" + userData.email + "/posts"}>
                   Profile
                 </NavLink>
               </li>

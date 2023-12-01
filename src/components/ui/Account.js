@@ -45,11 +45,11 @@ export default function Account() {
       <div className="account-menu">
         {userData && userData.id && (
           <nav>
-            <NavLink to={"/profile/" + userData.id + "/account/general"}>
+            <NavLink to={"/profile/" + userData.email + "/account/general"}>
               <div className="user-menu">General</div>
             </NavLink>
 
-            <NavLink to={"/profile/" + userData.id + "/account/sensitive"}>
+            <NavLink to={"/profile/" + userData.email + "/account/sensitive"}>
               <div className="user-menu">Password</div>
             </NavLink>
 

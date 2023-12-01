@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Account from "../components/ui/Account";
 import Followers from "../components/ui/Followers";
@@ -6,7 +6,7 @@ import GeneralSettings from "../components/ui/GeneralSettings";
 import PasswordSettings from "../components/ui/PasswordSettings";
 import Posts from "../components/ui/Posts";
 import Verification from "../components/ui/Verification";
-import { UserDataContext } from "../context/UserContext";
+import { LogoutUserContext, UserDataContext } from "../context/UserContext";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import Cuisine from "../pages/Cuisine";
@@ -18,9 +18,9 @@ import Trending from "../pages/Trending";
 import ProtectedRoute from "./ProtectedRoute";
 import Course from "../pages/Course";
 import Test from "../pages/UserProfile";
+import { APIResponse, BACKEND, PATH } from "../environment/APIService";
 
 export default function AppRouter() {
-
   const userData = useContext(UserDataContext);
 
   return (
@@ -41,12 +41,16 @@ export default function AppRouter() {
 
         <Route
           path="/login"
-          element={userData && userData.email ? <Navigate to="/home" /> : <Login />}
+          element={
+            userData && userData.email ? <Navigate to="/home" /> : <Login />
+          }
         ></Route>
 
         <Route
           path="/register"
-          element={userData && userData.email ? <Navigate to="/home" /> : <Register />}
+          element={
+            userData && userData.email ? <Navigate to="/home" /> : <Register />
+          }
         ></Route>
 
         <Route exact path="/explore">
@@ -65,25 +69,31 @@ export default function AppRouter() {
           <Route path="/profile" element={<Profile />}>
             <Route
               exact
-              path="/profile/:id/posts"
-              element={<Posts userFollower={false} currentUser={true} userData={null}/>}
+              path="/profile/:email/posts"
+              element={
+                <Posts
+                  userFollower={false}
+                  currentUser={true}
+                  userData={userData}
+                />
+              }
             />
-            <Route path="/profile/:id/followers" element={<Followers />} />
-            <Route path="/profile/:id/following" element={<Followers />} />
+            <Route path="/profile/:email/followers" element={<Followers />} />
+            <Route path="/profile/:email/following" element={<Followers />} />
 
-            <Route exact path="/profile/:id/account" element={<Account />}>
+            <Route exact path="/profile/:email/account" element={<Account />}>
               <Route
                 index
-                path="/profile/:id/account/general"
+                path="/profile/:email/account/general"
                 element={<GeneralSettings />}
               />
               <Route
                 index
-                path="/profile/:id/account/sensitive"
+                path="/profile/:email/account/sensitive"
                 element={<PasswordSettings />}
               />
               <Route
-                path="/profile/:id/account/verification"
+                path="/profile/:email/account/verification"
                 element={<Verification />}
               />
             </Route>

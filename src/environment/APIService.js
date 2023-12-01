@@ -6,7 +6,12 @@ export const BACKEND = {
 export const APIResponse = {
   BAD_REQUEST: "Error in API Request",
   UNAUTHORIZED: "API Access Denied",
+  BAD_RESPONSE: "Error during API call "
 };
+
+export const TRENDING={
+  ID: 0
+}
 
 export const JSON_HEADERS = {
   "Content-Type": "application/json",

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useParams } from "react-router-dom";
 import { UpdateNotificationContext } from "../../context/NotificationContext";
 import { LogoutUserContext, UserDataContext } from "../../context/UserContext";
 import {
@@ -15,7 +15,11 @@ import Notification from "./Notification";
 export default function Profile() {
   const userLogged = useContext(UserDataContext);
 
-  const [userData, setUserData] = useState();
+  const [userData, setUserData] = useState({ value: {}, isLoggedUser: false });
+
+  const [loader, setLoader] = useState();
+
+  const userEmail = useParams();
 
   const logout = useContext(LogoutUserContext);
 
@@ -25,9 +29,9 @@ export default function Profile() {
 
   useEffect(() => {
     if (userLogged && userLogged.email != null) {
-      fetchUserDetails(userLogged.email);
-    } 
-  }, []);
+      fetchUserDetails(userEmail.email);
+    }
+  }, [userEmail]);
 
   async function fetchUserDetails(email) {
     fetch(BACKEND.API_URL + PATH.FETCH_USER + email, {
@@ -35,18 +39,30 @@ export default function Profile() {
     })
       .then((response) => {
         if (response.status === 200) return response.json();
-        else return APIResponse.UNAUTHORIZED;
+        if (response.status === 404) return APIResponse.BAD_REQUEST;
+        else return APIResponse.BAD_RESPONSE;
       })
       .then((data) => {
-        if (data === APIResponse.UNAUTHORIZED) {
-          logout();
+        if (data === APIResponse.BAD_REQUEST) {
+          setUserData((prev) => ({...prev,value:null , isLoggedUser: false}));
+        } else if (data === APIResponse.BAD_RESPONSE) {
+          setNotificationData(
+            true,
+            "Error occured while fetching new user data.",
+            NotificationType.INFO
+          );
         } else if (data && data.email !== "") {
-          setUserData(() => data);
+          console.log(data);
+          setUserData((prev) => ({...prev,value:data , isLoggedUser: data.email=== userLogged.email ? true:false}));
           fetchUserAnalysis(data.id);
         }
       })
       .catch((err) => {
-        logout();
+        setNotificationData(
+          true,
+          "Oops you got us! Raise a bug.",
+          NotificationType.INFO
+        );
       });
   }
 
@@ -81,9 +97,9 @@ export default function Profile() {
       });
   }
 
-  return userData && userData.id === null ? (
+  return userData.value && userData.value.id === null ? (
     <>Loading...</>
-  ) : (
+  ) : userData.value != null ? (
     <div className="profile-content">
       <Notification />
       <div className="profile-info">
@@ -91,7 +107,7 @@ export default function Profile() {
           <img src="/posts/profile.svg" alt="profile" />
         </div>
         <div className="profile-details">
-          <div className="profile-name">{userData && userData.username}</div>
+          <div className="profile-name">{userData.value && userData.value.username}</div>
 
           <div className="profile-stats">
             <div className="stats">
@@ -107,26 +123,26 @@ export default function Profile() {
             </div>
           </div>
 
-          {userData && userData.bio.length > 0 && (
-            <div className="profile-bio">{userData && userData.bio}</div>
+          {userData.value && userData.value.bio && (
+            <div className="profile-bio">{userData.value && userData.value.bio}</div>
           )}
         </div>
       </div>
 
-      {userData && userData.id && (
+      {userData.value && userData.value.id && (
         <div className="profile-data">
           <nav>
-            <NavLink to={"/profile/" + userData.id + "/posts"}>
+            <NavLink to={"/profile/" + userData.value.email + "/posts"}>
               <div className="profile-nav">Posts</div>
             </NavLink>
-            <NavLink to={"/profile/" + userData.id + "/followers"}>
+            <NavLink to={"/profile/" + userData.value.email + "/followers"}>
               <div className="profile-nav">Followers</div>
             </NavLink>
 
-            <NavLink to={"/profile/" + userData.id + "/followers"}>
+            <NavLink to={"/profile/" + userData.value.email + "/followers"}>
               <div className="profile-nav">Following</div>
             </NavLink>
-            <NavLink to={"/profile/" + userData.id + "/account/general"}>
+            <NavLink to={"/profile/" + userData.value.email + "/account/general"}>
               <div className="profile-nav">Account</div>
             </NavLink>
           </nav>
@@ -135,5 +151,21 @@ export default function Profile() {
 
       <Outlet />
     </div>
+  ) : (
+    <>
+      <div className="profile-content">
+        <Notification />
+        <div className="profile-info">
+          <div className="profile-image">
+            <img src="/posts/profile.svg" alt="profile" />
+          </div>
+        </div>
+        <div className="profile-data">
+          <div className="new-user">
+            <h1>This user doesn't exist</h1>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }

@@ -1,7 +1,7 @@
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import { useContext, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UpdateNotificationContext } from "../../context/NotificationContext";
 import {
   PostDataContext,
@@ -14,6 +14,7 @@ import {
   JSON_HEADERS,
   NotificationType,
   PATH,
+  TRENDING,
 } from "../../environment/APIService";
 import "../styles/Posts.css";
 import Notification from "./Notification";
@@ -29,16 +30,58 @@ export default function Posts({ userFollower, currentUser, userData }) {
 
   const navigate = useNavigate();
 
-  const { id } = useParams();
-  
   useEffect(() => {
-    let user_id = 0;
-    if (userData !== null) user_id = userData.id;
-    else if (id && id > 0) user_id = id;
-    if (!userFollower && !currentUser) fetchTrendingPost(user_id);
-    else if (userFollower && !currentUser) fetchFollowersPost(user_id);
-    else fetchUsersPost(user_id);
+    if (!userFollower && !currentUser) fetchTrendingPost(TRENDING.ID);
+    else if (userFollower && !currentUser) {
+      if (userData.id != null) {
+        fetchFollowersPost(userData.id);
+      } else {
+        setNotificationData(
+          true,
+          "Unable to fetch posts. Kindly raise a bug.",
+          NotificationType.INFO
+        );
+      }
+    } else {
+      if (userData.id == null && userData.email != null) {
+        fetchUserDetails(userData.email);
+      } else {
+        setNotificationData(
+          true,
+          "Unable to fetch posts. Kindly raise a bug.",
+          NotificationType.INFO
+        );
+      }
+    }
   }, []);
+
+  async function fetchUserDetails(email) {
+    fetch(BACKEND.API_URL + PATH.FETCH_USER + email, {
+      method: "POST",
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else return APIResponse.BAD_REQUEST;
+      })
+      .then((data) => {
+        if (data === APIResponse.BAD_REQUEST) {
+          setNotificationData(
+            true,
+            "Error occured while fetching user data.",
+            NotificationType.INFO
+          );
+        } else if (data && data.email !== "") {
+          fetchUsersPost(data.id);
+        }
+      })
+      .catch((err) => {
+        setNotificationData(
+          true,
+          "Oops you got us! Raise a bug.",
+          NotificationType.INFO
+        );
+      });
+  }
 
   const likePost = (post) => {
     if (userLogged && userLogged.email === null) {
@@ -247,11 +290,18 @@ export default function Posts({ userFollower, currentUser, userData }) {
               );
             })}
 
-          {postsList.length === 0 && (
+          {postsList.length === 0 && currentUser && (
             <div className="new-user">
               <h1>Welcome to Cookspire!</h1>
               <br />
               Follow users / create posts to get started...
+            </div>
+          )}
+
+          {postsList.length === 0 && currentUser && (
+            <div className="new-user">
+              <br />
+              No posts yet...
             </div>
           )}
         </div>

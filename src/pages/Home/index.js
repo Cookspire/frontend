@@ -5,6 +5,7 @@ import QuickAction from "../../components/ui/QuickAction";
 import "./index.css";
 import { LogoutUserContext, UserDataContext } from "../../context/UserContext";
 import { APIResponse, BACKEND, PATH } from "../../environment/APIService";
+import { NavLink } from "react-router-dom";
 
 export default function Home() {
   const [newPost, setNewPost] = useState(false);
@@ -71,6 +72,8 @@ export default function Home() {
 
         {newPost && <PostCreation closeDialog={setNewPost} />}
       </div>
+
+      <NavLink to={"/profile/gordon@gmail.com/posts"}>Open user</NavLink>
 
       <div className="explore-container">
         <QuickAction />
