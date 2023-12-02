@@ -2,7 +2,12 @@ import { useContext, useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { UserDataContext } from "../../context/UserContext";
 import "../styles/SideNav.css";
-import { APIResponse, BACKEND, NotificationType, PATH } from "../../environment/APIService";
+import {
+  APIResponse,
+  BACKEND,
+  NotificationType,
+  PATH,
+} from "../../environment/APIService";
 import Notification from "./Notification";
 import { UpdateNotificationContext } from "../../context/NotificationContext";
 
@@ -78,12 +83,10 @@ export default function SideNav() {
             {userData && userData.email != null && (
               <li
                 onClick={() => {
-                  navigate("/profile/" + userData.email + "/posts");
+                  navigate("/profile/" + userData.email);
                 }}
               >
-                <NavLink to={"/profile/" + userData.email + "/posts"}>
-                  Profile
-                </NavLink>
+                <NavLink to={"/profile/" + userData.email}>Profile</NavLink>
               </li>
             )}
           </ul>

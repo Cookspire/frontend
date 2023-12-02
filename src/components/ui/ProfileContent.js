@@ -44,7 +44,11 @@ export default function Profile() {
       })
       .then((data) => {
         if (data === APIResponse.BAD_REQUEST) {
-          setUserData((prev) => ({...prev,value:null , isLoggedUser: false}));
+          setUserData((prev) => ({
+            ...prev,
+            value: null,
+            isLoggedUser: false,
+          }));
         } else if (data === APIResponse.BAD_RESPONSE) {
           setNotificationData(
             true,
@@ -53,7 +57,11 @@ export default function Profile() {
           );
         } else if (data && data.email !== "") {
           console.log(data);
-          setUserData((prev) => ({...prev,value:data , isLoggedUser: data.email=== userLogged.email ? true:false}));
+          setUserData((prev) => ({
+            ...prev,
+            value: data,
+            isLoggedUser: data.email === userLogged.email ? true : false,
+          }));
           fetchUserAnalysis(data.id);
         }
       })
@@ -107,7 +115,9 @@ export default function Profile() {
           <img src="/posts/profile.svg" alt="profile" />
         </div>
         <div className="profile-details">
-          <div className="profile-name">{userData.value && userData.value.username}</div>
+          <div className="profile-name">
+            {userData.value && userData.value.username}
+          </div>
 
           <div className="profile-stats">
             <div className="stats">
@@ -124,7 +134,9 @@ export default function Profile() {
           </div>
 
           {userData.value && userData.value.bio && (
-            <div className="profile-bio">{userData.value && userData.value.bio}</div>
+            <div className="profile-bio">
+              {userData.value && userData.value.bio}
+            </div>
           )}
         </div>
       </div>
@@ -142,9 +154,13 @@ export default function Profile() {
             <NavLink to={"/profile/" + userData.value.email + "/followers"}>
               <div className="profile-nav">Following</div>
             </NavLink>
-            <NavLink to={"/profile/" + userData.value.email + "/account/general"}>
-              <div className="profile-nav">Account</div>
-            </NavLink>
+            {userData.isLoggedUser && (
+              <NavLink
+                to={"/profile/" + userData.value.email + "/account/general"}
+              >
+                <div className="profile-nav">Account</div>
+              </NavLink>
+            )}
           </nav>
         </div>
       )}

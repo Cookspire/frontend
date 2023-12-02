@@ -2,11 +2,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useContext, useEffect, useState } from "react";
 import ReactDom from "react-dom";
 import { NavLink, useNavigate } from "react-router-dom";
-import { UserDataContext,LogoutUserContext } from "../../context/UserContext";
+import { UserDataContext, LogoutUserContext } from "../../context/UserContext";
 import CloseModal from "../../hooks/CloseModal";
 import "../styles/HamburgerNav.css";
 import { APIResponse, PATH, BACKEND } from "../../environment/APIService";
-
 
 const OVERLAY = {
   backgroundColor: "rgb(0 0 0 / 70%)",
@@ -124,12 +123,10 @@ export default function HamburgerNav({ closeNav }) {
                 <li
                   onClick={() => {
                     closeHam();
-                    navigate("/profile/" + userData.email + "/posts");
+                    navigate("/profile/" + userData.email);
                   }}
                 >
-                  <NavLink to={"/profile/" + userData.email + "/posts"}>
-                    Profile
-                  </NavLink>
+                  <NavLink to={"/profile/" + userData.email}>Profile</NavLink>
                 </li>
               )}
             </ul>

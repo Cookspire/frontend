@@ -73,8 +73,6 @@ export default function Home() {
         {newPost && <PostCreation closeDialog={setNewPost} />}
       </div>
 
-      <NavLink to={"/profile/gordon@gmail.com/posts"}>Open user</NavLink>
-
       <div className="explore-container">
         <QuickAction />
       </div>
