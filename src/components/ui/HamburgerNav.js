@@ -124,10 +124,10 @@ export default function HamburgerNav({ closeNav }) {
                 <li
                   onClick={() => {
                     closeHam();
-                    navigate("/profile/" + userData.id + "/posts");
+                    navigate("/profile/" + userData.email + "/posts");
                   }}
                 >
-                  <NavLink to={"/profile/" + userData.id + "/posts"}>
+                  <NavLink to={"/profile/" + userData.email + "/posts"}>
                     Profile
                   </NavLink>
                 </li>
