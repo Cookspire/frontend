@@ -9,6 +9,17 @@ export const APIResponse = {
   BAD_RESPONSE: "Error during API call "
 };
 
+export const IMAGE_TYPE={
+  JPEG:"image/jpeg",
+  PNG:"image/png"
+}
+
+export const IMAGE_SRC={
+  JPEG:"data:image/jpeg;base64,",
+  PNG:"data:image/png;base64,"
+}
+
+
 export const TRENDING={
   ID: 0
 }
@@ -26,10 +37,12 @@ export const PATH = {
   CREATE_USER: "/persist/user",
   VERIFY_USER: "/verify/user",
   FETCH_USER: "/fetch/user?email=",
+  SPOTLIGHT_USER: "/fetch/profile/spotlight",
+  SUGGESTED_USER: "/fetch/suggested/user",
 
   PERSIST_POST: "/persist/post",
   FETCH_FOLLOWERS_POST: "/fetchAll/post/user/follower?userId=",
-  FETCH_USERS_POST: "/fetchAll/post/user?userId=",
+  FETCH_USERS_POST: "/fetchAll/post?currentUser=",
   FETCH_TRENDING_POST: "/fetchAll/trending/post?userId=",
   
   FETCH_GENERAL_ANALYSIS: "/fetch/general/userAnalysis?userId=",

@@ -67,7 +67,7 @@ export default function AppRouter() {
           <Route path="/test" element={<Test />}></Route>
 
           <Route path="/profile" element={<Profile />}>
-            <Route exact path="/profile/:email" />
+            <Route exact path="/profile/:email" element={<></>}/>
 
             <Route
               path="/profile/:email/posts"

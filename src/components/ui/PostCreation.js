@@ -63,6 +63,8 @@ export default function PostCreation({ closeDialog }) {
     imageURL: null,
   });
 
+  const [file, setFile] = useState();
+
   const [valid, setValid] = useState({
     showDisable: true,
     showBuffer: false,
@@ -110,10 +112,17 @@ export default function PostCreation({ closeDialog }) {
   };
 
   async function fetchUsersPost(id) {
-    fetch(BACKEND.API_URL + PATH.FETCH_USERS_POST + id, {
-      method: "POST",
-      headers: JSON_HEADERS,
-    })
+    fetch(
+      BACKEND.API_URL +
+        PATH.FETCH_USERS_POST +
+        userLogged.email +
+        "&fetchUser=" +
+        userLogged.email,
+      {
+        method: "POST",
+        headers: JSON_HEADERS,
+      }
+    )
       .then((response) => {
         if (response.status === 200) return response.json();
         else {
@@ -147,6 +156,7 @@ export default function PostCreation({ closeDialog }) {
   async function persistPosts(postData) {
     const formdata = new FormData();
     formdata.set("data", JSON.stringify(postData));
+    formdata.set("file", file);
 
     fetch(BACKEND.API_URL + PATH.PERSIST_POST, {
       method: "PUT",
@@ -220,6 +230,7 @@ export default function PostCreation({ closeDialog }) {
         file.type === "image/jpg"
       ) {
         if (file.size <= 300000) {
+          setFile(uploadPostImageRef.current.files[0]);
           setFilePreview((prev) => ({
             ...prev,
             show: true,
