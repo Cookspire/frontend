@@ -71,6 +71,20 @@
   font-weight: 600;
 }
 
+.profile-name a {
+  text-decoration: none;
+  color: var(--primaryColor);
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.profile-name a:hover {
+  text-decoration: underline;
+  color: var(--primaryColor);
+  margin-right: 10px;
+  font-weight: bold;
+}
+
 .profile-suggestions-info {
   display: flex;
   justify-content: flex-start;
@@ -80,6 +94,12 @@
 }
 .profile-info .profile-name {
   margin-left: 5px;
+}
+
+.suggestions-profile .done-msg {
+  margin-left: 10px;
+  margin-right: 10px;
+  color: var(--secondaryColor);
 }
 
 .profile-suggestions-info img {
@@ -133,7 +153,7 @@
   right: 0px;
   cursor: pointer;
   margin: 0;
-  padding:0;
+  padding: 0;
 }
 
 .suggestion-content {
@@ -168,7 +188,7 @@
   align-content: flex-start;
   flex-direction: column;
   flex-wrap: wrap;
-  padding:5px;
+  padding: 5px;
 }
 
 .suggestion-name {
@@ -183,8 +203,28 @@
   padding: 10px;
 }
 
-
-.suggestion-name:hover{
+.suggestion-name:hover {
   background-color: var(--primaryBackground);
   border-radius: var(--borderRadius);
+}
+
+
+.center-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.suggestions-content .loader {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border-right: 2px solid var(--buttonDisabled);
+  border-bottom: 2px solid var(--buttonDisabled);
+  border-left: 2px solid var(--buttonDisabled);
+  border-top: 2px solid var(--background);
 }

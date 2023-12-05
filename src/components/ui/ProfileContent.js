@@ -17,6 +17,8 @@ export default function Profile() {
 
   const [userData, setUserData] = useState({ value: {}, isLoggedUser: false });
 
+  const[loggedUser, setLoggedUser] = useState();
+
   const [loader, setLoader] = useState();
 
   const userEmail = useParams();
@@ -29,7 +31,8 @@ export default function Profile() {
 
   useEffect(() => {
     if (userLogged && userLogged.email != null) {
-      fetchUserDetails(userEmail.email);
+      fetchSpotlightUserDetails(userLogged.email, userEmail.email);
+      fetchUserDetails(userLogged.email)
     }
   }, [userEmail]);
 
@@ -39,7 +42,41 @@ export default function Profile() {
     })
       .then((response) => {
         if (response.status === 200) return response.json();
-        if (response.status === 404) return APIResponse.BAD_REQUEST;
+        else return APIResponse.BAD_REQUEST;
+      })
+      .then((data) => {
+        if (data === APIResponse.BAD_REQUEST) {
+          setNotificationData(
+            true,
+            "Error occured while fetching user data.",
+            NotificationType.INFO
+          );
+        } else if (data && data.email !== "") {
+          setLoggedUser(data);
+          fetchSpotlightUserDetails(userLogged.email, userEmail.email);
+        }
+      })
+      .catch((err) => {
+        setNotificationData(
+          true,
+          "Oops you got us! Raise a bug.",
+          NotificationType.INFO
+        );
+      });
+  }
+
+  async function fetchSpotlightUserDetails(currentUser, spotlightUser) {
+    fetch(BACKEND.API_URL + PATH.SPOTLIGHT_USER, {
+      method: "POST",
+      headers: JSON_HEADERS,
+      body: JSON.stringify({
+        spotlightUser: spotlightUser,
+        currentUser: currentUser,
+      }),
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else if (response.status === 404) return APIResponse.BAD_REQUEST;
         else return APIResponse.BAD_RESPONSE;
       })
       .then((data) => {
@@ -105,6 +142,46 @@ export default function Profile() {
       });
   }
 
+  async function followUser(followerId, shouldFollow) {
+    fetch(BACKEND.API_URL + PATH.FOLLOW_USER, {
+      method: "POST",
+      headers: JSON_HEADERS,
+      body: JSON.stringify({
+        followerId: loggedUser.id,
+        followeeId: followerId,
+        followUser: shouldFollow,
+      }),
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else return APIResponse.BAD_REQUEST;
+      })
+      .then((data) => {
+        if (data !== APIResponse.BAD_REQUEST) {
+          fetchSpotlightUserDetails(userLogged.email, userEmail.email) 
+        } else {
+          setNotificationData(
+            true,
+            "Unable to follow user. Kindly raise a bug!",
+            NotificationType.INFO
+          );
+        }
+      })
+      .catch((err) => {
+        setNotificationData(
+          true,
+          "Oops you got us! Kindly raise a bug.",
+          NotificationType.INFO
+        );
+        return console.log("Error Occured, Reason : " + err);
+      });
+  }
+
+  const submitFollowUser = (e, followerId, shouldFollow) => {
+    e.preventDefault();
+    followUser(followerId, shouldFollow);
+  };
+
   return userData.value && userData.value.id === null ? (
     <>Loading...</>
   ) : userData.value != null ? (
@@ -115,8 +192,24 @@ export default function Profile() {
           <img src="/posts/profile.svg" alt="profile" />
         </div>
         <div className="profile-details">
-          <div className="profile-name">
-            {userData.value && userData.value.username}
+          <div className="profile-interaction">
+            <div className="name">
+              {userData.value && userData.value.username}
+            </div>
+            {!userData.isLoggedUser && userData.value && (
+              <div className="interaction">
+                {userData.value.isfollowing && (
+                  <button className="button"
+                  onClick={(e) => submitFollowUser(e, userData.value.id, !userData.value.isfollowing)}
+                  >Following</button>
+                )}
+                {!userData.value.isfollowing && (
+                  <button className="button"
+                  onClick={(e) => submitFollowUser(e, userData.value.id, !userData.value.isfollowing)}
+                  >Follow</button>
+                )}
+              </div>
+            )}
           </div>
 
           <div className="profile-stats">
@@ -151,7 +244,7 @@ export default function Profile() {
               <div className="profile-nav">Followers</div>
             </NavLink>
 
-            <NavLink to={"/profile/" + userData.value.email + "/followers"}>
+            <NavLink to={"/profile/" + userData.value.email + "/following"}>
               <div className="profile-nav">Following</div>
             </NavLink>
             {userData.isLoggedUser && (

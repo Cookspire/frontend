@@ -38,7 +38,9 @@ export const PATH = {
   VERIFY_USER: "/verify/user",
   FETCH_USER: "/fetch/user?email=",
   SPOTLIGHT_USER: "/fetch/profile/spotlight",
-  SUGGESTED_USER: "/fetch/suggested/user",
+  SUGGESTED_USER: "/fetch/suggested/user?email=",
+  FOLLOW_USER: "/follow/user",
+  FETCH_USER_FOLLOWER_INFO: "/fetchAll/followersInfo?userId=",
 
   PERSIST_POST: "/persist/post",
   FETCH_FOLLOWERS_POST: "/fetchAll/post/user/follower?userId=",

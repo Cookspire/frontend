@@ -1,10 +1,10 @@
 import { NavLink, useParams } from "react-router-dom";
-import "../styles/Followers.css";
+import "../styles/Following.css";
 import { useContext, useEffect, useState } from "react";
 import { LogoutUserContext, UserDataContext } from "../../context/UserContext";
 import { APIResponse, BACKEND, PATH } from "../../environment/APIService";
 
-export default function Followers() {
+export default function Following() {
   const userEmail = useParams();
 
   const logout = useContext(LogoutUserContext);
@@ -13,7 +13,7 @@ export default function Followers() {
 
   const [userData, setUserData] = useState();
 
-  const [userFollowers, setUserFollowers] = useState();
+  const [userFollowing, setUserFollowing] = useState();
 
   useEffect(() => {
     if (userLogged && userLogged.email != null) {
@@ -36,7 +36,7 @@ export default function Followers() {
           logout();
         } else if (data && data.email !== "") {
           setUserData(() => data);
-          fetchUserFollower(data.id);
+          fetchUserFollowing(data.id);
         }
       })
       .catch((err) => {
@@ -44,7 +44,7 @@ export default function Followers() {
       });
   }
 
-  async function fetchUserFollower(id) {
+  async function fetchUserFollowing(id) {
     fetch(BACKEND.API_URL + PATH.FETCH_USER_FOLLOWER_INFO + id, {
       method: "POST",
     })
@@ -56,7 +56,7 @@ export default function Followers() {
         if (data === APIResponse.UNAUTHORIZED) {
           logout();
         } else if (data && data.email !== "") {
-          setUserFollowers(() => data.followers);
+          setUserFollowing(() => data.following);
         }
       })
       .catch((err) => {
@@ -66,9 +66,9 @@ export default function Followers() {
 
   return (
     <div className="follower-content">
-      {userFollowers &&
-        userFollowers.length > 0 &&
-        userFollowers.map((x) => (
+      {userFollowing &&
+        userFollowing.length > 0 &&
+        userFollowing.map((x) => (
           <NavLink to={"/profile/" + x.email + "/posts"}>
             <div className="profile" key={x.id}>
               <div className="profile-image">
@@ -79,7 +79,7 @@ export default function Followers() {
             </div>
           </NavLink>
         ))}
-      {userFollowers && userFollowers.length === 0 && (
+      {userFollowing && userFollowing.length === 0 && (
         <div className="loader"></div>
       )}
     </div>

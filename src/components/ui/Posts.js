@@ -22,6 +22,7 @@ import "../styles/Posts.css";
 import Notification from "./Notification";
 
 export default function Posts({ userFollower, currentUser, userData }) {
+  
   const userLogged = useContext(UserDataContext);
 
   const setNotificationData = useContext(UpdateNotificationContext);
@@ -34,11 +35,14 @@ export default function Posts({ userFollower, currentUser, userData }) {
 
   const navigate = useNavigate();
 
+  const [showLoader, setShowLoader] = useState(false);
+
   const [loggedUser, setLoggedUser] = useState();
 
   useEffect(() => {
     console.log(postsList);
   }, [postsList]);
+  
   useEffect(() => {
     if (!userFollower && !currentUser) fetchTrendingPost(TRENDING.ID);
     else if (userFollower && !currentUser) {
@@ -177,7 +181,7 @@ export default function Posts({ userFollower, currentUser, userData }) {
   }
 
   async function fetchFollowersPost(id) {
-    console.log("fetching user follower post!!");
+    setShowLoader(true);
     fetch(BACKEND.API_URL + PATH.FETCH_FOLLOWERS_POST + id, {
       method: "POST",
       headers: JSON_HEADERS,
@@ -189,6 +193,7 @@ export default function Posts({ userFollower, currentUser, userData }) {
         }
       })
       .then((data) => {
+        setShowLoader(false);
         if (data !== APIResponse.BAD_REQUEST) {
           updatePosts(data);
         } else {
@@ -293,9 +298,7 @@ export default function Posts({ userFollower, currentUser, userData }) {
     }
   };
 
-  return userData && userData.id === null ? (
-    <>Loading...</>
-  ) : (
+  return (
     <>
       <Notification />
       <div className="post-content">
@@ -361,11 +364,19 @@ export default function Posts({ userFollower, currentUser, userData }) {
             })}
 
           {postsList.length === 0 && !currentUser && (
-            <div className="new-user">
-              <h1>Welcome to Cookspire!</h1>
-              <br />
-              Follow users / create posts to get started...
-            </div>
+            <>
+              {showLoader ? (
+                <div className="center-loader">
+                  <div className="loader"></div>
+                </div>
+              ) : (
+                <div className="new-user">
+                  <h1>Welcome to Cookspire!</h1>
+                  <br />
+                  Follow users / create posts to get started...
+                </div>
+              )}
+            </>
           )}
 
           {postsList.length === 0 && currentUser && (

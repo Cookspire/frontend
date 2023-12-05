@@ -16,8 +16,6 @@
   align-content: center;
   flex-wrap: wrap;
   flex-direction: row;
-  flex-basis: 150px;
-  flex-grow: inherit;
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 10px;
@@ -43,4 +41,12 @@
 .profile .profile-image img {
   width: 120px;
   height: 120px;
+}
+
+.follower-content a{
+  text-decoration: none;
+}
+
+.follower-content a:hover{
+  text-decoration: underline;
 }

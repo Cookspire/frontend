@@ -14,11 +14,15 @@ import Home from "../pages/Home";
 import NotFound from "../pages/NotFound/NotFound";
 import Profile from "../pages/Profile";
 import Recipe from "../pages/Recipe";
+import Search from "../pages/Search";
 import Trending from "../pages/Trending";
 import ProtectedRoute from "./ProtectedRoute";
 import Course from "../pages/Course";
 import Test from "../pages/UserProfile";
 import { APIResponse, BACKEND, PATH } from "../environment/APIService";
+import Following from "../components/ui/Following";
+import RecipeSearch from "../components/ui/RecipeSearch";
+import PeopleSearch from "../components/ui/PeopleSearch";
 
 export default function AppRouter() {
   const userData = useContext(UserDataContext);
@@ -53,6 +57,11 @@ export default function AppRouter() {
           }
         ></Route>
 
+        <Route exact path="/search" element={<Search />}>
+          <Route path="/search/recipe" element={<RecipeSearch />} />
+          <Route path="/search/people" element={<PeopleSearch />} />
+        </Route>
+
         <Route exact path="/explore">
           <Route path="/explore" element={<Recipe />} />
           <Route path="/explore/cuisine/:name" element={<Cuisine />} />
@@ -67,7 +76,7 @@ export default function AppRouter() {
           <Route path="/test" element={<Test />}></Route>
 
           <Route path="/profile" element={<Profile />}>
-            <Route exact path="/profile/:email" element={<></>}/>
+            <Route exact path="/profile/:email" element={<></>} />
 
             <Route
               path="/profile/:email/posts"
@@ -80,7 +89,7 @@ export default function AppRouter() {
               }
             />
             <Route path="/profile/:email/followers" element={<Followers />} />
-            <Route path="/profile/:email/following" element={<Followers />} />
+            <Route path="/profile/:email/following" element={<Following />} />
 
             <Route exact path="/profile/:email/account" element={<Account />}>
               <Route

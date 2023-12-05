@@ -4,7 +4,6 @@ import ReactDom, { createPortal } from "react-dom";
 import { UpdateNotificationContext } from "../../context/NotificationContext";
 import { UpdatePostDataContext } from "../../context/PostContext";
 import { LogoutUserContext, UserDataContext } from "../../context/UserContext";
-import PostAddIcon from "@mui/icons-material/PostAdd";
 
 import {
   APIResponse,
@@ -100,9 +99,9 @@ export default function PostCreation({ closeDialog }) {
       });
   }
 
-  // const closePost = CloseModal(() => {
-  //   closeDialog(false);
-  // }, true);
+  const closePost = CloseModal(() => {
+    closeDialog(false);
+  }, true);
 
   const handlePostInput = (e) => {
     setPost((prev) => ({ ...prev, content: e.target.value }));
@@ -262,7 +261,7 @@ export default function PostCreation({ closeDialog }) {
     <>
       <Notification />
       <div style={OVERLAY_STYLE}>
-        <div className="post-creation-content">
+        <div className="post-creation-content" ref={closePost}>
           <div
             className="close-dialog"
             title="close"

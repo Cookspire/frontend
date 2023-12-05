@@ -135,7 +135,6 @@ export default function GeneralSettings() {
       body: JSON.stringify({
         username: userForm.username.value,
         email: userData.email,
-        password: userData.password,
         country: userForm.country.value,
         isVerified: false,
         bio: userForm.bio.value,
