@@ -337,13 +337,13 @@ export default function PostCreation({ closeDialog }) {
                   <AddPhotoAlternateIcon htmlColor="blue" fontSize="medium" />
                 </div>
 
-                <div
+                {/* <div
                   className="photo-attachment"
                   title="Add Recipe"
                   onClick={() => setShowRecipe(true)}
                 >
                   <PostAddIcon htmlColor="orange" fontSize="medium" />
-                </div>
+                </div> */}
               </div>
             </div>
 
