@@ -68,6 +68,7 @@
   flex-wrap: wrap;
   font-size: var(--text-xl);
   margin: 5px;
+  padding:10px;
   width: 100%;
   font-weight: 600;
 }

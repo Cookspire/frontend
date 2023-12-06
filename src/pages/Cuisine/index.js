@@ -21,10 +21,37 @@ export default function Cuisine() {
 
   const [recipeList, setRecipeList] = useState([]);
 
+  const [maxPageNumber, setMaxPageNumber] = useState(0);
+
+  const [currentPageNumber, setCurrentPageNumber] = useState(0);
+
+  const [showMore, setShowMore] = useState(true);
+
+  useEffect(() => {
+    if (name && name.length === 0) {
+      navigate("/explore");
+    } else {
+      fetchRecipeByCuisine(name);
+    }
+  }, [name, navigate]);
+
+  useEffect(() => {
+    if (maxPageNumber > 0 && currentPageNumber >= maxPageNumber) {
+      setShowMore(false);
+    }
+  }, [maxPageNumber, currentPageNumber]);
+
   async function fetchRecipeByCuisine(cuisine) {
-    fetch(BACKEND.API_URL + PATH.FETCH_RECIPE_CUISINE + cuisine, {
-      method: "POST",
-    })
+    fetch(
+      BACKEND.API_URL +
+        PATH.FETCH_RECIPE_CUISINE +
+        cuisine +
+        "&pageNumber=" +
+        currentPageNumber,
+      {
+        method: "POST",
+      }
+    )
       .then((response) => {
         if (response.status === 200) return response.json();
         else {
@@ -40,7 +67,10 @@ export default function Cuisine() {
             NotificationType.INFO
           );
         } else if (data !== "") {
-          setRecipeList(data);
+          const responseList = data.recipe;
+          setRecipeList((prevList) => [...prevList, ...responseList]);
+          setMaxPageNumber(() => data.maxPageNumber);
+          setCurrentPageNumber((prev) => prev + 1);
         }
       })
       .catch((err) => {
@@ -52,13 +82,11 @@ export default function Cuisine() {
       });
   }
 
-  useEffect(() => {
-    if (name && name.length === 0) {
-      navigate("/explore");
-    } else {
+  const loadMoreData = () => {
+    if (currentPageNumber <= maxPageNumber) {
       fetchRecipeByCuisine(name);
     }
-  }, [name, navigate]);
+  };
 
   return (
     <div className="recipe-container">
@@ -122,11 +150,18 @@ export default function Cuisine() {
         </div>
       </div>
       <div className="recipe-list">
-        {recipeList.length > 0 &&
+        {recipeList &&
+          recipeList.length > 0 &&
           recipeList.map((x) => {
             return <RecipeCard key={x.id} recipeData={x} />;
           })}
       </div>
+
+      {showMore && (
+        <div className="data-loader-action">
+          <button onClick={loadMoreData}> Show more</button>
+        </div>
+      )}
     </div>
   );
 }

@@ -38,7 +38,7 @@
   margin: 15px 5px;
   background-color: var(--cardBackgroundColor);
   border-radius: 6px;
-  border: 1px solid var(--border);
+  box-shadow: var(--boxShadow);
 }
 
 .suggestions-heading {
@@ -92,6 +92,35 @@
   align-content: flex-start;
   flex-direction: row;
 }
+
+.query-suggestions-info {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  width: inherit;
+  flex-direction: row;
+  word-break: break-all;
+}
+
+.query-suggestions-info .query-image {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  padding-left: 5px;
+}
+.query-suggestions-info .query-name {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  margin-left: 5px;
+  color: rgb(34, 86, 190);
+}
+
 .profile-info .profile-name {
   margin-left: 5px;
 }
@@ -138,7 +167,7 @@
 }
 
 .quick-actions-content .search-suggestions {
-  box-shadow: 0px 0px 20px var(--border);
+  box-shadow: 0px 0px 10px var(--secondaryColor);
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -147,6 +176,7 @@
   width: 100%;
   border-radius: var(--borderRadius);
   background-color: var(--cardBackgroundColor);
+  min-height: 60px;
   height: auto;
   position: absolute;
   top: 40px;
@@ -154,6 +184,17 @@
   cursor: pointer;
   margin: 0;
   padding: 0;
+}
+
+.search-suggestions a {
+  width: inherit;
+  color: var(--primaryColor);
+  text-decoration: none;
+}
+
+.search-suggestions a:active {
+  width: inherit;
+  color: var(--primaryColor);
 }
 
 .suggestion-content {
@@ -170,9 +211,9 @@
   display: flex;
   height: auto;
   width: 100%;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  align-content: flex-start;
+  align-content: center;
   flex-direction: column;
   flex-wrap: wrap;
   padding: 10px;
@@ -180,6 +221,18 @@
 }
 
 .suggestion-list {
+  display: flex;
+  height: auto;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 5px;
+}
+
+.query-suggestion-list {
   display: flex;
   height: auto;
   width: 100%;
@@ -207,7 +260,6 @@
   background-color: var(--primaryBackground);
   border-radius: var(--borderRadius);
 }
-
 
 .center-loader {
   display: flex;

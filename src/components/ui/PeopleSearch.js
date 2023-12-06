@@ -1,11 +1,13 @@
 import { useState } from "react";
 import "../styles/PeopleSearch.css";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useParams, useSearchParams } from "react-router-dom";
 
 export default function PeopleSearch() {
   const [peopleList, setPeopleList] = useState([]);
 
   const searchQuery= useParams();
+
+  const [searchParams, setSearchParams] = useSearchParams({ q: "" });
 
   return (
     <div className="recipe-list">
@@ -23,7 +25,7 @@ export default function PeopleSearch() {
         ))}
 
       {peopleList.length === 0 && (
-        <div className="search-msg"><h2>No Users found!</h2></div>
+        <div className="search-msg"><h2>No Users found! {searchParams.get("q")}</h2></div>
       )}
     </div>
   );

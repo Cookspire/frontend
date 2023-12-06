@@ -34,6 +34,7 @@ export const MULTI_PART_HEADERS = {
 
 
 export const PATH = {
+
   CREATE_USER: "/persist/user",
   VERIFY_USER: "/verify/user",
   FETCH_USER: "/fetch/user?email=",
@@ -48,6 +49,10 @@ export const PATH = {
   FETCH_TRENDING_POST: "/fetchAll/trending/post?userId=",
   
   FETCH_GENERAL_ANALYSIS: "/fetch/general/userAnalysis?userId=",
+
+  SEARCH_COOKSPIRE: "/search/cookspire",
+  SEARCH_RECIPE: "/search/recipe",
+  SEARCH_USERS: "/search/people",
 
   FETCH_RECIPE_CUISINE: "/fetch/recipe/cuisine?name=",
   FETCH_RECIPE_COURSE: "/fetch/recipe/course?name=",
