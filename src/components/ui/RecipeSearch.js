@@ -22,11 +22,14 @@ export default function RecipeSearch() {
 
   const [currentPageNumber, setCurrentPageNumber] = useState(0);
 
+  const [showLoader, setShowLoader] = useState(false);
+
   const [showMore, setShowMore] = useState(true);
 
   useEffect(() => {
-    recipeSearch(searchParams.get("q"));
-  }, [searchParams]);
+    console.log("change in search params!!");
+    recipeSearch(searchParams.get("q"), true);
+  }, [searchParams.get("q")]);
 
   useEffect(() => {
     if (maxPageNumber > 0 && currentPageNumber >= maxPageNumber) {
@@ -34,13 +37,15 @@ export default function RecipeSearch() {
     }
   }, [maxPageNumber, currentPageNumber]);
 
-  async function recipeSearch(query) {
+  async function recipeSearch(query, refreshData) {
+    if (refreshData) setMaxPageNumber(0);
+    setShowLoader(true);
     fetch(BACKEND.API_URL + PATH.SEARCH_RECIPE, {
       method: "POST",
       headers: JSON_HEADERS,
       body: JSON.stringify({
         query: query,
-        currentPageNumber: currentPageNumber,
+        currentPageNumber: !refreshData ? currentPageNumber : 0,
       }),
     })
       .then((response) => {
@@ -48,10 +53,13 @@ export default function RecipeSearch() {
         else return APIResponse.BAD_REQUEST;
       })
       .then((data) => {
+        setShowLoader(false);
         if (data !== APIResponse.BAD_REQUEST) {
           const responseList = data.recipe;
-          setRecipeList((prevList) => [...prevList, ...responseList]);
-          setMaxPageNumber(() => data.maxPageNumber);
+          if (!refreshData)
+            setRecipeList((prevList) => [...prevList, ...responseList]);
+          else setRecipeList(responseList);
+          setMaxPageNumber(data.maxPageNumber);
           setCurrentPageNumber((prev) => prev + 1);
         } else {
           setNotificationData(
@@ -72,7 +80,7 @@ export default function RecipeSearch() {
 
   const loadMoreData = () => {
     if (currentPageNumber <= maxPageNumber) {
-      recipeSearch(searchParams.get("q"));
+      recipeSearch(searchParams.get("q"), false);
     }
   };
 
@@ -82,15 +90,11 @@ export default function RecipeSearch() {
         {recipeList.length > 0 &&
           recipeList.map((x) => {
             return (
-              <RecipeCard
-                key={x.id}
-                recipeData={x}
-                recipeCreation={false}
-              />
+              <RecipeCard key={x.id} recipeData={x} recipeCreation={false} />
             );
           })}
 
-        {recipeList.length === 0 && (
+        {recipeList.length === 0 && !showLoader && (
           <div className="search-msg">
             <h2>No recipes found for {searchParams.get("q")} .</h2>
           </div>
@@ -101,6 +105,8 @@ export default function RecipeSearch() {
           <button onClick={loadMoreData}> Show more</button>
         </div>
       )}
+
+      {showLoader && recipeList.length === 0 && <div className="loader"></div>}
     </div>
   );
 }
