@@ -129,7 +129,7 @@ export default function Posts({ userFollower, currentUser, userData }) {
   }
 
   const likePost = (post) => {
-    if (userLogged && userLogged.email === null) {
+    if (userLogged=== null) {
       navigate("/login");
     } else {
       let likePost = post.hasLiked ? false : true;

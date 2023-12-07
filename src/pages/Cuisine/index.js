@@ -46,7 +46,9 @@ export default function Cuisine() {
   }, [debouncedSearchValue]);
 
   useEffect(() => {
-    if (maxPageNumber > 0 && currentPageNumber >= maxPageNumber) {
+    if (
+      (maxPageNumber > 0 && currentPageNumber >= maxPageNumber) 
+    ) {
       setShowMore(false);
     }
   }, [maxPageNumber, currentPageNumber]);
@@ -89,7 +91,10 @@ export default function Cuisine() {
         } else if (data !== "") {
           const responseList = data.recipe;
           setRecipeList(responseList);
-          setMaxPageNumber(() => data.maxPageNumber);
+          if(data.maxPageNumber===0)
+            setShowMore(false)
+          else
+            setMaxPageNumber(() => data.maxPageNumber);
           setCurrentPageNumber((prev) => prev + 1);
         }
       })

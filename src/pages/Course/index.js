@@ -12,6 +12,7 @@ import {
   JSON_HEADERS,
 } from "../../environment/APIService";
 import "./index.css";
+import useDebounce from "../../hooks/useDebounce";
 
 export default function Course() {
   const { name } = useParams();
@@ -19,6 +20,10 @@ export default function Course() {
   const navigate = useNavigate();
 
   const setNotificationData = useContext(UpdateNotificationContext);
+
+  const [globalSearch, setGlobalSearch] = useState("");
+
+  const debouncedSearchValue = useDebounce(globalSearch, 250);
 
   const [recipeList, setRecipeList] = useState([]);
 
@@ -37,6 +42,10 @@ export default function Course() {
   }, [name, navigate]);
 
   useEffect(() => {
+    handleSearchSubmit(debouncedSearchValue);
+  }, [debouncedSearchValue]);
+
+  useEffect(() => {
     if (maxPageNumber > 0 && currentPageNumber >= maxPageNumber) {
       setShowMore(false);
     }
@@ -51,7 +60,6 @@ export default function Course() {
     course,
     pageNumber
   ) {
-   
     fetch(BACKEND.API_URL + PATH.FILTER_RECIPE, {
       method: "POST",
       headers: JSON_HEADERS,
@@ -68,7 +76,6 @@ export default function Course() {
       .then((response) => {
         if (response.status === 200) return response.json();
         else {
-    
           return APIResponse.BAD_REQUEST;
         }
       })
@@ -109,7 +116,6 @@ export default function Course() {
       .then((response) => {
         if (response.status === 200) return response.json();
         else {
-
           return APIResponse.BAD_REQUEST;
         }
       })
@@ -123,7 +129,8 @@ export default function Course() {
         } else if (data !== "") {
           const responseList = data.recipe;
           setRecipeList((prevList) => [...prevList, ...responseList]);
-          setMaxPageNumber(() => data.maxPageNumber);
+          if (data.maxPageNumber === 0) setShowMore(false);
+          else setMaxPageNumber(() => data.maxPageNumber);
           setCurrentPageNumber((prev) => prev + 1);
         }
       })
@@ -143,6 +150,20 @@ export default function Course() {
     if (currentPageNumber <= maxPageNumber) {
       fetchRecipeByCourse(name);
     }
+  };
+
+  const handleSearchSubmit = (value) => {
+    const fromTime = timingRef.current.value.split(":")[0];
+    const toTime = timingRef.current.value.split(":")[1];
+
+    const reqDiet =
+      dietRef.current.value.length > 0 ? dietRef.current.value : null;
+    const reqFromTime = fromTime.length > 0 ? fromTime : 0;
+    const reqToTime = toTime.length > 0 ? toTime : 100;
+    const query = value.length > 0 ? value : "";
+    const cusine = null;
+    const course = name;
+    filterRecipe(query, reqDiet, reqFromTime, reqToTime, cusine, course, 0);
   };
 
   const handleFilter = () => {
@@ -171,10 +192,13 @@ export default function Course() {
             <input
               type="text"
               autoComplete="off"
-              maxLength={1000}
               id="search"
-              placeholder="Search Recipes"
-              
+              placeholder="Filter within Course"
+              maxLength={1000}
+              onChange={(e) => {
+                setGlobalSearch(e.target.value);
+              }}
+              value={globalSearch}
             />
           </div>
         </div>
