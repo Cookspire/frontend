@@ -16,8 +16,6 @@
   align-content: center;
   flex-wrap: wrap;
   flex-direction: row;
-  flex-basis: 150px;
-  flex-grow: inherit;
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 10px;
@@ -26,10 +24,10 @@
 .profile .profile-name {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   align-content: center;
   flex-wrap: wrap;
-  flex-direction: column;
+  flex-direction: row;
   width: 100%;
 }
 
@@ -43,4 +41,25 @@
 .profile .profile-image img {
   width: 120px;
   height: 120px;
+}
+
+.follower-content a{
+  text-decoration: none;
+}
+
+.follower-content a:hover{
+  text-decoration: underline;
+}
+
+
+.follower-container {
+  width: inherit;
+  padding: 15px 9%;
+  padding-bottom: 100px;
+}
+
+.follower-container .people-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
 }

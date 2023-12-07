@@ -120,7 +120,6 @@ export default function GeneralSettings() {
     console.log(e.target.id, e.target.value);
     if (
       userForm.username.value.length > 0 &&
-      userForm.bio.value.length > 0 &&
       errResponse === ""
     ) {
       setValid(true);
@@ -135,7 +134,6 @@ export default function GeneralSettings() {
       body: JSON.stringify({
         username: userForm.username.value,
         email: userData.email,
-        password: userData.password,
         country: userForm.country.value,
         isVerified: false,
         bio: userForm.bio.value,

@@ -1,8 +1,17 @@
 import SearchIcon from "@mui/icons-material/Search";
-import { useNavigate } from "react-router-dom";
-import "./index.css";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { UpdateNotificationContext } from "../../context/NotificationContext";
+import {
+  APIResponse,
+  BACKEND,
+  JSON_HEADERS,
+  NotificationType,
+  PATH,
+} from "../../environment/APIService";
 import CloseModal from "../../hooks/CloseModal";
+import useDebounce from "../../hooks/useDebounce";
+import "./index.css";
 
 export const TYPE = {
   FUSION: "fusion",
@@ -28,13 +37,64 @@ export default function Recipe() {
 
   const [globalSearch, setGlobalSearch] = useState("");
 
-  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [showSearchSuggestions, setShowSearchSuggestions] = useState(false);
 
-  const [suggestionsList, setSuggestionsList] = useState([]);
+  const [searchUsers, setSearchUsers] = useState([]);
+
+  const [searchQuery, setSearchQuery] = useState([]);
+
+  const debouncedSearchValue = useDebounce(globalSearch, 200);
+
+  const setNotificationData = useContext(UpdateNotificationContext);
+
+  useEffect(() => {
+    cookspireSearch(debouncedSearchValue);
+  }, [debouncedSearchValue]);
 
   const onClickOutside = CloseModal(() => {
-    setShowSuggestions(false);
+    setShowSearchSuggestions(false);
   }, true);
+
+  async function cookspireSearch(query) {
+    fetch(BACKEND.API_URL + PATH.SEARCH_COOKSPIRE, {
+      method: "POST",
+      headers: JSON_HEADERS,
+      body: JSON.stringify({
+        query: query,
+      }),
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else return APIResponse.BAD_REQUEST;
+      })
+      .then((data) => {
+        if (data !== APIResponse.BAD_REQUEST) {
+          setSearchUsers(() => data.users.slice(0, 7));
+          setSearchQuery(data.recipe);
+          if (data.query.length > 0)
+            setSearchQuery((prev) => [...prev, data.query]);
+        } else {
+          setNotificationData(
+            true,
+            "Search function not working. Kindly check the input.",
+            NotificationType.INFO
+          );
+        }
+      })
+      .catch((err) => {
+        setNotificationData(
+          true,
+          "Oops you got us! Kindly raise a bug.",
+          NotificationType.INFO
+        );
+      });
+  }
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    setShowSearchSuggestions(false);
+    navigate("/search/recipe?q=" + globalSearch);
+  };
 
   return (
     <div className="cuisine-container">
@@ -45,28 +105,73 @@ export default function Recipe() {
           </div>
           <div
             className="search-input"
-            onClick={() => setShowSuggestions(true)}
+            onClick={() => setShowSearchSuggestions(true)}
           >
-            <input
-              type="text"
-              autoComplete="off"
-              id="search"
-              placeholder="Search Cookspire"
-              maxLength={1000}
-              onChange={(e) => setGlobalSearch(e.target.value)}
-              value={globalSearch}
-            />
+            <form onSubmit={(e) => handleSearchSubmit(e)}>
+              <input
+                type="text"
+                autoComplete="off"
+                id="search"
+                placeholder="Search Cookspire"
+                maxLength={1000}
+                onChange={(e) => {
+                  setShowSearchSuggestions(true);
+                  setGlobalSearch(e.target.value);
+                }}
+                value={globalSearch}
+              />
+              <button
+                style={{ display: "none" }}
+                type="submit"
+                onSubmit={(e) => handleSearchSubmit(e)}
+              ></button>
+            </form>
           </div>
+
+          {searchUsers && showSearchSuggestions && (
+            <div className="search-suggestions">
+              {searchUsers.length === 0 && searchQuery.length === 0 && (
+                <div className="suggestion-data">
+                  Try searching for people / recipes.
+                </div>
+              )}
+
+              {searchUsers.length > 0 &&
+                searchUsers.map((x, index) => (
+                  <NavLink to={"/profile/" + x.email + "/posts"}>
+                    <div className="suggestion-list" key={index}>
+                      <div className="suggestion-name">
+                        <div className="profile-suggestions-info">
+                          <div className="profile-image">
+                            <img src="/posts/profile.svg" alt="profile" />
+                          </div>
+                          <div className="profile-name">{x.username}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </NavLink>
+                ))}
+
+              {searchQuery.length > 0 &&
+                searchQuery.map((x, index) => (
+                  <NavLink to={"/search/recipe?q=" + x}>
+                    <div className="query-suggestion-list" key={index}>
+                      <div className="suggestion-name">
+                        <div className="query-suggestions-info">
+                          <div className="query-image">
+                            <SearchIcon htmlColor="hsl(240, 62%, 42%)" />
+                          </div>
+                          <div className="query-name">
+                            Search for&nbsp;<b>{x}</b>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </NavLink>
+                ))}
+            </div>
+          )}
         </div>
-        {showSuggestions && (
-          <div className="search-suggestions">
-            {suggestionsList.length === 0 && (
-              <div className="suggestion-data">
-                Try searching for people / recipes.
-              </div>
-            )}
-          </div>
-        )}
       </div>
 
       <div className="cuisine-navigation">Recipes</div>

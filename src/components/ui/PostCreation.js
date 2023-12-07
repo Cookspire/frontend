@@ -4,7 +4,6 @@ import ReactDom, { createPortal } from "react-dom";
 import { UpdateNotificationContext } from "../../context/NotificationContext";
 import { UpdatePostDataContext } from "../../context/PostContext";
 import { LogoutUserContext, UserDataContext } from "../../context/UserContext";
-import PostAddIcon from "@mui/icons-material/PostAdd";
 
 import {
   APIResponse,
@@ -63,6 +62,8 @@ export default function PostCreation({ closeDialog }) {
     imageURL: null,
   });
 
+  const [file, setFile] = useState();
+
   const [valid, setValid] = useState({
     showDisable: true,
     showBuffer: false,
@@ -98,22 +99,29 @@ export default function PostCreation({ closeDialog }) {
       });
   }
 
-  // const closePost = CloseModal(() => {
-  //   closeDialog(false);
-  // }, true);
+  const closePost = CloseModal(() => {
+    closeDialog(false);
+  }, true);
 
   const handlePostInput = (e) => {
     setPost((prev) => ({ ...prev, content: e.target.value }));
-    e.target.value.length > 0
+    e.target.value.length > 0 || file!=null
       ? setValid((prev) => ({ ...prev, showDisable: false }))
       : setValid((prev) => ({ ...prev, showDisable: true }));
   };
 
   async function fetchUsersPost(id) {
-    fetch(BACKEND.API_URL + PATH.FETCH_USERS_POST + id, {
-      method: "POST",
-      headers: JSON_HEADERS,
-    })
+    fetch(
+      BACKEND.API_URL +
+        PATH.FETCH_USERS_POST +
+        userLogged.email +
+        "&fetchUser=" +
+        userLogged.email,
+      {
+        method: "POST",
+        headers: JSON_HEADERS,
+      }
+    )
       .then((response) => {
         if (response.status === 200) return response.json();
         else {
@@ -147,6 +155,7 @@ export default function PostCreation({ closeDialog }) {
   async function persistPosts(postData) {
     const formdata = new FormData();
     formdata.set("data", JSON.stringify(postData));
+    formdata.set("file", file);
 
     fetch(BACKEND.API_URL + PATH.PERSIST_POST, {
       method: "PUT",
@@ -220,11 +229,13 @@ export default function PostCreation({ closeDialog }) {
         file.type === "image/jpg"
       ) {
         if (file.size <= 300000) {
+          setFile(uploadPostImageRef.current.files[0]);
           setFilePreview((prev) => ({
             ...prev,
             show: true,
             imageURL: URL.createObjectURL(uploadPostImageRef.current.files[0]),
           }));
+          setValid((prev) => ({ ...prev, showDisable: false }))
         } else {
           setNotificationData(
             true,
@@ -251,7 +262,7 @@ export default function PostCreation({ closeDialog }) {
     <>
       <Notification />
       <div style={OVERLAY_STYLE}>
-        <div className="post-creation-content">
+        <div className="post-creation-content" ref={closePost}>
           <div
             className="close-dialog"
             title="close"
@@ -263,7 +274,13 @@ export default function PostCreation({ closeDialog }) {
             <div className="form-header">Create Post</div>
             <div className="user-data">
               <div className="profile-image">
-                <img src="/posts/profile.svg" alt="profile" />
+                <img src={
+                          userData &&
+                          userData.imageType != null &&
+                          userData.imageType === "url"
+                            ? userData.imageName
+                            : "/posts/profile.svg"
+                        } alt="profile" />
               </div>
 
               <div className="profile-name">
@@ -326,13 +343,13 @@ export default function PostCreation({ closeDialog }) {
                   <AddPhotoAlternateIcon htmlColor="blue" fontSize="medium" />
                 </div>
 
-                <div
+                {/* <div
                   className="photo-attachment"
                   title="Add Recipe"
                   onClick={() => setShowRecipe(true)}
                 >
                   <PostAddIcon htmlColor="orange" fontSize="medium" />
-                </div>
+                </div> */}
               </div>
             </div>
 

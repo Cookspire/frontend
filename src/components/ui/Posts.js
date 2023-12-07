@@ -1,7 +1,7 @@
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
-import { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { UpdateNotificationContext } from "../../context/NotificationContext";
 import {
   PostDataContext,
@@ -11,6 +11,8 @@ import { UserDataContext } from "../../context/UserContext";
 import {
   APIResponse,
   BACKEND,
+  IMAGE_SRC,
+  IMAGE_TYPE,
   JSON_HEADERS,
   NotificationType,
   PATH,
@@ -28,12 +30,21 @@ export default function Posts({ userFollower, currentUser, userData }) {
 
   const updatePosts = useContext(UpdatePostDataContext);
 
+  const urlParam = useParams();
+
   const navigate = useNavigate();
 
+  const [showLoader, setShowLoader] = useState(false);
+
+  const [loggedUser, setLoggedUser] = useState();
+
   useEffect(() => {
-    if (!userFollower && !currentUser) fetchTrendingPost(TRENDING.ID);
-    else if (userFollower && !currentUser) {
+    updatePosts([]);
+    if (!userFollower && !currentUser) {
+      fetchTrendingPost(TRENDING.ID);
+    } else if (userFollower && !currentUser) {
       if (userData.id != null) {
+        setLoggedUser(userData);
         fetchFollowersPost(userData.id);
       } else {
         setNotificationData(
@@ -43,8 +54,8 @@ export default function Posts({ userFollower, currentUser, userData }) {
         );
       }
     } else {
-      if (userData.id == null && userData.email != null) {
-        fetchUserDetails(userData.email);
+      if (urlParam.email != null) {
+        fetchUserDetails(userLogged.email);
       } else {
         setNotificationData(
           true,
@@ -55,9 +66,14 @@ export default function Posts({ userFollower, currentUser, userData }) {
     }
   }, []);
 
-  async function fetchUserDetails(email) {
-    fetch(BACKEND.API_URL + PATH.FETCH_USER + email, {
+  async function fetchSpotlightUserDetails(currentUser, spotlightUser) {
+    fetch(BACKEND.API_URL + PATH.SPOTLIGHT_USER, {
       method: "POST",
+      headers: JSON_HEADERS,
+      body: JSON.stringify({
+        spotlightUser: spotlightUser,
+        currentUser: currentUser,
+      }),
     })
       .then((response) => {
         if (response.status === 200) return response.json();
@@ -83,6 +99,35 @@ export default function Posts({ userFollower, currentUser, userData }) {
       });
   }
 
+  async function fetchUserDetails(email) {
+    fetch(BACKEND.API_URL + PATH.FETCH_USER + email, {
+      method: "POST",
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else return APIResponse.BAD_REQUEST;
+      })
+      .then((data) => {
+        if (data === APIResponse.BAD_REQUEST) {
+          setNotificationData(
+            true,
+            "Error occured while fetching user data.",
+            NotificationType.INFO
+          );
+        } else if (data && data.email !== "") {
+          setLoggedUser(data);
+          fetchSpotlightUserDetails(data.email, urlParam.email);
+        }
+      })
+      .catch((err) => {
+        setNotificationData(
+          true,
+          "Oops you got us! Raise a bug.",
+          NotificationType.INFO
+        );
+      });
+  }
+
   const likePost = (post) => {
     if (userLogged && userLogged.email === null) {
       navigate("/login");
@@ -96,7 +141,7 @@ export default function Posts({ userFollower, currentUser, userData }) {
     fetch(BACKEND.API_URL + PATH.PERSIST_INTERACTION, {
       method: "PATCH",
       body: JSON.stringify({
-        createdBy: userData.id,
+        createdBy: loggedUser.id,
         postId: post.id,
         liked: likePost,
       }),
@@ -113,7 +158,7 @@ export default function Posts({ userFollower, currentUser, userData }) {
           if (!userFollower && !currentUser) fetchTrendingPost(0);
           else if (userFollower && !currentUser)
             fetchFollowersPost(userData.id);
-          else fetchUsersPost(userData.id);
+          else fetchUsersPost();
         } else {
           setNotificationData(
             true,
@@ -133,7 +178,7 @@ export default function Posts({ userFollower, currentUser, userData }) {
   }
 
   async function fetchFollowersPost(id) {
-    console.log("fetching user follower post!!");
+    setShowLoader(true);
     fetch(BACKEND.API_URL + PATH.FETCH_FOLLOWERS_POST + id, {
       method: "POST",
       headers: JSON_HEADERS,
@@ -145,6 +190,7 @@ export default function Posts({ userFollower, currentUser, userData }) {
         }
       })
       .then((data) => {
+        setShowLoader(false);
         if (data !== APIResponse.BAD_REQUEST) {
           updatePosts(data);
         } else {
@@ -165,12 +211,19 @@ export default function Posts({ userFollower, currentUser, userData }) {
       });
   }
 
-  async function fetchUsersPost(id) {
-    console.log("fetching user post!!");
-    fetch(BACKEND.API_URL + PATH.FETCH_USERS_POST + id, {
-      method: "POST",
-      headers: JSON_HEADERS,
-    })
+  async function fetchUsersPost() {
+    setShowLoader(true);
+    fetch(
+      BACKEND.API_URL +
+        PATH.FETCH_USERS_POST +
+        userLogged.email +
+        "&fetchUser=" +
+        urlParam.email,
+      {
+        method: "POST",
+        headers: JSON_HEADERS,
+      }
+    )
       .then((response) => {
         if (response.status === 200) return response.json();
         else {
@@ -178,6 +231,7 @@ export default function Posts({ userFollower, currentUser, userData }) {
         }
       })
       .then((data) => {
+        setShowLoader(false);
         if (data !== APIResponse.BAD_REQUEST) {
           updatePosts(data);
         } else {
@@ -198,8 +252,17 @@ export default function Posts({ userFollower, currentUser, userData }) {
       });
   }
 
+  const dateFormat = (date) => {
+    const converted = new Date(date);
+    return (
+      converted.toLocaleString("en-us", { month: "long" }) +
+      " " +
+      new Date(date).getDate().toString()
+    );
+  };
+
   async function fetchTrendingPost(id) {
-    console.log("fetching trending post!!");
+    setShowLoader(true);
     fetch(BACKEND.API_URL + PATH.FETCH_TRENDING_POST + id, {
       method: "POST",
       headers: JSON_HEADERS,
@@ -211,6 +274,7 @@ export default function Posts({ userFollower, currentUser, userData }) {
         }
       })
       .then((data) => {
+        setShowLoader(false);
         if (data !== APIResponse.BAD_REQUEST) {
           updatePosts(data);
         } else {
@@ -231,9 +295,19 @@ export default function Posts({ userFollower, currentUser, userData }) {
       });
   }
 
-  return userData && userData.id === null ? (
-    <>Loading...</>
-  ) : (
+  const showImage = (imageData, imageType) => {
+    if (imageType === IMAGE_TYPE.JPEG) return IMAGE_SRC.JPEG + imageData;
+    else if (imageType === IMAGE_TYPE.PNG) return IMAGE_SRC.PNG + imageData;
+    else {
+      setNotificationData(
+        true,
+        "Error occured while loading file in posts",
+        NotificationType.INFO
+      );
+    }
+  };
+
+  return (
     <>
       <Notification />
       <div className="post-content">
@@ -244,7 +318,16 @@ export default function Posts({ userFollower, currentUser, userData }) {
                 <div className="user-post" key={post.id}>
                   <div className="user-data">
                     <div className="profile-image">
-                      <img src="/posts/profile.svg" alt="profile" />
+                      <img
+                        src={
+                          post.createdUser &&
+                          post.createdUser.imageType != null &&
+                          post.createdUser.imageType === "url"
+                            ? post.createdUser.imageName
+                            : "/posts/profile.svg"
+                        }
+                        alt="profile"
+                      />
                     </div>
 
                     <div className="profile-name">
@@ -259,10 +342,25 @@ export default function Posts({ userFollower, currentUser, userData }) {
                       )}
                     </div>
 
-                    <div className="profile-image">&#183; 21hr</div>
+                    <div className="profile-image">
+                      &#183; {dateFormat(post.updatedOn)}
+                    </div>
                   </div>
 
-                  <div className="user-content">{post.content}</div>
+                  <div className="user-content">
+                    {post.content && post.content.length > 0 && (
+                      <div className="text-content">{post.content}</div>
+                    )}
+
+                    <div className="image-content">
+                      {post.imageData && post.imageData.length > 0 && (
+                        <img
+                          src={showImage(post.imageData, post.imageType)}
+                          alt="user-post"
+                        />
+                      )}
+                    </div>
+                  </div>
 
                   <div className="post-interaction">
                     <div className="like" onClick={() => likePost(post)}>
@@ -290,19 +388,32 @@ export default function Posts({ userFollower, currentUser, userData }) {
               );
             })}
 
-          {postsList.length === 0 && currentUser && (
-            <div className="new-user">
-              <h1>Welcome to Cookspire!</h1>
-              <br />
-              Follow users / create posts to get started...
-            </div>
+          {postsList.length === 0 && !currentUser && (
+            <>
+              {showLoader ? (
+                <div className="center-loader">
+                  <div className="loader"></div>
+                </div>
+              ) : (
+                <div className="new-user">
+                  <h1>Welcome to Cookspire!</h1>
+                  <br />
+                  Follow users / create posts to get started...
+                </div>
+              )}
+            </>
           )}
 
           {postsList.length === 0 && currentUser && (
-            <div className="new-user">
-              <br />
-              No posts yet...
-            </div>
+            <>
+              {showLoader ? (
+                <div className="center-loader">
+                  <div className="loader"></div>
+                </div>
+              ) : (
+                <div className="new-user">No posts yet...</div>
+              )}
+            </>
           )}
         </div>
       </div>

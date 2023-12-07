@@ -25,6 +25,8 @@
   margin-bottom: 10px;
   height: 250px;
   width: 200px;
+  /* height: 250px;
+  width: 200px; */
   flex-grow: 1;
   box-shadow: var(--boxShadow);
   transition: border 300ms ease-in-out;

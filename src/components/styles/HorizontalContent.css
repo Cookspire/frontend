@@ -48,3 +48,66 @@
 .child-right:hover {
   background-color: var(--themeColor);
 }
+
+.trending-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+.trending-img img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+}
+
+.trending-type {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 10px;
+  border-radius: var(--borderRadius);
+  background-color: var(--navbarBackground);
+  border: 3px solid var(--invisibleBorder);
+  margin-right: 10px;
+  margin-bottom: 10px;
+  width: 200px;
+  flex-grow: 1;
+  box-shadow: var(--boxShadow);
+  transition: border 300ms ease-in-out;
+}
+
+.trending-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  font-size: var(--text-small);
+  font-weight: bold;
+  padding: 20px 0px 2px 0px;
+  gap: 0.3em;
+}
+
+.scrollmenu a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  color: var(--primaryColor);
+  width: 180px;
+}
+
+.scrollmenu a:hover {
+  text-decoration: underline;
+}

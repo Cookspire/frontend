@@ -21,10 +21,37 @@ export default function Course() {
 
   const [recipeList, setRecipeList] = useState([]);
 
-  async function fetchRecipeByCourse(cuisine) {
-    fetch(BACKEND.API_URL + PATH.FETCH_RECIPE_COURSE + cuisine, {
-      method: "POST",
-    })
+  const [maxPageNumber, setMaxPageNumber] = useState(0);
+
+  const [currentPageNumber, setCurrentPageNumber] = useState(0);
+
+  const [showMore, setShowMore] = useState(true);
+
+  useEffect(() => {
+    if (name && name.length === 0) {
+      navigate("/explore");
+    } else {
+      fetchRecipeByCourse(name);
+    }
+  }, [name, navigate]);
+
+  useEffect(() => {
+    if (maxPageNumber > 0 && currentPageNumber >= maxPageNumber) {
+      setShowMore(false);
+    }
+  }, [maxPageNumber, currentPageNumber]);
+
+  async function fetchRecipeByCourse(course) {
+    fetch(
+      BACKEND.API_URL +
+        PATH.FETCH_RECIPE_COURSE +
+        course +
+        "&pageNumber=" +
+        currentPageNumber,
+      {
+        method: "POST",
+      }
+    )
       .then((response) => {
         if (response.status === 200) return response.json();
         else {
@@ -40,7 +67,10 @@ export default function Course() {
             NotificationType.INFO
           );
         } else if (data !== "") {
-          setRecipeList(data);
+          const responseList = data.recipe;
+          setRecipeList((prevList) => [...prevList, ...responseList]);
+          setMaxPageNumber(() => data.maxPageNumber);
+          setCurrentPageNumber((prev) => prev + 1);
         }
       })
       .catch((err) => {
@@ -52,13 +82,11 @@ export default function Course() {
       });
   }
 
-  useEffect(() => {
-    if (name && name.length === 0) {
-      navigate("/explore");
-    } else {
+  const loadMoreData = () => {
+    if (currentPageNumber <= maxPageNumber) {
       fetchRecipeByCourse(name);
     }
-  }, [name, navigate]);
+  };
 
   return (
     <div className="recipe-container">
@@ -129,6 +157,11 @@ export default function Course() {
             );
           })}
       </div>
+      {showMore && (
+        <div className="data-loader-action">
+          <button onClick={loadMoreData}> Show more</button>
+        </div>
+      )}
     </div>
   );
 }

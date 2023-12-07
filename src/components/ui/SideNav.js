@@ -2,7 +2,12 @@ import { useContext, useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { UserDataContext } from "../../context/UserContext";
 import "../styles/SideNav.css";
-import { APIResponse, BACKEND, NotificationType, PATH } from "../../environment/APIService";
+import {
+  APIResponse,
+  BACKEND,
+  NotificationType,
+  PATH,
+} from "../../environment/APIService";
 import Notification from "./Notification";
 import { UpdateNotificationContext } from "../../context/NotificationContext";
 

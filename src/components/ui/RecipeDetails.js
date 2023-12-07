@@ -329,8 +329,7 @@ export default function RecipeDetails({ handleClose, createRecipe, recipeId }) {
                             <div className="menu-body">
                               <div className="heading">Items</div>
                               <div className="sub-heading">
-                                Follow step by step to cook the recipe
-                                perfectly!
+                                Keep this below items ready!
                               </div>
                               <div className="steps">
                                 {verifiedRecipeData.items}
@@ -340,8 +339,7 @@ export default function RecipeDetails({ handleClose, createRecipe, recipeId }) {
                             <div className="menu-body">
                               <div className="heading">Quantity</div>
                               <div className="sub-heading">
-                                Follow step by step to cook the recipe
-                                perfectly!
+                                Follow below text for items quantity!
                               </div>
                               <div className="steps">
                                 {verifiedRecipeData.quantity}

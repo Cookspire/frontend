@@ -34,11 +34,19 @@
   background-color: var(--cardBackgroundColor);
   cursor: pointer;
   border-radius: var(--borderRadius);
-  border: 1px solid var(--border);
+  box-shadow: var(--boxShadow);
 }
 
-.user-post:hover {
+/* .user-post:hover {
   border: 1px solid orange;
+} */
+
+.image-content{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  width: 100%;
 }
 
 .user-data {
@@ -54,8 +62,9 @@
 
 .profile-image img {
   display: flex;
-  width: 35px;
-  height: 35px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
 }
 
 .profile-name {
@@ -66,7 +75,7 @@
   padding-left: 5px;
   font-size: var(--text-xs);
   font-weight: 600;
-  gap:2px;
+  gap: 2px;
 }
 
 .profile-name img {
@@ -100,6 +109,16 @@
   width: 100%;
   padding: 10px;
   font-size: var(--text-small);
+}
+.user-content .text-content {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  width: inherit;
+  padding:10px 0px;
+  font-size: larger;
+  white-space: break-spaces;
 }
 
 .post-interaction {
@@ -145,7 +164,7 @@
   color: hsl(120, 43%, 47%);
 }
 
-.new-user{
+.new-user {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -157,3 +176,26 @@
   color: var(--secondaryColor);
 }
 
+.center-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.post-content .loader {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border-right: 2px solid var(--buttonDisabled);
+  border-bottom: 2px solid var(--buttonDisabled);
+  border-left: 2px solid var(--buttonDisabled);
+  border-top: 2px solid var(--background);
+}
+
+.user-content img {
+  height: 350px;
+}

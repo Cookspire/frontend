@@ -89,3 +89,20 @@
   flex-wrap: wrap;
   flex-direction: row;
 }
+
+.data-loader-action button {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-direction: row;
+  padding: 8px 20px;
+  background-color: var(--themeColor);
+  border-radius: var(--borderRadius);
+  outline: none;
+  border-style: none;
+  font-size: var(--text-base);
+  cursor: pointer;
+  color: var(--buttonColor);
+}
+
