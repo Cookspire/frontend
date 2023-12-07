@@ -120,7 +120,6 @@ export default function GeneralSettings() {
     console.log(e.target.id, e.target.value);
     if (
       userForm.username.value.length > 0 &&
-      userForm.bio.value.length > 0 &&
       errResponse === ""
     ) {
       setValid(true);

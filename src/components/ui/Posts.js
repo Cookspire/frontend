@@ -22,7 +22,6 @@ import "../styles/Posts.css";
 import Notification from "./Notification";
 
 export default function Posts({ userFollower, currentUser, userData }) {
-  
   const userLogged = useContext(UserDataContext);
 
   const setNotificationData = useContext(UpdateNotificationContext);
@@ -40,12 +39,10 @@ export default function Posts({ userFollower, currentUser, userData }) {
   const [loggedUser, setLoggedUser] = useState();
 
   useEffect(() => {
-    console.log(postsList);
-  }, [postsList]);
-  
-  useEffect(() => {
-    if (!userFollower && !currentUser) fetchTrendingPost(TRENDING.ID);
-    else if (userFollower && !currentUser) {
+    updatePosts([]);
+    if (!userFollower && !currentUser) {
+      fetchTrendingPost(TRENDING.ID);
+    } else if (userFollower && !currentUser) {
       if (userData.id != null) {
         setLoggedUser(userData);
         fetchFollowersPost(userData.id);
@@ -215,6 +212,7 @@ export default function Posts({ userFollower, currentUser, userData }) {
   }
 
   async function fetchUsersPost() {
+    setShowLoader(true);
     fetch(
       BACKEND.API_URL +
         PATH.FETCH_USERS_POST +
@@ -233,6 +231,7 @@ export default function Posts({ userFollower, currentUser, userData }) {
         }
       })
       .then((data) => {
+        setShowLoader(false);
         if (data !== APIResponse.BAD_REQUEST) {
           updatePosts(data);
         } else {
@@ -253,8 +252,17 @@ export default function Posts({ userFollower, currentUser, userData }) {
       });
   }
 
+  const dateFormat = (date) => {
+    const converted = new Date(date);
+    return (
+      converted.toLocaleString("en-us", { month: "long" }) +
+      " " +
+      new Date(date).getDate().toString()
+    );
+  };
+
   async function fetchTrendingPost(id) {
-    console.log("fetching trending post!!");
+    setShowLoader(true);
     fetch(BACKEND.API_URL + PATH.FETCH_TRENDING_POST + id, {
       method: "POST",
       headers: JSON_HEADERS,
@@ -266,6 +274,7 @@ export default function Posts({ userFollower, currentUser, userData }) {
         }
       })
       .then((data) => {
+        setShowLoader(false);
         if (data !== APIResponse.BAD_REQUEST) {
           updatePosts(data);
         } else {
@@ -309,7 +318,16 @@ export default function Posts({ userFollower, currentUser, userData }) {
                 <div className="user-post" key={post.id}>
                   <div className="user-data">
                     <div className="profile-image">
-                      <img src="/posts/profile.svg" alt="profile" />
+                      <img
+                        src={
+                          post.createdUser &&
+                          post.createdUser.imageType != null &&
+                          post.createdUser.imageType === "url"
+                            ? post.createdUser.imageName
+                            : "/posts/profile.svg"
+                        }
+                        alt="profile"
+                      />
                     </div>
 
                     <div className="profile-name">
@@ -324,17 +342,24 @@ export default function Posts({ userFollower, currentUser, userData }) {
                       )}
                     </div>
 
-                    <div className="profile-image">&#183; 21hr</div>
+                    <div className="profile-image">
+                      &#183; {dateFormat(post.updatedOn)}
+                    </div>
                   </div>
 
                   <div className="user-content">
-                    {post.content} <br />
-                    {post.imageData && post.imageData.length > 0 && (
-                      <img
-                        src={showImage(post.imageData, post.imageType)}
-                        alt="user-post"
-                      />
+                    {post.content && post.content.length > 0 && (
+                      <div className="text-content">{post.content}</div>
                     )}
+
+                    <div className="image-content">
+                      {post.imageData && post.imageData.length > 0 && (
+                        <img
+                          src={showImage(post.imageData, post.imageType)}
+                          alt="user-post"
+                        />
+                      )}
+                    </div>
                   </div>
 
                   <div className="post-interaction">
@@ -380,10 +405,15 @@ export default function Posts({ userFollower, currentUser, userData }) {
           )}
 
           {postsList.length === 0 && currentUser && (
-            <div className="new-user">
-              <br />
-              No posts yet...
-            </div>
+            <>
+              {showLoader ? (
+                <div className="center-loader">
+                  <div className="loader"></div>
+                </div>
+              ) : (
+                <div className="new-user">No posts yet...</div>
+              )}
+            </>
           )}
         </div>
       </div>

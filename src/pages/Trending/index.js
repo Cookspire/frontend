@@ -43,7 +43,7 @@ export default function Trending() {
         )}
 
         <div className="trend-heading">
-          <div className="new-content">Trending Recipes</div>
+          <div className="new-content"><b>Trending People</b></div>
         </div>
 
         <div className="trend-content">
@@ -51,7 +51,7 @@ export default function Trending() {
         </div>
 
         <div className="trend-heading">
-          <div className="new-content">Trending Posts</div>
+          <div className="new-content"><b>Trending Posts</b></div>
         </div>
 
         <Posts userFollower={false} currentUser={false} userData={null}/>

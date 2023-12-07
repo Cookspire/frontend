@@ -52,7 +52,13 @@ export default function Home() {
           <div className="new-content">
             <div className="creation-form">
               <div className="profile-image">
-                <img alt="profile" src="/posts/profile.svg" />
+                <img alt="profile" src={
+                          userData &&
+                          userData.imageType != null &&
+                          userData.imageType === "url"
+                            ? userData.imageName
+                            : "/posts/profile.svg"
+                        } />
               </div>
               <div
                 className="new-post"

@@ -13,6 +13,8 @@ export default function Following() {
 
   const [userData, setUserData] = useState();
 
+  const [showLoader, setShowLoader] = useState(true);
+
   const [userFollowing, setUserFollowing] = useState();
 
   useEffect(() => {
@@ -24,6 +26,7 @@ export default function Following() {
   }, []);
 
   async function fetchUserDetails(email) {
+    setShowLoader(true);
     fetch(BACKEND.API_URL + PATH.FETCH_USER + email, {
       method: "POST",
     })
@@ -53,6 +56,7 @@ export default function Following() {
         else return APIResponse.UNAUTHORIZED;
       })
       .then((data) => {
+        setShowLoader(false);
         if (data === APIResponse.UNAUTHORIZED) {
           logout();
         } else if (data && data.email !== "") {
@@ -65,23 +69,50 @@ export default function Following() {
   }
 
   return (
-    <div className="follower-content">
-      {userFollowing &&
-        userFollowing.length > 0 &&
-        userFollowing.map((x) => (
-          <NavLink to={"/profile/" + x.email + "/posts"}>
-            <div className="profile" key={x.id}>
-              <div className="profile-image">
-                <img src="/posts/profile.svg" alt="profile-pic" />
-              </div>
+    <div className="follower-container">
+      <div className="people-list">
+        {userFollowing &&
+          userFollowing.length > 0 &&
+          userFollowing.map((x) => (
+            <NavLink to={"/profile/" + x.email + "/posts"}>
+              <div className="profile" key={x.id}>
+                <div className="profile-image">
+                  <img
+                    src={
+                      x.imageType != null && x.imageType === "url"
+                        ? x.imageName
+                        : "/posts/profile.svg"
+                    }
+                    alt="profile-pic"
+                  />
+                </div>
 
-              <div className="profile-name">{x.username}</div>
+                <div className="profile-name">
+                  {x.username}
+                  <div className="badge">
+                    {x.verified && (
+                      <img
+                        className="verified"
+                        src="/Verified/verified.svg"
+                        alt="verified"
+                      />
+                    )}
+                  </div>
+                </div>
+              </div>
+            </NavLink>
+          ))}
+        {userFollowing &&
+          userFollowing.length === 0 &&
+          (showLoader ? (
+            <div className="loader"></div>
+          ) : (
+            <div className="new-user">
+              <br />
+              Not following anyone
             </div>
-          </NavLink>
-        ))}
-      {userFollowing && userFollowing.length === 0 && (
-        <div className="loader"></div>
-      )}
+          ))}
+      </div>
     </div>
   );
 }

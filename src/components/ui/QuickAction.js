@@ -1,6 +1,6 @@
 import SearchIcon from "@mui/icons-material/Search";
 import { useContext, useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { UpdateNotificationContext } from "../../context/NotificationContext";
 import { LogoutUserContext, UserDataContext } from "../../context/UserContext";
 import {
@@ -40,14 +40,18 @@ export default function QuickAction() {
 
   const [searchUsers, setSearchUsers] = useState([]);
 
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState([]);
+
+  const navigate = useNavigate();
 
   const onClickOutside = CloseModal(() => {
     setShowSearchSuggestions(false);
   }, true);
 
   useEffect(() => {
-    fetchUserDetails(userLogged.email);
+    if (userLogged && userLogged.email != null) {
+      fetchUserDetails(userLogged.email);
+    }
   }, []);
 
   async function fetchUserDetails(email) {
@@ -98,7 +102,9 @@ export default function QuickAction() {
       .then((data) => {
         if (data !== APIResponse.BAD_REQUEST) {
           setSearchUsers(() => data.users.slice(0, 7));
-          setSearchQuery(() => data.query);
+          setSearchQuery(data.recipe);
+          if (data.query.length > 0)
+            setSearchQuery((prev) => [...prev, data.query]);
         } else {
           setNotificationData(
             true,
@@ -196,6 +202,12 @@ export default function QuickAction() {
     followUser(followerId, shouldFollow);
   };
 
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    setShowSearchSuggestions(false);
+    navigate("/search/recipe?q=" + globalSearch);
+  };
+
   return (
     <div className="quick-actions-content">
       <Notification />
@@ -208,15 +220,25 @@ export default function QuickAction() {
           className="search-input"
           onClick={() => setShowSearchSuggestions(true)}
         >
-          <input
-            type="text"
-            id="search"
-            maxLength={1000}
-            autoComplete="off"
-            placeholder="Search Cookspire"
-            onChange={(e) => {setShowSearchSuggestions(true);setGlobalSearch(e.target.value)}}
-            value={globalSearch}
-          />
+          <form onSubmit={(e) => handleSearchSubmit(e)}>
+            <input
+              type="text"
+              id="search"
+              maxLength={1000}
+              autoComplete="off"
+              placeholder="Search Cookspire"
+              onChange={(e) => {
+                setShowSearchSuggestions(true);
+                setGlobalSearch(e.target.value);
+              }}
+              value={globalSearch}
+            />
+            <button
+              style={{ display: "none" }}
+              type="submit"
+              onSubmit={(e) => handleSearchSubmit(e)}
+            ></button>
+          </form>
         </div>
 
         {searchUsers && showSearchSuggestions && (
@@ -243,22 +265,23 @@ export default function QuickAction() {
                 </NavLink>
               ))}
 
-            {searchQuery.length > 0 && (
-              <NavLink to={"/search/recipe?q=" + searchQuery} onClick={()=>setShowSearchSuggestions(false)}>
-                <div className="query-suggestion-list">
-                  <div className="suggestion-name">
-                    <div className="query-suggestions-info">
-                      <div className="query-image">
-                        <SearchIcon htmlColor="hsl(240, 62%, 42%)" />
-                      </div>
-                      <div className="query-name">
-                        Search for&nbsp;<b>{searchQuery}</b>
+            {searchQuery.length > 0 &&
+              searchQuery.map((x, index) => (
+                <NavLink to={"/search/recipe?q=" + x} key={index}>
+                  <div className="query-suggestion-list">
+                    <div className="suggestion-name">
+                      <div className="query-suggestions-info">
+                        <div className="query-image">
+                          <SearchIcon htmlColor="hsl(240, 62%, 42%)" />
+                        </div>
+                        <div className="query-name">
+                          Search for&nbsp;<b>{x}</b>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </NavLink>
-            )}
+                </NavLink>
+              ))}
           </div>
         )}
       </div>
@@ -277,6 +300,17 @@ export default function QuickAction() {
                   <NavLink to={"/profile/" + x.email + "/posts"}>
                     {x.username}
                   </NavLink>
+                  <div className="badge">
+                    {x.isVerified && (
+                      <img
+                        className="verified"
+                        src="/Verified/verified.svg"
+                        alt="verified"
+                      />
+                    )}
+                  </div>
+
+                  
                 </div>
               </div>
 
@@ -307,8 +341,15 @@ export default function QuickAction() {
               <div className="center-loader">
                 <div className="loader"></div>
               </div>
-            ) : (
+            ) : userLogged && userLogged.email != null ? (
               <div className="done-msg">You are all caught up!</div>
+            ) : (
+              <div className="done-msg">
+                <NavLink to="/login" style={{ color: "var(--primaryColor)" }}>
+                  <b>Log in</b>
+                </NavLink>{" "}
+                &nbsp;to explore more!!!
+              </div>
             )}
           </div>
         )}

@@ -147,9 +147,21 @@ body {
     height: 400px;
     margin: 0px 10px 0px 10px;
   }
+  .user-content img{
+    height: 300px;
+  }
 }
 
 @media (max-width: 900px) {
+
+  .userProfile-content .user-post{
+    width:80%;
+  }
+
+  .user-content img{
+    height: 280px;
+  }
+
   .content-image {
     display: none;
   }
@@ -252,6 +264,11 @@ body {
 }
 
 @media (max-width: 500px) {
+
+  .user-content img{
+    height: 210px;
+  }
+
   .content-image {
     display: none;
   }

@@ -24,10 +24,10 @@
 .profile .profile-name {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   align-content: center;
   flex-wrap: wrap;
-  flex-direction: column;
+  flex-direction: row;
   width: 100%;
 }
 
@@ -49,4 +49,17 @@
 
 .follower-content a:hover{
   text-decoration: underline;
+}
+
+
+.follower-container {
+  width: inherit;
+  padding: 15px 9%;
+  padding-bottom: 100px;
+}
+
+.follower-container .people-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
 }

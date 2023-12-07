@@ -17,7 +17,7 @@ export default function Profile() {
 
   const [userData, setUserData] = useState({ value: {}, isLoggedUser: false });
 
-  const[loggedUser, setLoggedUser] = useState();
+  const [loggedUser, setLoggedUser] = useState();
 
   const [loader, setLoader] = useState();
 
@@ -32,7 +32,7 @@ export default function Profile() {
   useEffect(() => {
     if (userLogged && userLogged.email != null) {
       fetchSpotlightUserDetails(userLogged.email, userEmail.email);
-      fetchUserDetails(userLogged.email)
+      fetchUserDetails(userLogged.email);
     }
   }, [userEmail]);
 
@@ -158,7 +158,7 @@ export default function Profile() {
       })
       .then((data) => {
         if (data !== APIResponse.BAD_REQUEST) {
-          fetchSpotlightUserDetails(userLogged.email, userEmail.email) 
+          fetchSpotlightUserDetails(userLogged.email, userEmail.email);
         } else {
           setNotificationData(
             true,
@@ -189,24 +189,60 @@ export default function Profile() {
       <Notification />
       <div className="profile-info">
         <div className="profile-image">
-          <img src="/posts/profile.svg" alt="profile" />
+          <img
+            src={
+              userData.value &&
+              userData.value.imageType != null &&
+              userData.value.imageType === "url"
+                ? userData.value.imageName
+                : "/posts/profile.svg"
+            }
+            alt="profile"
+          />
         </div>
         <div className="profile-details">
           <div className="profile-interaction">
             <div className="name">
               {userData.value && userData.value.username}
             </div>
+            {userData.value.isVerified && (
+              <div className="verify-badge">
+                <img
+                  className="verifiedImage"
+                  src="/Verified/verified.svg"
+                  alt="verified"
+                />
+              </div>
+            )}
             {!userData.isLoggedUser && userData.value && (
               <div className="interaction">
                 {userData.value.isfollowing && (
-                  <button className="button"
-                  onClick={(e) => submitFollowUser(e, userData.value.id, !userData.value.isfollowing)}
-                  >Following</button>
+                  <button
+                    className="button"
+                    onClick={(e) =>
+                      submitFollowUser(
+                        e,
+                        userData.value.id,
+                        !userData.value.isfollowing
+                      )
+                    }
+                  >
+                    Following
+                  </button>
                 )}
                 {!userData.value.isfollowing && (
-                  <button className="button"
-                  onClick={(e) => submitFollowUser(e, userData.value.id, !userData.value.isfollowing)}
-                  >Follow</button>
+                  <button
+                    className="button"
+                    onClick={(e) =>
+                      submitFollowUser(
+                        e,
+                        userData.value.id,
+                        !userData.value.isfollowing
+                      )
+                    }
+                  >
+                    Follow
+                  </button>
                 )}
               </div>
             )}
@@ -258,7 +294,9 @@ export default function Profile() {
         </div>
       )}
 
-      <Outlet />
+      <div className="userProfile-content">
+        <Outlet />
+      </div>
     </div>
   ) : (
     <>

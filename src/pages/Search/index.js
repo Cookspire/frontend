@@ -1,15 +1,12 @@
+import SearchIcon from "@mui/icons-material/Search";
 import { useContext, useEffect, useState } from "react";
 import {
   NavLink,
   Outlet,
   useNavigate,
-  useParams,
   useSearchParams,
 } from "react-router-dom";
-import "./index.css";
-import SearchIcon from "@mui/icons-material/Search";
-import CloseModal from "../../hooks/CloseModal";
-import useDebounce from "../../hooks/useDebounce";
+import { UpdateNotificationContext } from "../../context/NotificationContext";
 import {
   APIResponse,
   BACKEND,
@@ -17,7 +14,9 @@ import {
   NotificationType,
   PATH,
 } from "../../environment/APIService";
-import { UpdateNotificationContext } from "../../context/NotificationContext";
+import CloseModal from "../../hooks/CloseModal";
+import useDebounce from "../../hooks/useDebounce";
+import "./index.css";
 
 export default function Search() {
   const [globalSearch, setGlobalSearch] = useState("");
@@ -68,7 +67,9 @@ export default function Search() {
       .then((data) => {
         if (data !== APIResponse.BAD_REQUEST) {
           setSearchUsers(() => data.users.slice(0, 7));
-          setSearchQuery(() => data.query);
+          setSearchQuery(data.recipe);
+          if (data.query.length > 0)
+            setSearchQuery((prev) => [...prev, data.query]);
         } else {
           setNotificationData(
             true,
@@ -86,6 +87,12 @@ export default function Search() {
       });
   }
 
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    setShowSearchSuggestions(false);
+    navigate("/search/recipe?q=" + globalSearch);
+  };
+
   return (
     <div className="search-container">
       <div className="global-search">
@@ -97,18 +104,25 @@ export default function Search() {
             className="search-input"
             onClick={() => setShowSearchSuggestions(true)}
           >
-            <input
-              type="text"
-              autoComplete="off"
-              id="search"
-              placeholder="Search Cookspire"
-              maxLength={1000}
-              onChange={(e) => {
-                setShowSearchSuggestions(true);
-                handleGlobalSearchChange(e);
-              }}
-              value={globalSearch}
-            />
+            <form onSubmit={(e) => handleSearchSubmit(e)}>
+              <input
+                type="text"
+                autoComplete="off"
+                id="search"
+                placeholder="Search Cookspire"
+                maxLength={1000}
+                onChange={(e) => {
+                  setShowSearchSuggestions(true);
+                  handleGlobalSearchChange(e);
+                }}
+                value={globalSearch}
+              />
+              <button
+                style={{ display: "none" }}
+                type="submit"
+                onSubmit={(e) => handleSearchSubmit(e)}
+              ></button>
+            </form>
           </div>
 
           {searchUsers && showSearchSuggestions && (
@@ -135,25 +149,27 @@ export default function Search() {
                   </NavLink>
                 ))}
 
-              {searchQuery.length > 0 && (
-                <NavLink
-                  to={"/search/recipe?q=" + searchQuery}
-                  onClick={() => setShowSearchSuggestions(false)}
-                >
-                  <div className="query-suggestion-list">
-                    <div className="suggestion-name">
-                      <div className="query-suggestions-info">
-                        <div className="query-image">
-                          <SearchIcon htmlColor="hsl(240, 62%, 42%)" />
-                        </div>
-                        <div className="query-name">
-                          Search for&nbsp;<b>{searchQuery}</b>
+              {searchQuery.length > 0 &&
+                searchQuery.map((x, index) => (
+                  <NavLink
+                    to={"/search/recipe?q=" + x}
+                    onClick={() => setShowSearchSuggestions(false)}
+                    key={index}
+                  >
+                    <div className="query-suggestion-list">
+                      <div className="suggestion-name">
+                        <div className="query-suggestions-info">
+                          <div className="query-image">
+                            <SearchIcon htmlColor="hsl(240, 62%, 42%)" />
+                          </div>
+                          <div className="query-name">
+                            Search for&nbsp;<b>{x}</b>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </NavLink>
-              )}
+                  </NavLink>
+                ))}
             </div>
           )}
         </div>

@@ -13,6 +13,8 @@ export default function Followers() {
 
   const [userData, setUserData] = useState();
 
+  const [showLoader, setShowLoader] = useState(true);
+
   const [userFollowers, setUserFollowers] = useState();
 
   useEffect(() => {
@@ -24,6 +26,7 @@ export default function Followers() {
   }, []);
 
   async function fetchUserDetails(email) {
+    setShowLoader(true);
     fetch(BACKEND.API_URL + PATH.FETCH_USER + email, {
       method: "POST",
     })
@@ -53,6 +56,7 @@ export default function Followers() {
         else return APIResponse.UNAUTHORIZED;
       })
       .then((data) => {
+        setShowLoader(false);
         if (data === APIResponse.UNAUTHORIZED) {
           logout();
         } else if (data && data.email !== "") {
@@ -65,23 +69,31 @@ export default function Followers() {
   }
 
   return (
-    <div className="follower-content">
-      {userFollowers &&
-        userFollowers.length > 0 &&
-        userFollowers.map((x) => (
-          <NavLink to={"/profile/" + x.email + "/posts"}>
-            <div className="profile" key={x.id}>
-              <div className="profile-image">
-                <img src="/posts/profile.svg" alt="profile-pic" />
-              </div>
+    <div className="follower-container">
+      <div className="people-list">
+        {userFollowers &&
+          userFollowers.length > 0 &&
+          userFollowers.map((x) => (
+            <NavLink to={"/profile/" + x.email + "/posts"}>
+              <div className="profile" key={x.id}>
+                <div className="profile-image">
+                  <img src="/posts/profile.svg" alt="profile-pic" />
+                </div>
 
-              <div className="profile-name">{x.username}</div>
+                <div className="profile-name">{x.username}</div>
+              </div>
+            </NavLink>
+          ))}
+        {userFollowers && userFollowers.length === 0 && (
+          showLoader ? (<div className="loader"></div>):(
+            <div className="new-user">
+              <br />
+              No followers
             </div>
-          </NavLink>
-        ))}
-      {userFollowers && userFollowers.length === 0 && (
-        <div className="loader"></div>
-      )}
+          )
+
+        )}
+      </div>
     </div>
   );
 }

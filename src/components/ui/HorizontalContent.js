@@ -1,11 +1,21 @@
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-import { useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import "../styles/HorizontalContent.css";
+import {
+  APIResponse,
+  BACKEND,
+  NotificationType,
+  PATH,
+} from "../../environment/APIService";
+import { UpdateNotificationContext } from "../../context/NotificationContext";
+import { NavLink } from "react-router-dom";
 
 export default function HorizontalContent() {
   const customScroll = useRef();
+
+  const setNotificationData = useContext(UpdateNotificationContext);
 
   const scrollRight = () => {
     customScroll.current.scrollLeft += 300;
@@ -15,6 +25,40 @@ export default function HorizontalContent() {
     customScroll.current.scrollLeft -= 300;
   };
 
+  const [userList, setUserList] = useState([]);
+
+  useEffect(() => {
+    fetchTrendingUsers();
+  }, []);
+
+  async function fetchTrendingUsers() {
+    fetch(BACKEND.API_URL + PATH.FETCH_TRENDING_USERS, {
+      method: "POST",
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else return APIResponse.BAD_REQUEST;
+      })
+      .then((data) => {
+        if (data === APIResponse.BAD_REQUEST) {
+          setNotificationData(
+            true,
+            "Error occured while fetching trending users.",
+            NotificationType.INFO
+          );
+        } else if (data) {
+          setUserList(data);
+        }
+      })
+      .catch((err) => {
+        setNotificationData(
+          true,
+          "Oops you got us! Raise a bug.",
+          NotificationType.INFO
+        );
+      });
+  }
+
   return (
     <div className="content">
       <div className="child-left" onClick={scrollLeft}>
@@ -22,83 +66,36 @@ export default function HorizontalContent() {
       </div>
 
       <div className="scrollmenu" ref={customScroll}>
-        <div className="recipe-type">
-          <div className="recipe-img">
-            <img
-              alt="coffee"
-              src="https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            ></img>
-          </div>
+        {userList &&
+          userList.map((x) => (
+            <NavLink to={"/profile/" + x.email + "/posts"}>
+              <div className="trending-type" key={x.id}>
+                <div className="trending-img">
+                  <img
+                    src={
+                      x.imageType != null && x.imageType === "url"
+                        ? x.imageName
+                        : "/posts/profile.svg"
+                    }
+                    alt="profile-pic"
+                  />
+                </div>
 
-          <div className="recipe-name">Coffee</div>
-
-          <div className="recipe-duration">Total time : 20min</div>
-        </div>
-
-        <div className="recipe-type">
-          <div className="recipe-img">
-            <img
-              alt="coffee"
-              src="https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            ></img>
-          </div>
-
-          <div className="recipe-name">Coffee</div>
-
-          <div className="recipe-duration">Total time : 20min</div>
-        </div>
-
-        <div className="recipe-type">
-          <div className="recipe-img">
-            <img
-              alt="coffee"
-              src="https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            ></img>
-          </div>
-
-          <div className="recipe-name">Coffee</div>
-
-          <div className="recipe-duration">Total time : 20min</div>
-        </div>
-
-        <div className="recipe-type">
-          <div className="recipe-img">
-            <img
-              alt="coffee"
-              src="https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            ></img>
-          </div>
-
-          <div className="recipe-name">Coffee</div>
-
-          <div className="recipe-duration">Total time : 20min</div>
-        </div>
-
-        <div className="recipe-type">
-          <div className="recipe-img">
-            <img
-              alt="coffee"
-              src="https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            ></img>
-          </div>
-
-          <div className="recipe-name">Coffee</div>
-
-          <div className="recipe-duration">Total time : 20min</div>
-        </div>
-
-        <div className="recipe-type">
-          <div className="recipe-img">
-            <img
-              alt="coffee"
-              src="https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            ></img>
-          </div>
-
-          <div className="recipe-name">Coffee</div>
-
-          <div className="recipe-duration">Total time : 20min</div>
-        </div>
+                <div className="trending-name">
+                  {x.username}
+                  <div className="badge">
+                    {x.isVerified && (
+                      <img
+                        className="verified"
+                        src="/Verified/verified.svg"
+                        alt="verified"
+                      />
+                    )}
+                  </div>
+                </div>
+              </div>
+            </NavLink>
+          ))}
       </div>
 
       <div className="child-right" onClick={scrollRight}>

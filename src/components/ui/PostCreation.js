@@ -105,7 +105,7 @@ export default function PostCreation({ closeDialog }) {
 
   const handlePostInput = (e) => {
     setPost((prev) => ({ ...prev, content: e.target.value }));
-    e.target.value.length > 0
+    e.target.value.length > 0 || file!=null
       ? setValid((prev) => ({ ...prev, showDisable: false }))
       : setValid((prev) => ({ ...prev, showDisable: true }));
   };
@@ -235,6 +235,7 @@ export default function PostCreation({ closeDialog }) {
             show: true,
             imageURL: URL.createObjectURL(uploadPostImageRef.current.files[0]),
           }));
+          setValid((prev) => ({ ...prev, showDisable: false }))
         } else {
           setNotificationData(
             true,
@@ -273,7 +274,13 @@ export default function PostCreation({ closeDialog }) {
             <div className="form-header">Create Post</div>
             <div className="user-data">
               <div className="profile-image">
-                <img src="/posts/profile.svg" alt="profile" />
+                <img src={
+                          userData &&
+                          userData.imageType != null &&
+                          userData.imageType === "url"
+                            ? userData.imageName
+                            : "/posts/profile.svg"
+                        } alt="profile" />
               </div>
 
               <div className="profile-name">

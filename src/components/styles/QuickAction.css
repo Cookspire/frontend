@@ -280,3 +280,14 @@
   border-left: 2px solid var(--buttonDisabled);
   border-top: 2px solid var(--background);
 }
+
+.done-msg a:hover {
+  text-decoration: underline;
+}
+
+.profile-suggestions-info a {
+  margin: 0;
+}
+.profile-suggestions-info a:hover {
+  margin: 0;
+}
