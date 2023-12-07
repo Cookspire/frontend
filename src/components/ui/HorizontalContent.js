@@ -2,20 +2,22 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 import { useContext, useEffect, useRef, useState } from "react";
-import "../styles/HorizontalContent.css";
+import { NavLink } from "react-router-dom";
+import { UpdateNotificationContext } from "../../context/NotificationContext";
 import {
   APIResponse,
   BACKEND,
   NotificationType,
   PATH,
 } from "../../environment/APIService";
-import { UpdateNotificationContext } from "../../context/NotificationContext";
-import { NavLink } from "react-router-dom";
+import "../styles/HorizontalContent.css";
 
 export default function HorizontalContent() {
   const customScroll = useRef();
 
   const setNotificationData = useContext(UpdateNotificationContext);
+
+  const [showLoader, setShowLoader] = useState(false);
 
   const scrollRight = () => {
     customScroll.current.scrollLeft += 300;
@@ -32,6 +34,7 @@ export default function HorizontalContent() {
   }, []);
 
   async function fetchTrendingUsers() {
+    setShowLoader(true);
     fetch(BACKEND.API_URL + PATH.FETCH_TRENDING_USERS, {
       method: "POST",
     })
@@ -40,6 +43,7 @@ export default function HorizontalContent() {
         else return APIResponse.BAD_REQUEST;
       })
       .then((data) => {
+        setShowLoader(false);
         if (data === APIResponse.BAD_REQUEST) {
           setNotificationData(
             true,
@@ -60,47 +64,55 @@ export default function HorizontalContent() {
   }
 
   return (
-    <div className="content">
-      <div className="child-left" onClick={scrollLeft}>
-        <ArrowBackIosNewIcon htmlColor="white" />
-      </div>
+    <>
+      {!showLoader ? (
+        <div className="content">
+          <div className="child-left" onClick={scrollLeft}>
+            <ArrowBackIosNewIcon htmlColor="white" />
+          </div>
 
-      <div className="scrollmenu" ref={customScroll}>
-        {userList &&
-          userList.map((x) => (
-            <NavLink to={"/profile/" + x.email + "/posts"}>
-              <div className="trending-type" key={x.id}>
-                <div className="trending-img">
-                  <img
-                    src={
-                      x.imageType != null && x.imageType === "url"
-                        ? x.imageName
-                        : "/posts/profile.svg"
-                    }
-                    alt="profile-pic"
-                  />
-                </div>
-
-                <div className="trending-name">
-                  {x.username}
-                  <div className="badge">
-                    {x.isVerified && (
+          <div className="scrollmenu" ref={customScroll}>
+            {userList &&
+              userList.map((x) => (
+                <NavLink to={"/profile/" + x.email + "/posts"} key={x.email}>
+                  <div className="trending-type" >
+                    <div className="trending-img">
                       <img
-                        className="verified"
-                        src="/Verified/verified.svg"
-                        alt="verified"
+                        src={
+                          x.imageType != null && x.imageType === "url"
+                            ? x.imageName
+                            : "/posts/profile.svg"
+                        }
+                        alt="profile-pic"
                       />
-                    )}
-                  </div>
-                </div>
-              </div>
-            </NavLink>
-          ))}
-      </div>
+                    </div>
 
-      <div className="child-right" onClick={scrollRight}>
-        <ArrowForwardIosIcon htmlColor="white" />
-      </div>
-    </div>
+                    <div className="trending-name">
+                      {x.username}
+                      <div className="badge">
+                        {x.isVerified && (
+                          <img
+                            className="verified"
+                            src="/Verified/verified.svg"
+                            alt="verified"
+                          />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </NavLink>
+              ))}
+          </div>
+
+          <div className="child-right" onClick={scrollRight}>
+            <ArrowForwardIosIcon htmlColor="white" />
+          </div>
+        </div>
+      ) : (
+        <div className="center-loader">
+          <div className="loader"></div>
+        </div>
+      )}
+    </>
   );
 }

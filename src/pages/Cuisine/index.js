@@ -12,6 +12,7 @@ import {
   PATH,
 } from "../../environment/APIService";
 import "./index.css";
+import useDebounce from "../../hooks/useDebounce";
 
 export default function Cuisine() {
   const { name } = useParams();
@@ -19,6 +20,10 @@ export default function Cuisine() {
   const navigate = useNavigate();
 
   const setNotificationData = useContext(UpdateNotificationContext);
+
+  const [globalSearch, setGlobalSearch] = useState("");
+
+  const debouncedSearchValue = useDebounce(globalSearch, 250);
 
   const [recipeList, setRecipeList] = useState([]);
 
@@ -37,6 +42,10 @@ export default function Cuisine() {
   }, [name, navigate]);
 
   useEffect(() => {
+    handleSearchSubmit(debouncedSearchValue);
+  }, [debouncedSearchValue]);
+
+  useEffect(() => {
     if (maxPageNumber > 0 && currentPageNumber >= maxPageNumber) {
       setShowMore(false);
     }
@@ -51,7 +60,6 @@ export default function Cuisine() {
     course,
     pageNumber
   ) {
-    
     fetch(BACKEND.API_URL + PATH.FILTER_RECIPE, {
       method: "POST",
       headers: JSON_HEADERS,
@@ -68,7 +76,6 @@ export default function Cuisine() {
       .then((response) => {
         if (response.status === 200) return response.json();
         else {
-  
           return APIResponse.BAD_REQUEST;
         }
       })
@@ -109,7 +116,6 @@ export default function Cuisine() {
       .then((response) => {
         if (response.status === 200) return response.json();
         else {
-        
           return APIResponse.BAD_REQUEST;
         }
       })
@@ -145,8 +151,7 @@ export default function Cuisine() {
     }
   };
 
-  const handleFilter = () => {
-
+  const handleSearchSubmit = (value) => {
     const fromTime = timingRef.current.value.split(":")[0];
     const toTime = timingRef.current.value.split(":")[1];
 
@@ -154,7 +159,21 @@ export default function Cuisine() {
       dietRef.current.value.length > 0 ? dietRef.current.value : null;
     const reqFromTime = fromTime.length > 0 ? fromTime : 0;
     const reqToTime = toTime.length > 0 ? toTime : 100;
-    const query = "";
+    const query = value.length > 0 ? value : "";
+    const cusine = name;
+    const course = null;
+    filterRecipe(query, reqDiet, reqFromTime, reqToTime, cusine, course, 0);
+  };
+
+  const handleFilter = () => {
+    const fromTime = timingRef.current.value.split(":")[0];
+    const toTime = timingRef.current.value.split(":")[1];
+
+    const reqDiet =
+      dietRef.current.value.length > 0 ? dietRef.current.value : null;
+    const reqFromTime = fromTime.length > 0 ? fromTime : 0;
+    const reqToTime = toTime.length > 0 ? toTime : 100;
+    const query = globalSearch.length > 0 ? globalSearch : "";
     const cusine = name;
     const course = null;
 
@@ -172,8 +191,12 @@ export default function Cuisine() {
               type="text"
               autoComplete="off"
               id="search"
+              placeholder="Filter within Cuisine"
               maxLength={1000}
-              placeholder="Search Recipes"
+              onChange={(e) => {
+                setGlobalSearch(e.target.value);
+              }}
+              value={globalSearch}
             />
           </div>
         </div>
@@ -245,8 +268,8 @@ export default function Cuisine() {
         </div>
       )}
 
-{recipeList.length === 0 && (
-       <div className="new-user">No match found</div>
+      {recipeList.length === 0 && (
+        <div className="new-user">No match found</div>
       )}
     </div>
   );

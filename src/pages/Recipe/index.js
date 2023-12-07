@@ -43,7 +43,7 @@ export default function Recipe() {
 
   const [searchQuery, setSearchQuery] = useState([]);
 
-  const debouncedSearchValue = useDebounce(globalSearch, 200);
+  const debouncedSearchValue = useDebounce(globalSearch, 250);
 
   const setNotificationData = useContext(UpdateNotificationContext);
 
