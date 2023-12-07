@@ -103,7 +103,7 @@ export default function AppRouter() {
                 element={<PasswordSettings />}
               />
               <Route
-                path="/profile/:email/account/verification"
+                path="/profile/:email/account/delete"
                 element={<Verification />}
               />
             </Route>

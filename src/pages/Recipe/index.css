@@ -139,6 +139,10 @@
   width: 100%;
 }
 
+.search-input form{
+  width:100%;
+}
+
 .search-content input {
   display: flex;
   justify-content: center;

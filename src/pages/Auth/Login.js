@@ -36,7 +36,7 @@ export default function Login() {
       .then((response) => {
         if (response.status === 200) return response.json();
         else {
-          console.log(response.text());
+         
           return APIResponse.BAD_REQUEST;
         }
       })
@@ -81,7 +81,7 @@ export default function Login() {
             "Invalid Credentials",
             NotificationType.INFO
           );
-          console.log("Unauthorized Access, show error pop up");
+       
         } else if (data && data.email !== "") {
           localStorage.setItem("persist", JSON.stringify(data));
           fetchUserDetails(data.email);
@@ -95,7 +95,7 @@ export default function Login() {
           "Oops you got us! Kindly raise a bug.",
           NotificationType.INFO
         );
-        console.log("handle API Error in Popup..");
+      
         return err;
       });
   }

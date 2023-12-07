@@ -53,9 +53,9 @@ export default function Account() {
               <div className="user-menu">Password</div>
             </NavLink>
 
-            {/* <NavLink to={"/profile/" + userData.id + "/account/verification"}>
-            <div className="user-menu">Verification</div>
-          </NavLink> */}
+            <NavLink to={"/profile/" + userData.email + "/account/delete"}>
+            <div className="user-menu">Remove</div>
+          </NavLink>
           </nav>
         )}
       </div>

@@ -18,9 +18,21 @@ export default function RecipeSearch() {
 
   const setNotificationData = useContext(UpdateNotificationContext);
 
+  const [maxPageNumber, setMaxPageNumber] = useState(0);
+
+  const [currentPageNumber, setCurrentPageNumber] = useState(0);
+
+  const [showMore, setShowMore] = useState(true);
+
   useEffect(() => {
     recipeSearch(searchParams.get("q"));
   }, [searchParams]);
+
+  useEffect(() => {
+    if (maxPageNumber > 0 && currentPageNumber >= maxPageNumber) {
+      setShowMore(false);
+    }
+  }, [maxPageNumber, currentPageNumber]);
 
   async function recipeSearch(query) {
     fetch(BACKEND.API_URL + PATH.SEARCH_RECIPE, {
@@ -28,6 +40,7 @@ export default function RecipeSearch() {
       headers: JSON_HEADERS,
       body: JSON.stringify({
         query: query,
+        currentPageNumber: currentPageNumber,
       }),
     })
       .then((response) => {
@@ -36,7 +49,10 @@ export default function RecipeSearch() {
       })
       .then((data) => {
         if (data !== APIResponse.BAD_REQUEST) {
-          setRecipeList(data);
+          const responseList = data.recipe;
+          setRecipeList((prevList) => [...prevList, ...responseList]);
+          setMaxPageNumber(() => data.maxPageNumber);
+          setCurrentPageNumber((prev) => prev + 1);
         } else {
           setNotificationData(
             true,
@@ -54,6 +70,12 @@ export default function RecipeSearch() {
       });
   }
 
+  const loadMoreData = () => {
+    if (currentPageNumber <= maxPageNumber) {
+      recipeSearch(searchParams.get("q"));
+    }
+  };
+
   return (
     <div className="recipe-search-container">
       <div className="recipe-list">
@@ -61,8 +83,8 @@ export default function RecipeSearch() {
           recipeList.map((x) => {
             return (
               <RecipeCard
-                key={x.recipe.id}
-                recipeData={x.recipe}
+                key={x.id}
+                recipeData={x}
                 recipeCreation={false}
               />
             );
@@ -74,6 +96,11 @@ export default function RecipeSearch() {
           </div>
         )}
       </div>
+      {showMore && recipeList.length > 0 && (
+        <div className="data-loader-action">
+          <button onClick={loadMoreData}> Show more</button>
+        </div>
+      )}
     </div>
   );
 }

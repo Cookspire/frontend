@@ -119,6 +119,15 @@
   flex-wrap: wrap;
   margin-left: 5px;
   color: rgb(34, 86, 190);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.query-suggestions-info .query-name b {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .profile-info .profile-name {

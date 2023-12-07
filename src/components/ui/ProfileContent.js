@@ -93,7 +93,7 @@ export default function Profile() {
             NotificationType.INFO
           );
         } else if (data && data.email !== "") {
-          console.log(data);
+     
           setUserData((prev) => ({
             ...prev,
             value: data,
@@ -138,7 +138,7 @@ export default function Profile() {
           "Oops you got us! Kindly raise a bug.",
           NotificationType.INFO
         );
-        return console.log("Error Occured, Reason : " + err);
+        
       });
   }
 
@@ -173,7 +173,7 @@ export default function Profile() {
           "Oops you got us! Kindly raise a bug.",
           NotificationType.INFO
         );
-        return console.log("Error Occured, Reason : " + err);
+    
       });
   }
 

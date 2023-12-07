@@ -74,8 +74,8 @@ export default function Following() {
         {userFollowing &&
           userFollowing.length > 0 &&
           userFollowing.map((x) => (
-            <NavLink to={"/profile/" + x.email + "/posts"}>
-              <div className="profile" key={x.id}>
+            <NavLink to={"/profile/" + x.email + "/posts"} key={x.id}>
+              <div className="profile">
                 <div className="profile-image">
                   <img
                     src={
