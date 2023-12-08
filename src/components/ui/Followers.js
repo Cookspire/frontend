@@ -74,8 +74,8 @@ export default function Followers() {
         {userFollowers &&
           userFollowers.length > 0 &&
           userFollowers.map((x) => (
-            <NavLink to={"/profile/" + x.email + "/posts"}>
-              <div className="profile" key={x.id}>
+            <NavLink to={"/profile/" + x.email + "/posts"}  key={x.id}>
+              <div className="profile">
                 <div className="profile-image">
                   <img src="/posts/profile.svg" alt="profile-pic" />
                 </div>

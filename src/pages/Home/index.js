@@ -5,7 +5,7 @@ import QuickAction from "../../components/ui/QuickAction";
 import "./index.css";
 import { LogoutUserContext, UserDataContext } from "../../context/UserContext";
 import { APIResponse, BACKEND, PATH } from "../../environment/APIService";
-import { NavLink } from "react-router-dom";
+
 
 export default function Home() {
   const [newPost, setNewPost] = useState(false);
@@ -17,10 +17,10 @@ export default function Home() {
   const [userData, setUserData] = useState();
 
   useEffect(() => {
-    console.log(userLogged.email)
+  
     if (userLogged && userLogged.email) {
       fetchUserDetails(userLogged.email);
-      console.log("called fetch user details api");
+      
     }
   }, []);
 
@@ -36,7 +36,7 @@ export default function Home() {
         if (data === APIResponse.UNAUTHORIZED) {
           logout();
         } else if (data && data.email !== "") {
-          console.log("call finished")
+          
           setUserData(()=>data);
         }
       })

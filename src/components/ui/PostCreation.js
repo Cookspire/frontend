@@ -146,7 +146,7 @@ export default function PostCreation({ closeDialog }) {
           "Oops you got us! Kindly raise a bug.",
           NotificationType.INFO
         );
-        return console.log("Error Occured, Reason : " + err);
+       
       });
   }
 
@@ -164,7 +164,7 @@ export default function PostCreation({ closeDialog }) {
       .then((response) => {
         if (response.status === 200) return response.json();
         else {
-          console.log(response.text());
+         
           return APIResponse.BAD_REQUEST;
         }
       })
@@ -187,7 +187,7 @@ export default function PostCreation({ closeDialog }) {
           "Oops you got us! Kindly raise a bug.",
           NotificationType.INFO
         );
-        return console.log("Error Occured, Reason : " + err);
+     
       });
   }
 

@@ -152,7 +152,7 @@ export default function QuickAction() {
           "Oops you got us! Kindly raise a bug.",
           NotificationType.INFO
         );
-        return console.log("Error Occured, Reason : " + err);
+    
       });
   }
 
@@ -193,7 +193,7 @@ export default function QuickAction() {
           "Oops you got us! Kindly raise a bug.",
           NotificationType.INFO
         );
-        return console.log("Error Occured, Reason : " + err);
+ 
       });
   }
 

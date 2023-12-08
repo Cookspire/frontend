@@ -38,7 +38,7 @@ export default function PeopleSearch() {
       })
       .then((data) => {
         if (data !== APIResponse.BAD_REQUEST) {
-          console.log(data);
+    
           setPeopleList(data);
         } else {
           setNotificationData(

@@ -1,16 +1,18 @@
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import SearchIcon from "@mui/icons-material/Search";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import RecipeCard from "../../components/ui/RecipeCard";
 import { UpdateNotificationContext } from "../../context/NotificationContext";
 import {
   APIResponse,
   BACKEND,
+  JSON_HEADERS,
   NotificationType,
   PATH,
 } from "../../environment/APIService";
 import "./index.css";
+import useDebounce from "../../hooks/useDebounce";
 
 export default function Cuisine() {
   const { name } = useParams();
@@ -18,6 +20,10 @@ export default function Cuisine() {
   const navigate = useNavigate();
 
   const setNotificationData = useContext(UpdateNotificationContext);
+
+  const [globalSearch, setGlobalSearch] = useState("");
+
+  const debouncedSearchValue = useDebounce(globalSearch, 250);
 
   const [recipeList, setRecipeList] = useState([]);
 
@@ -36,10 +42,70 @@ export default function Cuisine() {
   }, [name, navigate]);
 
   useEffect(() => {
-    if (maxPageNumber > 0 && currentPageNumber >= maxPageNumber) {
+    handleSearchSubmit(debouncedSearchValue);
+  }, [debouncedSearchValue]);
+
+  useEffect(() => {
+    if (
+      (maxPageNumber > 0 && currentPageNumber >= maxPageNumber) 
+    ) {
       setShowMore(false);
     }
   }, [maxPageNumber, currentPageNumber]);
+
+  async function filterRecipe(
+    query,
+    dietPlan,
+    fromTime,
+    toTime,
+    cuisine,
+    course,
+    pageNumber
+  ) {
+    fetch(BACKEND.API_URL + PATH.FILTER_RECIPE, {
+      method: "POST",
+      headers: JSON_HEADERS,
+      body: JSON.stringify({
+        query: query,
+        dietPlan: dietPlan,
+        fromTime: fromTime,
+        toTime: toTime,
+        cuisine: cuisine,
+        course: course,
+        currentPageNumber: pageNumber,
+      }),
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else {
+          return APIResponse.BAD_REQUEST;
+        }
+      })
+      .then((data) => {
+        if (data === APIResponse.UNAUTHORIZED) {
+          setNotificationData(
+            true,
+            "Error occured while fetching user data.",
+            NotificationType.INFO
+          );
+        } else if (data !== "") {
+          const responseList = data.recipe;
+          setRecipeList(responseList);
+          if(data.maxPageNumber===0)
+            setShowMore(false)
+          else
+            setMaxPageNumber(() => data.maxPageNumber);
+          setCurrentPageNumber((prev) => prev + 1);
+        }
+      })
+      .catch((err) => {
+        setNotificationData(
+          true,
+          "Error occured while fetching user data.",
+          NotificationType.INFO
+        );
+      });
+  }
 
   async function fetchRecipeByCuisine(cuisine) {
     fetch(
@@ -55,7 +121,6 @@ export default function Cuisine() {
       .then((response) => {
         if (response.status === 200) return response.json();
         else {
-          console.log(response.text());
           return APIResponse.BAD_REQUEST;
         }
       })
@@ -82,12 +147,43 @@ export default function Cuisine() {
       });
   }
 
+  const dietRef = useRef();
+  const timingRef = useRef();
+
   const loadMoreData = () => {
     if (currentPageNumber <= maxPageNumber) {
       fetchRecipeByCuisine(name);
     }
   };
 
+  const handleSearchSubmit = (value) => {
+    const fromTime = timingRef.current.value.split(":")[0];
+    const toTime = timingRef.current.value.split(":")[1];
+
+    const reqDiet =
+      dietRef.current.value.length > 0 ? dietRef.current.value : null;
+    const reqFromTime = fromTime.length > 0 ? fromTime : 0;
+    const reqToTime = toTime.length > 0 ? toTime : 100;
+    const query = value.length > 0 ? value : "";
+    const cusine = name;
+    const course = null;
+    filterRecipe(query, reqDiet, reqFromTime, reqToTime, cusine, course, 0);
+  };
+
+  const handleFilter = () => {
+    const fromTime = timingRef.current.value.split(":")[0];
+    const toTime = timingRef.current.value.split(":")[1];
+
+    const reqDiet =
+      dietRef.current.value.length > 0 ? dietRef.current.value : null;
+    const reqFromTime = fromTime.length > 0 ? fromTime : 0;
+    const reqToTime = toTime.length > 0 ? toTime : 100;
+    const query = globalSearch.length > 0 ? globalSearch : "";
+    const cusine = name;
+    const course = null;
+
+    filterRecipe(query, reqDiet, reqFromTime, reqToTime, cusine, course, 0);
+  };
   return (
     <div className="recipe-container">
       <div className="global-search">
@@ -100,8 +196,12 @@ export default function Cuisine() {
               type="text"
               autoComplete="off"
               id="search"
+              placeholder="Filter within Cuisine"
               maxLength={1000}
-              placeholder="Search Recipes"
+              onChange={(e) => {
+                setGlobalSearch(e.target.value);
+              }}
+              value={globalSearch}
             />
           </div>
         </div>
@@ -127,23 +227,33 @@ export default function Cuisine() {
         <div className="recipe-filter">
           <div className="filter-data">
             <div className="field">
-              <select id="diet" type="text">
-                <option value="choose">--Diet Plan--</option>
-                <option value="choose">Vegiterian</option>
-                <option value="choose">Non Vegiterian</option>
-                <option value="choose">Eggeterian</option>
+              <select
+                id="diet"
+                type="text"
+                onChange={handleFilter}
+                ref={dietRef}
+              >
+                <option value="">--Diet Plan--</option>
+                <option value="vegetarian">Vegetarian</option>
+                <option value="non vegeterian">Non Vegeterian</option>
+                <option value="eggetarian">Eggetarian</option>
               </select>
             </div>
           </div>
 
           <div className="filter-data">
             <div className="field">
-              <select id="diet" type="text">
-                <option value="choose">--By time--</option>
-                <option value="choose">&lt;10 mins</option>
-                <option value="choose">10-20 mins</option>
-                <option value="choose">20-40 mins</option>
-                <option value="choose">&gt;40min</option>
+              <select
+                id="timing"
+                type="text"
+                onChange={handleFilter}
+                ref={timingRef}
+              >
+                <option value=":">--By time--</option>
+                <option value="0:10">&lt;10 mins</option>
+                <option value="10:20">10-20 mins</option>
+                <option value="20:40">20-40 mins</option>
+                <option value="40:240">&gt;40min</option>
               </select>
             </div>
           </div>
@@ -157,10 +267,14 @@ export default function Cuisine() {
           })}
       </div>
 
-      {showMore && (
+      {showMore && recipeList.length > 0 && (
         <div className="data-loader-action">
           <button onClick={loadMoreData}> Show more</button>
         </div>
+      )}
+
+      {recipeList.length === 0 && (
+        <div className="new-user">No match found</div>
       )}
     </div>
   );

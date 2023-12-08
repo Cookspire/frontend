@@ -117,7 +117,7 @@ export default function GeneralSettings() {
       ...prev,
       [e.target.id]: { value: e.target.value, err: errResponse },
     }));
-    console.log(e.target.id, e.target.value);
+   
     if (
       userForm.username.value.length > 0 &&
       errResponse === ""
@@ -163,7 +163,7 @@ export default function GeneralSettings() {
             "Account not created",
             NotificationType.INFO
           );
-          console.log("Error during API call.");
+        
         }
       })
       .catch((err) => {
@@ -173,7 +173,7 @@ export default function GeneralSettings() {
           "Oops you got us! Kindly raise a bug.",
           NotificationType.INFO
         );
-        return console.log("Error Occured, Reason : " + err);
+       
       });
   }
 

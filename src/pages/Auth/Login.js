@@ -9,9 +9,7 @@ import {
 } from "../../environment/APIService";
 
 import Notification from "../../components/ui/Notification";
-import {
-  UpdateNotificationContext,
-} from "../../context/NotificationContext";
+import { UpdateNotificationContext } from "../../context/NotificationContext";
 import { UpdateUserDataContext } from "../../context/UserContext";
 import "./index.css";
 
@@ -36,7 +34,6 @@ export default function Login() {
       .then((response) => {
         if (response.status === 200) return response.json();
         else {
-          console.log(response.text());
           return APIResponse.BAD_REQUEST;
         }
       })
@@ -81,9 +78,13 @@ export default function Login() {
             "Invalid Credentials",
             NotificationType.INFO
           );
-          console.log("Unauthorized Access, show error pop up");
         } else if (data && data.email !== "") {
-          localStorage.setItem("persist", JSON.stringify(data));
+          localStorage.setItem(
+            "persist",
+            JSON.stringify({
+              email: data.email,
+            })
+          );
           fetchUserDetails(data.email);
           navigate("/home");
         }
@@ -95,7 +96,7 @@ export default function Login() {
           "Oops you got us! Kindly raise a bug.",
           NotificationType.INFO
         );
-        console.log("handle API Error in Popup..");
+
         return err;
       });
   }
@@ -111,7 +112,7 @@ export default function Login() {
       <Notification />
       <div className="center-modal">
         <div className="content-image">
-          <img src="/Auth/login.svg" alt="login_image"/>
+          <img src="/Auth/login.svg" alt="login_image" />
         </div>
         <div className="center-content">
           <div className="center-content-header">

@@ -1,25 +1,119 @@
+import { useContext, useEffect, useState } from "react";
+import { UpdateNotificationContext } from "../../context/NotificationContext";
+import { LogoutUserContext, UserDataContext } from "../../context/UserContext";
+import {
+  APIResponse,
+  BACKEND,
+  NotificationType,
+  PATH,
+} from "../../environment/APIService";
 import "../styles/Verification.css";
-import { useState } from "react";
 export default function Verification() {
-  const [blockSubmit, setBlockSubmit] = useState(true);
+  const userLogged = useContext(UserDataContext);
+
+  const logout = useContext(LogoutUserContext);
+
+  const [loggedUser, setLoggedUser] = useState();
+
+  const setNotificationData = useContext(UpdateNotificationContext);
+
+  useEffect(() => {
+    if (userLogged && userLogged.email != null) {
+      fetchUserDetails(userLogged.email);
+    }
+  }, [userLogged]);
+
+  async function deleteUser(id) {
+   
+    fetch(BACKEND.API_URL + PATH.DELETE_USER +id , {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else return APIResponse.BAD_REQUEST;
+      })
+      .then((data) => {
+        if (data === APIResponse.BAD_REQUEST) {
+          setNotificationData(
+            true,
+            "Error occured while fetching user data.",
+            NotificationType.INFO
+          );
+        } else {
+          logout();
+          setNotificationData(
+            true,
+            "Account deleted Successfully.",
+            NotificationType.INFO
+          );
+        }
+      })
+      .catch((err) => {
+        setNotificationData(
+          true,
+          "Oops you got us! Raise a bug.",
+          NotificationType.INFO
+        );
+      });
+  }
+
+  async function fetchUserDetails(email) {
+    fetch(BACKEND.API_URL + PATH.FETCH_USER + email, {
+      method: "POST",
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else return APIResponse.BAD_REQUEST;
+      })
+      .then((data) => {
+        if (data === APIResponse.BAD_REQUEST) {
+          setNotificationData(
+            true,
+            "Error occured while fetching user data.",
+            NotificationType.INFO
+          );
+        } else if (data && data.email !== "") {
+          setLoggedUser(data);
+        }
+      })
+      .catch((err) => {
+        setNotificationData(
+          true,
+          "Oops you got us! Raise a bug.",
+          NotificationType.INFO
+        );
+      });
+  }
+
+  const deleteUserControl = (e) => {
+    e.preventDefault();
+    const value = prompt(
+      "Are you sure to delete the account? If yes then type in your email"
+    );
+    if (value === loggedUser.email) {
+      deleteUser(loggedUser.id)
+    }else{
+      setNotificationData(
+        true,
+        "Your email is incorrect.",
+        NotificationType.INFO
+      );
+    }
+  };
 
   return (
     <div className="verify-content">
-      <div className="heading">Verify your account</div>
+      <div className="heading">Delete your account</div>
 
       <div className="explanation">
-        Various factors are considered when evaluating accounts to determine
-        whether they're in the public interest and meet verification criteria.
-        Even if your account is eligible, submitting a request doesn't guarantee
-        verification. After your request has been reviewed, you get a
-        notification that lets you know whether your account has been verified.
-        If your request is denied, you can submit a new request after 30 days.
+        Deleting your account deletes all your connections & posts. It cannot be
+        recoverd back.
+        <br />
+        Kindly let us know, what could have been done better!
       </div>
 
       <div className="action">
-        {!blockSubmit && <button>Submit for Verification</button>}
-
-        {blockSubmit && <button className="invalid-button">Verification in progress</button>}
+        <button onClick={deleteUserControl}>Delete Account</button>
       </div>
     </div>
   );

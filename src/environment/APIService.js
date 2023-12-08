@@ -41,7 +41,10 @@ export const PATH = {
   FETCH_USER_FOLLOWER_INFO: "/fetchAll/followersInfo?userId=",
 
   FETCH_TRENDING_USERS: "/fetch/trending/profile",
+
+  FILTER_RECIPE:"/filter/recipe",
   
+  DELETE_USER:"/delete/user?userId=",
   PERSIST_POST: "/persist/post",
   FETCH_FOLLOWERS_POST: "/fetchAll/post/user/follower?userId=",
   FETCH_USERS_POST: "/fetchAll/post?currentUser=",

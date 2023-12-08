@@ -49,7 +49,7 @@ export default function Register() {
       .then((response) => {
         if (response.status === 200) return response.json();
         else {
-          console.log(response.text());
+       
           return APIResponse.BAD_REQUEST;
         }
       })
@@ -72,7 +72,7 @@ export default function Register() {
             "Account not created",
             NotificationType.INFO
           );
-          console.log("Error during API call.");
+    
         }
       })
       .catch((err) => {
@@ -82,7 +82,7 @@ export default function Register() {
           "Oops you got us! Kindly raise a bug.",
           NotificationType.INFO
         );
-        return console.log("Error Occured, Reason : " + err);
+    
       });
   }
 

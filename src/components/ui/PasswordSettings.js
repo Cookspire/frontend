@@ -258,7 +258,7 @@ export default function PasswordSettings() {
           "Oops you got us! Kindly raise a bug.",
           NotificationType.INFO
         );
-        return console.log("Error Occured, Reason : " + err);
+       
       });
   }
 
