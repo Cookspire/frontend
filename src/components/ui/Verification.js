@@ -92,6 +92,12 @@ export default function Verification() {
     );
     if (value === loggedUser.email) {
       deleteUser(loggedUser.id)
+    }else{
+      setNotificationData(
+        true,
+        "Your email is incorrect.",
+        NotificationType.INFO
+      );
     }
   };
 
